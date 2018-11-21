@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <!--quitar la composicion!-->
+
+    <p:panelGrid  styleClass="input_number_small gridsinbordes">
+        <p:row>
+            <p:column >
+                <p:outputLabel style="font-weight:bold;" value="Tipo de método: " />
+                <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="*" />
+            </p:column>
+            <p:column>
+
+                <p:selectOneMenu style=" font-size: 14px;  width: 250px;" value="#{historialMetodosUsadosSexualController.metodoPlanificacion}">
+                    <f:selectItems value="#{metodoPlanificacionController.items}"
+                                   var="metodoPlanificacion"  
+                                   itemValue="#{metodoPlanificacion}"
+                                   itemLabel="#{metodoPlanificacion.nombreMetodo}"/>
+                    
+                </p:selectOneMenu>
+            </p:column>
+
+            <p:column>
+                <p:outputLabel style="font-weight:bold;" value="Tiempo de Uso (en años): " />
+                <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="*" />
+            </p:column>
+            <p:column>
+
+                <p:selectOneMenu style=" font-size: 14px;  width: 250px; " value="#{historialMetodosUsadosSexualController.tiempoUso}">
+                    <f:selectItems value="#{historialMetodosUsadosSexualController.rangosTiempoUso}"
+                                   var="rango"
+                                   itemValue="#{rango}"
+                                   itemLabel="#{rangos}"/>
+                </p:selectOneMenu>
+
+            </p:column> 
+        </p:row>
+
+
+        <p:row>
+            <p:column>
+                <p:outputLabel style="font-weight:bold;" value="Nombre comercial:" />
+            </p:column>
+            <p:column colspan="3">
+                <p:inputTextarea  value="#{historialMetodosUsadosSexualController.nombreComercial}" rows="1" style="width:99%;" counter="display4" maxlength="70"  counterTemplate="{0} Caracteres Restantes"  />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column/>
+            <p:column/>
+            <p:column>
+                <h:outputText id="display4" />
+            </p:column>
+            <p:column/>
+        </p:row>
+
+        <p:row>
+            <p:column>
+                <p:outputLabel style="font-weight:bold;" value="Razón suspensión:" />
+            </p:column>
+            <p:column colspan="3">
+                <p:inputTextarea  value="#{historialMetodosUsadosSexualController.razonSuspension}" rows="3" style="width:99%; " counter="display" maxlength="70"  counterTemplate="{0} Caracteres Restantes"  />
+
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column/>
+            <p:column/>
+            <p:column>
+                <h:outputText id="display" />
+            </p:column>
+            <p:column/>
+        </p:row>
+        <p:row>
+            <p:column>
+                <p:outputLabel style="font-weight:bold;" value="Problemas presentados:" />
+                <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="" />
+            </p:column>
+            <p:column colspan="3">
+                <p:inputTextarea value="#{historialMetodosUsadosSexualController.problemasMetodo}" rows="3" style="width:99%; " counter="display2" maxlength="70"  counterTemplate="{0} Caracteres Restantes" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column/>
+            <p:column/>
+            <p:column>
+                <h:outputText id="display2" />
+            </p:column>
+            <p:column/>
+        </p:row>
+    </p:panelGrid>
+
+</html>
+

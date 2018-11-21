@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./css/usuario.css"/>
+        <h:outputStylesheet name="./css/style.css"/>
+        <h:outputScript library="js" name="login.js"/>
+    </h:head>
+    
+    <h:body>
+    <div class="container">
+        <div class="jumbotron">
+                <div class="container-fluid text-center">
+                    <h1 class="text-center">Gestión de Recursos</h1>
+                    <p>Esta es la información que puedes gestionar: </p>
+                    <h:form> 
+                    <div class="row">          
+                      <div class="col-sm-3">
+                          <p:commandLink  actionListener="#{cargarVistaSecretariaController.cargarAlergenos()}" ajax="false">
+                                <div id="service" class="panel panel-primary">
+                                      <i class="fa fa-frown-o fa-5x"></i> 
+                                      <p>Alérgenos</p>
+                                </div>
+                            </p:commandLink>
+                      </div>
+                      <div class="col-sm-3">
+                          <p:commandLink  actionListener="#{cargarVistaSecretariaController.cargarEnfermedades()}" ajax="false">
+                          <div id="service" class="panel panel-primary">
+                            <i class="fa fa-user-md fa-5x"></i> 
+                            <p>Diagnosticos</p>
+                          </div>
+                          </p:commandLink>
+                      </div>
+                      <div class="col-sm-3">
+                          <p:commandLink  actionListener="#{cargarVistaSecretariaController.cargarEps()}" ajax="false">
+                          <div id="service" class="panel panel-primary">
+                            <i class="fa fa-plus-square fa-5x"></i> 
+                            <p>Eps</p>
+                          </div>
+                          </p:commandLink>
+                      </div>
+                      <div class="col-sm-3">
+                          <p:commandLink  actionListener="#{cargarVistaSecretariaController.cargarFacultad()}" ajax="false">
+                          <div id="service" class="panel panel-primary">
+                            <i class="fa fa-building-o fa-5x"></i> 
+                            <p>Facultades</p>
+                          </div>
+                          </p:commandLink>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <p:commandLink  actionListener="#{cargarVistaSecretariaController.cargarMedicamentos()}" ajax="false">
+                                <div id="service" class="panel panel-primary">
+                                      <i class="fa fa-medkit fa-5x"></i> 
+                                      <p>Medicamentos</p>
+                                </div>
+                            </p:commandLink>
+                      </div>
+                      <div class="col-sm-3">
+                          <p:commandLink  actionListener="#{cargarVistaSecretariaController.cargarProcedimientos()}" ajax="false">
+                          <div id="service" class="panel panel-primary">
+                            <i class="fa fa-wheelchair  fa-5x"></i> 
+                            <p>Quirurgicos</p>
+                          </div>
+                          </p:commandLink>
+                      </div>
+                      <div class="col-sm-3">
+                          <p:commandLink  actionListener="#{cargarVistaSecretariaController.cargarPrograma()}" ajax="false">
+                          <div id="service" class="panel panel-primary">
+                            <i class="fa fa-graduation-cap fa-5x"></i> 
+                            <p>Programas</p>
+                          </div>
+                          </p:commandLink>
+                      </div>
+                    </div>    
+                    </h:form>
+                </div>
+            </div>
+    </div>
+    </h:body>
+</html>
+

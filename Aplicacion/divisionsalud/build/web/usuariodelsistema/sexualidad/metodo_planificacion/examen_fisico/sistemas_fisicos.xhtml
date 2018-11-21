@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:body>
+        <div class="ui-messages-info ">
+            <span class="ui-messages-info-detail"><b>Sistemas físicos</b></span>
+        </div>
+        <!--h:form-->
+            <p:dataTable value="#{examenFisicoController.resultados_examenes}"
+                         var="examen">
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="Nombre examen"/>
+                    </f:facet>
+                    <h:outputText value="#{examen.tipoExamenFisicoSexual.nombreExamen}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Resultado"/>
+                    </f:facet>
+                    <p:selectOneRadio value="#{examen.resultadoExamenFisico}" transient="false" disabled="#{examenFisicoController.viendo}">
+                        <f:selectItem itemLabel="Normal" itemValue="Normal"/>
+                        <f:selectItem itemLabel="Anormal" itemValue="Anormal"/>
+                        <p:ajax event="change"/>
+                    </p:selectOneRadio>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Especificación"/>
+                    </f:facet>
+                    <p:row>
+                        <p:inputTextarea value="#{examen.especificacionExamenFisico}"
+                                         id="especificacionExamen"
+                                         disabled="#{examenFisicoController.viendo}"
+                                        rows="2" style="width: 98%;" autoResize="false"
+                                        validatorMessage="La especificación de #{examen.tipoExamenFisicoSexual.nombreExamen} admite máximo 300 caracteres">
+                           <f:validator validatorId = "Validar300Caracteres"/>
+                           <p:ajax event="keyup" update="msgEspecificacionExamen"/>
+                       </p:inputTextarea>
+                    </p:row>
+                    <p:message for="especificacionExamen" id="msgEspecificacionExamen"></p:message>
+                    
+                </p:column>
+            </p:dataTable>
+        <!--/h:form-->
+    </h:body>
+</html>

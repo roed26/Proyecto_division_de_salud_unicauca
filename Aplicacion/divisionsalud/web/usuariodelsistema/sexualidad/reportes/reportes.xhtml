@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <!--
+    PENDIENTE EL AJAX
+    -->
+    <ui:composition template="/templates/_sexualidadtmp.xhtml">
+        <ui:define name="body">                            
+            <h:form>                               
+                <div class="ui-messages-info ">
+                    <span class="ui-messages-info-detail"><b>Pacientes atendidos en un año en el programa de sexualidad</b></span>
+                </div>
+                <p:panelGrid styleClass="gridsinbordes">
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel  value="Año del reporte:" style="font-weight:bold; "/>
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu value="#{reportesController.anio}">
+                                <f:selectItems value="#{exportarExcelController.anios}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <f:event type="preRenderView" listener="#{reportesController.cargarReportes(exportarExcelController)}" />
+                <p:separator />
+                <div class="ui-messages-info ">
+                    <span class="ui-messages-info-detail"><b>Reportes del número de pacientes atendidos, clasificados por: </b></span>
+                </div>
+                <p:tabView>
+                    <p:tab  title="Facultad" titleStyleClass="title" >
+                        <p:panel header="Pacientes atendidos por facultad">
+                            <p:chart type="bar" model="#{reportesController.atendidosFacultad}" style="height:300px"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Programa" titleStyleClass="title">
+                        <p:tabView value="#{reportesController.obtenerReporte()}" var="facultad" >
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hombres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.hombres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Mujeres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.mujeres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Total atendidos"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.total_atendidos}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hombres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.hombres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Mujeres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.mujeres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Total atendidos"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.total_atendidos}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hombres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.hombres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Mujeres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.mujeres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Total atendidos"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.total_atendidos}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hombres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.hombres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Mujeres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.mujeres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Total atendidos"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.total_atendidos}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hombres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.hombres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Mujeres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.mujeres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Total atendidos"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.total_atendidos}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hombres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.hombres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Mujeres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.mujeres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Total atendidos"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.total_atendidos}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hombres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.hombres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Mujeres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.mujeres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Total atendidos"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.total_atendidos}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hombres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.hombres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Mujeres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.mujeres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Total atendidos"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.total_atendidos}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Hombres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.hombres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Mujeres"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.mujeres}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Total atendidos"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.total_atendidos}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                        </p:tabView>
+                    </p:tab>
+                    <p:tab title="Meses" titleStyleClass="title">
+                        <p:panel header="Pacientes atendidos en el año">
+                            <p:chart type="bar" model="#{reportesController.atendidosMeses}" style="height:300px"/>
+                        </p:panel>
+                    </p:tab>
+                </p:tabView>
+                <p:separator />
+                <div class="ui-messages-info ">
+                    <span class="ui-messages-info-detail"><b> Número de Pacientes que iniciaron un método de planificación y/o un control, clasificados por:</b></span>
+                </div>
+                <p:tabView>
+                    <p:tab title="Facultad" titleStyleClass="title">
+                        <p:panel header="Reporte por facultad">
+                            <p:chart type="bar" model="#{reportesController.iniciarFacultad}" style="height:300px"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Programa" titleStyleClass="title">
+                        <p:tabView value="#{reportesController.obtenerReporte()}" var="facultad" >
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Métodos de control iniciados."/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.inicio_metodos_planificacion}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Controles creados"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.controles}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Métodos de control iniciados."/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.inicio_metodos_planificacion}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Controles creados"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.controles}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Métodos de control iniciados."/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.inicio_metodos_planificacion}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Controles creados"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.controles}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Métodos de control iniciados."/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.inicio_metodos_planificacion}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Controles creados"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.controles}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Métodos de control iniciados."/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.inicio_metodos_planificacion}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Controles creados"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.controles}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Métodos de control iniciados."/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.inicio_metodos_planificacion}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Controles creados"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.controles}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Métodos de control iniciados."/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.inicio_metodos_planificacion}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Controles creados"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.controles}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Métodos de control iniciados."/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.inicio_metodos_planificacion}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Controles creados"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.controles}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                            <p:tab  title="#{facultad.facultad}" titleStyleClass="title" >
+                                <p:dataTable value="#{facultad.departamentos}" var="departamento"                                               
+                                             emptyMessage="No se encontró ningúna informacion.">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Programas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.programa}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Métodos de control iniciados."/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.inicio_metodos_planificacion}"/>    
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Controles creados"/>
+                                        </f:facet>
+                                        <h:outputText value="#{departamento.controles}"/>    
+                                    </p:column>
+                                </p:dataTable>
+                            </p:tab>
+                        </p:tabView>
+                    </p:tab>
+                    <p:tab title="Meses" titleStyleClass="title">
+                        <p:panel header="Reporte por meses">
+                            <p:chart type="bar" model="#{reportesController.iniciarMeses}" style="height:300px"/>
+                        </p:panel>
+                    </p:tab>
+                </p:tabView>
+                <div class="ui-messages-info ">
+                    <span class="ui-messages-info-detail"><b>Pacientes por método de planificación: </b></span>
+                </div>
+                <p:panel header="Pacientes atendidos por facultad">
+                    <p:chart type="bar" model="#{reportesController.graficaMetodos}" style="
+                             height:300px"/>
+                </p:panel>
+            </h:form>           
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:composition template="/templates/_sexualidadtmp.xhtml">
+        <ui:define name="body">
+            <style>
+                .ui-outputlabel {
+                    font-weight:bold;
+                }
+                .ui-outputlabel-rfi {
+                    color: red;
+                }
+            </style>
+            <script>
+                function goTop() {
+                    window.scrollTo(0, 0);
+                }
+                $(document).ready(function () {
+                    $('.ui-inputtextarea').flexible();
+                });
+            </script>
+
+            #{antecedentesPersonalesSexualController.limpiar()}
+            #{examenFisicoController.limpiar()}
+            #{metodoAdoptadoSexualController.limpiar()}
+            #{historialMetodosUsadosSexualController.limpiarCampos()}
+            #{examenesDiagnosticosPacienteSexualController.limpiar()}
+            <div class="ui-messages-info ">
+                <span class="ui-messages-info-detail"><b>Iniciar Método de Planificación</b></span>               
+            </div>
+            
+            <p:separator></p:separator>
+            <ui:include src="../../datosBasicosPaciente.xhtml"/>
+
+            <p:separator />
+            <div style = "float: right;">
+             <p:outputLabel style="font-weight:bold; " value="Campos obligatorios"/>
+             <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+          </div> 
+            <h:form >
+
+                <p:wizard onback="goTop();" onnext="goTop();" nextLabel="Siguiente" backLabel="Atrás" >
+
+                    <p:tab title="Antecedentes Clínicos" titleStyleClass="title">
+                        <p:panel header="Antecedentes Clínicos">
+                            <ui:include src="./antecedentes_clinicos.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab title="Métodos Usados" titleStyleClass="title">
+                        <p:panel header="Métodos Usados">
+                            <ui:include src="./metodos_usados.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Examen Físico" titleStyleClass="title">
+                        <p:panel header="Examen Físico">
+                            <ui:include src="./examen_fisico/examen_fisico.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Examen Diagnóstico" titleStyleClass="title">
+                        <p:panel header="Examen Diagnóstico">
+                            <ui:include src="./examen_diagnostico.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Método Adoptado" titleStyleClass="title">
+                        <p:panel header="Método Adoptado" id="tab_adoptado">
+                            <ui:include src="./metodo_adoptado.xhtml"/>
+                        </p:panel>
+                        <p:commandButton value="Guardar" style="float:right"
+                                         action="#{historiaModuloSexualidadController.registrar(antecedentesPersonalesSexualController, examenFisicoController, examenesDiagnosticosPacienteSexualController, metodoAdoptadoSexualController, historialMetodosUsadosSexualController)}"
+                                         ajax="true" update="tab_adoptado">
+                        </p:commandButton>
+                    </p:tab>
+                </p:wizard>
+
+            </h:form>
+            <p:dialog header="Información" modal="true" closable="false" position="center" widgetVar="RegistroExitoso">
+                <h:form id="mensajeForm">
+                    <h:panelGrid columns="2" >
+                        <p:graphicImage width="50px" height="50px" library="img" name="exitoso.png" />
+                        <p:outputLabel value="La historia del paciente se registró con éxito" />
+                        <p:commandButton value="Aceptar"  action="#{pacienteController.tipoListarPacientes(2)}" />
+                    </h:panelGrid>
+
+                </h:form>
+            </p:dialog>
+
+            <p:dialog header="Información" modal="true" position="center" widgetVar="RegistroNoExitoso">
+                <h:form id="mensajeForm2">
+                    <h:panelGrid columns="2" >
+                        <p:graphicImage width="50px" height="50px" library="img" name="error.png" />
+                        <p:outputLabel value="La historia del paciente NO se registró con éxito" />
+                    </h:panelGrid>
+
+                </h:form>
+            </p:dialog>
+
+        </ui:define>
+
+    </ui:composition>
+</html>
+

@@ -1,0 +1,747 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Gestion de Pacientes</title>
+    </h:head>
+
+    <h:body> 
+
+        <center><h1><font color="red" size="4">EDITAR PACIENTE</font></h1></center>
+
+        <p:row>
+            <br><p:column></p:column></br>
+        </p:row>
+
+        <h:form id="selecionarPaciente">
+            <p:commandButton style="left: 1150px; size: 19px; font-weight:bold; color: black; background-color: #97AED7" value="SELECCIONAR PACIENTE" 
+                             onclick="PF('seleccionPacienteDialog').show()" />
+        </h:form><br></br>
+
+        <h:form id="PacienteEditForm" rendered="#{pacienteController.selected!=null}">
+            <h:panelGroup id="display">
+
+                <p:panelGrid  id="panelValidarEditar" styleClass="panelgrid">
+
+
+                    <p:row >
+                        <p:column style=" font-size: 19px; font-weight:bold; color: white; background: #339cdf" colspan="6">
+                            <p:outputLabel value="DATOS PERSONALES"/> 
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <br><p:column></p:column></br>
+                    </p:row>
+
+                    <p:row>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_estado}" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:selectOneRadio id="estado" value="#{pacienteController.selected.estado}"  >
+                                <f:selectItem itemLabel="Activo" itemValue="1"/>
+                                <f:selectItem itemLabel="Inactivo" itemValue="0"/>
+                            </p:selectOneRadio>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <br><p:column></p:column></br>
+                    </p:row>
+
+
+                    <p:row>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_tipoIdentificacion}"  />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold; color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_identificacion}" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold; color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_sexo}"  />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_raza}" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu id="tipoIdentificacion" value="#{pacienteController.tipoIdentificacion.id}" 
+                                             required="true" 
+                                             requiredMessage="#{bundlePaciente.EditPacienteRequiredMessage_tipoIdentificacion}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{tipoIdentificacionController.itemsAvailableSelectOne}"
+                                               var="tipoIdentificacionItem"
+                                               itemValue="#{tipoIdentificacionItem.id}"
+                                               itemLabel="#{tipoIdentificacionItem.nombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="identificacion" value="#{pacienteController.selected.identificacion}" 
+                                         title="#{bundlePaciente.EditPacienteTitle_identificacion}">
+                                <f:validator validatorId="ValidarCampoNumerico"/>
+                                <f:validator validatorId="ValidarCampoObligatorio"/>
+                                <f:validator validatorId="ValidarCampoNumericoPositivo"/>
+                                <p:ajax update="msgIdentificacion"  event="keyup"/>
+                            </p:inputText>             
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneRadio id="sexo" value="#{pacienteController.selected.sexo}">  
+                                <f:selectItem itemLabel="F" itemValue='F'/>
+                                <f:selectItem itemLabel="M" itemValue='M'/>
+                            </p:selectOneRadio>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu id="raza" value="#{pacienteController.raza.id}" disabled="true" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{razaController.itemsAvailableSelectOne}"
+                                               var="razaItem"
+                                               itemValue="#{razaItem.id}"
+                                               itemLabel="#{razaItem.nombre}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column></p:column>
+                        <p:column><p:message for="identificacion" id="msgIdentificacion"/></p:column>
+                        <p:column></p:column>
+                        <p:column></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_nombre1}" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_nombre2}"  />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_apellido1}" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_apellido2}"  />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:inputText id="nombre1" 
+                                         value="#{pacienteController.selected.nombre1}" 
+                                         title="#{bundlePaciente.EditPacienteTitle_nombre1}">
+                                <f:validator validatorId="ValidarCampoSoloLetrasYespacio"/>
+                                <f:validator validatorId="ValidarCampoMaximo20Caracteres" />
+                                <f:validator validatorId="ValidarCampoObligatorio" />
+                                <p:ajax update="msgNombre1"  event="keyup"/>
+                            </p:inputText>
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="nombre2" 
+                                         value="#{pacienteController.selected.nombre2}" 
+                                         title="#{bundlePaciente.EditPacienteTitle_nombre2}" >
+                                <f:validator validatorId="ValidarCampoSoloLetrasYespacio"/>
+                                <f:validator validatorId="ValidarCampoMaximo20Caracteres" />
+                                <p:ajax update="msgNombre2"  event="keyup"/>
+                            </p:inputText>
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="apellido1" 
+                                         value="#{pacienteController.selected.apellido1}" 
+                                         title="#{bundlePaciente.EditPacienteTitle_apellido1}" >
+                                <f:validator validatorId="ValidarCampoSoloLetrasYespacio"/>
+                                <f:validator validatorId="ValidarCampoMaximo20Caracteres" />
+                                <f:validator validatorId="ValidarCampoObligatorio" />
+                                <p:ajax update="msgApellido1"  event="keyup"/>
+                            </p:inputText>      
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="apellido2" 
+                                         value="#{pacienteController.selected.apellido2}" 
+                                         title="#{bundlePaciente.EditPacienteTitle_apellido2}" >
+                                <f:validator validatorId="ValidarCampoSoloLetrasYespacio"/>
+                                <f:validator validatorId="ValidarCampoMaximo20Caracteres" />
+                                <p:ajax update="msgApellido2"  event="keyup"/>
+                            </p:inputText>    
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:message for="nombre1" id="msgNombre1" /></p:column>
+                        <p:column><p:message for="nombre2" id="msgNombre2"/></p:column>
+                        <p:column><p:message for="apellido1" id="msgApellido1" /></p:column>
+                        <p:column><p:message for="apellido2" id="msgApellido2" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_fechaNacimiento}" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_estadoCivil}" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_estrato}"  />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_facultad}" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:calendar placeholder="dd/mm/aaaa" 
+                                        id="fechaNacimiento" 
+                                        yearRange="c-80:c-6"
+                                        navigator="true"
+                                        pattern="MM/dd/yyyy" 
+                                        value="#{pacienteController.selected.fechaNacimiento}" 
+                                        title="#{bundlePaciente.EditPacienteTitle_fechaNacimiento}"  
+                                        showOn="button"/>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu id="estadoCivil" value="#{pacienteController.estadoCivil.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{estadoCivilController.itemsAvailableSelectOne}"
+                                               var="estadoCivilItem"
+                                               itemValue="#{estadoCivilItem.id}"
+                                               itemLabel="#{estadoCivilItem.nombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu id="estrato" value="#{pacienteController.estrato.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{estratoController.itemsAvailableSelectOne}"
+                                               var="estratoItem"
+                                               itemValue="#{estratoItem.id}"
+                                               itemLabel="#{estratoItem.nombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+
+                        <p:column >
+                            <p:selectOneMenu filter="true" id="facultad" value="#{pacienteController.facultad.id}" >
+                                <f:selectItems value="#{facultadController.itemsAvailableSelectOne}"
+                                               var="facultadItem"
+                                               itemValue="#{facultadItem.id}"
+                                               itemLabel="#{facultadItem.nombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column> 
+                    </p:row>
+
+                    <p:row>
+                        <br><p:column></p:column></br>
+                    </p:row>
+
+                    <p:row>
+                        <p:column style=" font-weight:bold">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_escolaridad}" for="escolaridad" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-weight:bold">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_ocupacion}" for="ocupacion" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu id="escolaridad" value="#{pacienteController.escolaridad.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{escolaridadController.itemsAvailableSelectOne}"
+                                               var="escolaridadItem"
+                                               itemValue="#{escolaridadItem.id}"
+                                               itemLabel="#{escolaridadItem.nombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+
+                        <p:column>
+                            <p:selectOneMenu id="ocupacion" value="#{pacienteController.selected.ocupacion}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItem itemLabel="Estudiante" itemValue="Estudiante"/>
+                                <f:selectItem itemLabel="Docente" itemValue="Docente"/>
+                                <f:selectItem itemLabel="Administrativo" itemValue="Administrativo"/> 
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column></p:column>
+                        <p:column><p:message  for="ocupacion" id="msgOcupacion"/></p:column>
+                        <p:column></p:column>
+                        <p:column></p:column>
+                    </p:row>
+
+
+                    <p:row>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black" > 
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_programa}" for="programa" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:selectOneMenu  filter="true" id="programa" value="#{pacienteController.programa.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{programasController.itemsAvailableSelectOne}"
+                                               var="programaItem"
+                                               itemValue="#{programaItem.id}"
+                                               itemLabel="#{programaItem.nombre}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <br><p:column></p:column></br>
+                    </p:row>
+
+
+                    <p:row>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_deptoNacimiento}" for="deptoNacimiento" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_municipioNacimiento}" for="municipioNacimiento" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu filter="true" id="deptoNacimiento"
+                                             valueChangeListener="#{municipioController.seleccionDepartamentoNacimiento}" 
+                                             value="#{pacienteController.deptoNacimiento.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{deptoController.itemsAvailableSelectOne}"
+                                               var="deptoNacimientoItem"
+                                               itemValue="#{deptoNacimientoItem.id}"
+                                               itemLabel="#{deptoNacimientoItem.nombre}"/>
+                                <f:ajax execute="deptoNacimiento" render="municipioNacimiento"/>
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu filter="true" id="municipioNacimiento" 
+                                             value="#{pacienteController.municipioNacimiento.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{municipioController.listaMunicipioNacimiento}"
+                                               var="municipioNacimientoItem"
+                                               itemValue="#{municipioNacimientoItem.id}"
+                                               itemLabel="#{municipioNacimientoItem.nombre}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <br><p:column></p:column></br>
+                    </p:row>
+
+
+                    <p:row >
+                        <p:column style=" font-size: 19px; font-weight:bold; color: white; background: #339cdf" colspan="6">
+                            <p:outputLabel value="DATOS DE UBICACIÓN"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <br><p:column></p:column></br>
+                    </p:row>
+
+                    <p:row>
+                        <br><p:column style=" font-size: 18px; font-weight:bold;color: black">
+                                <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_deptoResidencia}" for="deptoResidencia" />
+                                <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                            </p:column></br>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_municipioResidencia}" for="municipioResidencia" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_direccion}" for="direccion" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                    </p:row>
+
+
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu filter="true" id="deptoResidencia" 
+                                             valueChangeListener="#{municipioController.seleccionDepartamentoResidencia}" 
+                                             value="#{pacienteController.deptoResidencia.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{deptoController.itemsAvailableSelectOne}"
+                                               var="deptoResidenciaItem"
+                                               itemValue="#{deptoResidenciaItem.id}"
+                                               itemLabel="#{deptoResidenciaItem.nombre}"                                           
+                                               />
+                                <f:ajax execute="deptoResidencia" render="municipioResidencia" />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu filter="true" id="municipioResidencia" value="#{pacienteController.municipioResidencia.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{municipioController.listaMunicipioResidencia}"
+                                               var="municipioResidenciaItem"
+                                               itemValue="#{municipioResidenciaItem.id}"
+                                               itemLabel="#{municipioResidenciaItem.nombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="direccion" 
+                                         value="#{pacienteController.selected.direccion}" 
+                                         title="#{bundlePaciente.EditPacienteTitle_direccion}" >
+                                <f:validator validatorId="ValidarCampoObligatorio"/>
+
+                                <p:ajax update="msgDireccion" event="keyup"/>
+                            </p:inputText>
+                        </p:column>
+
+                    </p:row>
+
+                    <p:row>
+                        <p:column></p:column>
+                        <p:column></p:column>
+                        <p:column><p:message for="direccion" id="msgDireccion"/></p:column>
+                        <p:column></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_zonaResidencia}" for="zonaResidencia" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_telefono}" for="telefono" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:selectOneRadio id="zonaResidencia" value="#{pacienteController.selected.zonaResidencia}">
+                                <f:selectItem itemLabel="Urbano" itemValue="U"/>
+                                <f:selectItem itemLabel="Rural" itemValue="R"/>
+                            </p:selectOneRadio>
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="telefono" 
+                                         value="#{pacienteController.selected.telefono}" 
+                                         title="#{bundlePaciente.EditPacienteTitle_telefono}" >
+
+                            </p:inputText>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column></p:column>
+                        <p:column> <p:message for="telefono" id="msgTelefono"/> </p:column>
+                    </p:row>
+
+                    <p:row >
+                        <p:column style=" font-size: 19px; font-weight:bold; color: white; background: #339cdf" colspan="6">
+                            <p:outputLabel value="DATOS DE AFILIACION"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <br><p:column></p:column></br>
+                    </p:row>
+
+
+                    <p:row>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_tipoRegimen}" for="tipoRegimen" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_categoriaAfiliado}" for="categoriaAfiliado" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black"> 
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_tipoAfiliado}" for="tipoAfiliado" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black">
+                            <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_eps}" for="eps" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:selectOneMenu id="tipoRegimen" value="#{pacienteController.tipoRegimen.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{tipoRegimenController.itemsAvailableSelectOne}"
+                                               var="tipoRegimenItem"
+                                               itemValue="#{tipoRegimenItem.id}"
+                                               itemLabel="#{tipoRegimenItem.nombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu id="categoriaAfiliado" value="#{pacienteController.categoriaAfiliado.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{categoriaAfiliadoController.itemsAvailableSelectOne}"
+                                               var="categoriaAfiliadoItem"
+                                               itemValue="#{categoriaAfiliadoItem.id}"
+                                               itemLabel="#{categoriaAfiliadoItem.nombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:selectOneMenu id="tipoAfiliado" value="#{pacienteController.tipoAfiliado.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{tipoAfiliadoController.itemsAvailableSelectOne}"
+                                               var="tipoAfiliadoItem"
+                                               itemValue="#{tipoAfiliadoItem.id}"
+                                               itemLabel="#{tipoAfiliadoItem.nombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column colspan="5">
+                            <p:selectOneMenu filter="true" id="eps" value="#{pacienteController.eps.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{epsController.itemsAvailableSelectOne}"
+                                               var="epsItem"
+                                               itemValue="#{epsItem.id}"
+                                               itemLabel="#{epsItem.nombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <br><p:column></p:column></br>
+                    </p:row>
+
+
+                    <p:row >
+                        <p:column style=" font-size: 19px; font-weight:bold; color: white; background: #339cdf" colspan="6">
+                            <p:outputLabel value="DATOS PERSONA RESPONSABLE"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <br><p:column></p:column></br>
+                    </p:row>
+
+
+                    <p:row>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black"> <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_parentesco}" for="parentesco" /></p:column>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black"> <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_personaResponsable}" for="personaResponsable"/></p:column>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black"> <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_direccionPresponsable}" for="direccionPresponsable" /></p:column>
+                        <p:column style=" font-size: 18px; font-weight:bold;color: black"> <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_telefonoPresponsable}" for="telefonoPresponsable" /></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column> <p:selectOneMenu id="parentesco" value="#{pacienteController.parentesco.id}" >
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItems value="#{parentescoController.itemsAvailableSelectOne}"
+                                               var="parentescoItem"
+                                               itemValue="#{parentescoItem.id}"
+                                               itemLabel="#{parentescoItem.nombre}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="personaResponsable" value="#{pacienteController.selected.personaResponsable}" title="#{bundlePaciente.EditPacienteTitle_personaResponsable}" />
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="direccionPresponsable" value="#{pacienteController.selected.direccionPresponsable}" title="#{bundlePaciente.EditPacienteTitle_direccionPresponsable}" />
+                        </p:column>
+
+                        <p:column>
+                            <p:inputText id="telefonoPresponsable" 
+                                         value="#{pacienteController.selected.telefonoPresponsable}" 
+                                         title="#{bundlePaciente.EditPacienteTitle_telefonoPresponsable}" >
+
+                            </p:inputText>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column></p:column>
+                        <p:column></p:column>
+                        <p:column></p:column>
+                        <p:column> <p:message for="telefonoPresponsable" id="msgTelefonoResponsabl"/></p:column>
+                    </p:row>
+
+
+                    <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_id}" for="id" />
+                    <p:inputText id="id" value="#{pacienteController.selected.id}" title="#{bundle.CreatePacienteTitle_id}" required="true" requiredMessage="#{bundle.CreatePacienteRequiredMessage_id}"/>
+
+
+                    <p:outputLabel value="#{bundlePaciente.EditPacienteLabel_fechaApertura}" for="fechaApertura" />
+                    <p:calendar id="fechaApertura" pattern="MM/dd/yyyy" value="#{pacienteController.selected.fechaApertura}" title="#{bundlePaciente.EditPacienteTitle_fechaApertura}"  showOn="button"/>
+
+
+                    <p:outputLabel value="#{bundle.EditPacienteLabel_padre}" for="padre" />
+                    <p:inputText id="padre" value="#{pacienteController.selected.padre}" title="#{bundlePaciente.EditPacienteTitle_padre}" />
+                    <p:outputLabel value="#{bundle.EditPacienteLabel_idPadre}" for="idPadre" />
+                    <p:inputText id="idPadre" value="#{pacienteController.selected.idPadre}" title="#{bundlePaciente.EditPacienteTitle_idPadre}" />
+                    <p:outputLabel value="#{bundle.EditPacienteLabel_madre}" for="madre" />
+                    <p:inputText id="madre" value="#{pacienteController.selected.madre}" title="#{bundlePaciente.EditPacienteTitle_madre}" />
+                    <p:outputLabel value="#{bundle.EditPacienteLabel_idMadre}" for="idMadre" />
+                    <p:inputText id="idMadre" value="#{pacienteController.selected.idMadre}" title="#{bundlePaciente.EditPacienteTitle_idMadre}" />
+                    <p:outputLabel value="#{bundle.EditPacienteLabel_carpeta}" for="carpeta" />
+                    <p:inputText id="carpeta" value="#{pacienteController.selected.carpeta}" title="#{bundlePaciente.EditPacienteTitle_carpeta}" />
+                    <p:outputLabel value="#{bundle.EditPacienteLabel_lugarNacimiento}" for="lugarNacimiento" />
+                    <p:inputText id="lugarNacimiento" value="#{pacienteController.selected.lugarNacimiento}" title="#{bundlePaciente.EditPacienteTitle_lugarNacimiento}" />
+                    <p:outputLabel value="#{bundle.EditPacienteLabel_lugarResidencia}" for="lugarResidencia" />
+                    <p:inputText id="lugarResidencia" value="#{pacienteController.selected.lugarResidencia}" title="#{bundlePaciente.EditPacienteTitle_lugarResidencia}" />
+
+
+                </p:panelGrid>
+
+                <br><p:commandButton style="left: 1150px; size: 19px; font-weight:bold; color: black; background-color: #97AED7"  
+                                     action="#{pacienteController.editarPaciente()}" 
+                                     value="Guardar cambios" 
+                                     update="display,:PacienteListForm:datalist,panelValidarEditar"/></br>
+
+            </h:panelGroup>
+        </h:form>    
+
+        <p:dialog header="Mensaje Editar" modal="true" position="center" widgetVar="ActualizacionExitosa">
+            <h:form id="mensajeForm">
+                <h:panelGrid columns="2" >
+                    <p:graphicImage width="50px" height="50px" library="img" name="exitoso.png" />
+                    <p:outputLabel value="La información del paciente se edito con exito" />
+                    <p:commandButton value="Aceptar" action="#{pacienteController.limpiarcamposformulario()}" />
+                </h:panelGrid>
+
+            </h:form>
+        </p:dialog>
+
+
+        <p:dialog id="PacienteSeleccion" widgetVar="seleccionPacienteDialog" modal="true" width="850" position="center"   header="#{bundlePaciente.EditPacienteTitle}">
+            <h:form id="PacienteListForm">
+                <p:panel header="#{bundlePaciente.ListPacienteTitle}">
+                    <p:outputLabel value="Buscar Paciente: "  style="bold"/>
+
+                    <p:inputText   style="width: 300px" placeholder="Ingrese nombre,apellidos o identificación" value="#{pacienteController.busquedaPaciente}">
+                        <p:ajax update="datalist"  event="keyup" listener="#{pacienteController.buscarPaciente()}"/>
+                    </p:inputText>    
+                    <p:dataTable id="datalist" value="#{pacienteController.items}" var="item"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="5,10"
+                                 >
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlePaciente.ListPacienteTitle_identificacion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.identificacion}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlePaciente.ListPacienteTitle_nombre1}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre1}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlePaciente.ListPacienteTitle_nombre2}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre2}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlePaciente.ListPacienteTitle_apellido1}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.apellido1}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundlePaciente.ListPacienteTitle_apellido2}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.apellido2}"/>
+                        </p:column>
+
+                        <p:column> 
+                            <p:commandButton id="botonSeleccionarPaciente" 
+                                             value="Seleccionar"   
+                                             icon="ui-icon-plus"  
+                                             update=":PacienteEditForm" 
+                                             action="#{pacienteController.seleccionar_CargarPaciente(item)}" 
+                                             oncomplete="PF('seleccionPacienteDialog').hide()" />
+                        </p:column>
+
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </p:dialog>  
+    </h:body>
+</html> 

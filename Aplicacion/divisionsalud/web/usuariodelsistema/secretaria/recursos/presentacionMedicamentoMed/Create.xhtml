@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PresentacionMedicamentoMedCreateDlg" widgetVar="PresentacionMedicamentoMedCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleMedicamentosMed.CreatePresentacionMedicamentoMedTitle}">
+            <h:form id="PresentacionMedicamentoMedCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{presentacionMedicamentoMedController.selected != null}">
+                        <p:outputLabel value="#{bundleMedicamentosMed.CreatePresentacionMedicamentoMedLabel_idx}" for="idx" />
+                        <p:inputText id="idx" value="#{presentacionMedicamentoMedController.selected.idx}" title="#{bundleMedicamentosMed.CreatePresentacionMedicamentoMedTitle_idx}" required="true" requiredMessage="#{bundleMedicamentosMed.CreatePresentacionMedicamentoMedRequiredMessage_idx}"/>
+                        <p:outputLabel value="#{bundleMedicamentosMed.CreatePresentacionMedicamentoMedLabel_nombrePresen}" for="nombrePresen" />
+                        <p:inputText id="nombrePresen" value="#{presentacionMedicamentoMedController.selected.nombrePresen}" title="#{bundleMedicamentosMed.CreatePresentacionMedicamentoMedTitle_nombrePresen}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{presentacionMedicamentoMedController.create}" value="#{bundleMedicamentosMed.Save}" update="display,:PresentacionMedicamentoMedListForm:datalist,:growl" oncomplete="handleSubmit(args,'PresentacionMedicamentoMedCreateDialog');"/>
+                    <p:commandButton value="#{bundleMedicamentosMed.Cancel}" onclick="PresentacionMedicamentoMedCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

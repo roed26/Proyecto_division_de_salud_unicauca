@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HistoricoGinecostetricosViewDlg" widgetVar="HistoricoGinecostetricosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleHistoricoGinecostetricosMed.ViewHistoricoGinecostetricosTitle}">
+            <h:form id="HistoricoGinecostetricosViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{historicoGinecostetricosController.selected != null}">
+                        <h:outputText value="#{bundleHistoricoGinecostetricosMed.ViewHistoricoGinecostetricosLabel_observaciones}"/>
+                        <h:outputText value="#{historicoGinecostetricosController.selected.observaciones}" title="#{bundleHistoricoGinecostetricosMed.ViewHistoricoGinecostetricosTitle_observaciones}"/>
+                        <h:outputText value="#{bundleHistoricoGinecostetricosMed.ViewHistoricoGinecostetricosLabel_ginecostetricosMed}"/>
+                        <h:outputText value="#{historicoGinecostetricosController.selected.ginecostetricosMed}" title="#{bundleHistoricoGinecostetricosMed.ViewHistoricoGinecostetricosTitle_ginecostetricosMed}"/>
+                        <h:outputText value="#{bundleHistoricoGinecostetricosMed.ViewHistoricoGinecostetricosLabel_consultaMedicaMed}"/>
+                        <h:outputText value="#{historicoGinecostetricosController.selected.consultaMedicaMed}" title="#{bundleHistoricoGinecostetricosMed.ViewHistoricoGinecostetricosTitle_consultaMedicaMed}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleHistoricoGinecostetricosMed.Close}" onclick="HistoricoGinecostetricosViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

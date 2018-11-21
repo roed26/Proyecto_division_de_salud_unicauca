@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </h:head>
+    <h1 class="text-center">Lista de Medicamentos</h1>    
+<h:form id="botonRegistroMedicamentos">
+        <p:commandButton style="font-weight: bold; color: black" id="createButton" icon="ui-icon-plus"   value="Crear Nuevo Medicamento" action="#{medicamentoMedController.inicirObjetoMedicamento()}" oncomplete="PF('MedicamentoMedCreateDialog').show()"/>
+    </h:form>
+    <p:separator/>
+
+
+       
+
+        
+            <h:form id="MedicamentoMedListForm">
+                <h:panelGrid columns="2" >
+                    <p:outputLabel value="Buscar Medicamento:" />
+                    <p:inputText  placeholder="Digite Código, Nombre, Presentación, Via Administración o Concentración" style="width: 300px;"  value="#{medicamentoMedController.datoBusqueda}" >
+                        <p:ajax event="keyup" update="datalist" listener="#{medicamentoMedController.buscarMedicamento()}" />                                
+                    </p:inputText>                          
+                </h:panelGrid>
+               
+                    <p:dataTable id="datalist" value="#{medicamentoMedController.items}" var="item"
+                              paginator="true"
+                                 rowKey="#{item.codigo}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleMedicamentosMed.ListMedicamentoMedTitle_codigo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleMedicamentosMed.ListMedicamentoMedTitle_nombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleMedicamentosMed.ListMedicamentoMedTitle_concentracion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.concentracion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleMedicamentosMed.ListMedicamentoMedTitle_viaIdx}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.viaIdx.nombreAdminis}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleMedicamentosMed.ListMedicamentoMedTitle_preIdx}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.preIdx.nombrePresen}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleMedicamentosMed.ListMedicamentoMedTitle_estado}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.estado}" disabled="true"/>
+                        </p:column>
+                        <p:column style="background: #C8CDD6; width: 120px">
+                <f:facet name="header"> 
+                    <h:outputText value="Acciones"/>
+                </f:facet>
+                <p:commandButton id="viewButton"   icon="ui-icon-search" action="#{medicamentoMedController.seleccionarMedicamento(item)}" update=":MedicamentoMedViewForm" oncomplete="PF('MedicamentoMedViewDialog').show()"/> 
+                <p:commandButton id="editButton"   icon="ui-icon-pencil" action="#{medicamentoMedController.seleccionarMedicamento(item)}" update=":MedicamentoMedEditForm" oncomplete="PF('MedicamentoMedEditDialog').show()"/>
+                <p:commandButton id="deleteButton" icon="ui-icon-trash"   actionListener="#{medicamentoMedController.destroy}" update="datalist" />
+            </p:column>
+                    </p:dataTable>
+                
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        
+
+</html>

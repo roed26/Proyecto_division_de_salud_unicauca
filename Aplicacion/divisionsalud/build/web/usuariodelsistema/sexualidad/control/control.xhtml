@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/_sexualidadtmp.xhtml">
+        <ui:define name="body">
+            <style>
+                .ui-outputlabel {
+
+                    font-weight:bold;
+
+                }
+                .ui-outputlabel-rfi {
+                    color: red;
+                }
+
+            </style>
+
+            <h:form>
+                
+              #{examenFisicoController.limpiar()}
+              
+                <div class="ui-messages-info ">
+                    <span class="ui-messages-info-detail"><b>Nuevo Control</b></span>
+                   
+                </div>
+                <p:separator></p:separator>
+                <ui:include src="../../datosBasicosPaciente.xhtml"/>
+
+                <div style = "float: right;">
+                    <p:outputLabel style="font-weight:bold; " value="Campos obligatorios"/>
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </div>
+                <p:wizard nextLabel="Siguiente" backLabel="Atrás">
+                    <p:tab title="Síntomas presentados" titleStyleClass="title">
+                        <p:panel header="Síntomas presentados">
+                            <ui:include src="./sintomas/sintomas.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Examen Físico" titleStyleClass="title">
+                        <p:panel header="Examen Físico">
+                            <ui:include src="../metodo_planificacion/examen_fisico/examen_fisico.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab title="Observaciones adicionales" titleStyleClass="title">
+                        <p:panel header="Observaciones adicionales" id="observaciones">
+                            <ui:include src="./observaciones_adicionales.xhtml"/>
+                        </p:panel>
+                        <p:commandButton value="Guardar" style="float:right"
+                                         action ="#{controlSexualController.registrar(pacienteController,examenFisicoController)}"
+                                         ajax = "true" update="observaciones"/>
+                    </p:tab>
+
+                </p:wizard>
+            </h:form>
+            <p:dialog header="Información" modal="true" closable="false" position="center" widgetVar="RegistroExitoso">
+                <h:form id="mensajeForm">
+                    <h:panelGrid columns="2" >
+                        <p:graphicImage width="50px" height="50px" library="img" name="exitoso.png" />
+                        <p:outputLabel value="El control se registró con éxito" />
+                        <p:commandButton value="Aceptar" action="#{pacienteController.tipoListarPacientes(2)}" />
+                    </h:panelGrid>
+
+                </h:form>
+            </p:dialog>
+
+            <p:dialog header="Información" modal="true" position="center" widgetVar="RegistroNoExitoso">
+                <h:form id="mensajeForm2">
+                    <h:panelGrid columns="2" >
+                        <p:graphicImage width="50px" height="50px" library="img" name="error.png" />
+                        <p:outputLabel value="El control NO se registró con éxito" />
+                    </h:panelGrid>
+
+                </h:form>
+            </p:dialog>
+
+        </ui:define>
+    </ui:composition>
+</html>
+

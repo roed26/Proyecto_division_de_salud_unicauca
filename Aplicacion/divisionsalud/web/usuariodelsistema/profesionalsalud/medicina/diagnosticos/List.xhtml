@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundleDiagnostico.ListDiagnosticosTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="DiagnosticosListForm">
+                <p:panel header="#{bundleDiagnostico.ListDiagnosticosTitle}">
+                    <p:dataTable id="datalist" value="#{diagnosticosController.items}" var="item"
+                                 selectionMode="single" selection="#{diagnosticosController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.diagnosticosPK}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleDiagnostico.ListDiagnosticosTitle_impresion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.impresion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleDiagnostico.ListDiagnosticosTitle_consultaMedicaMed}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.consultaMedicaMed}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleDiagnostico.ListDiagnosticosTitle_enfermedadesCie10Med}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.enfermedadesCie10Med}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleDiagnostico.Create}" actionListener="#{diagnosticosController.prepareCreate}" update=":DiagnosticosCreateForm" oncomplete="PF('DiagnosticosCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleDiagnostico.View}" update=":DiagnosticosViewForm" oncomplete="PF('DiagnosticosViewDialog').show()" disabled="#{empty diagnosticosController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleDiagnostico.Edit}" update=":DiagnosticosEditForm" oncomplete="PF('DiagnosticosEditDialog').show()" disabled="#{empty diagnosticosController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundleDiagnostico.Delete}" actionListener="#{diagnosticosController.destroy}" update=":growl,datalist" disabled="#{empty diagnosticosController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

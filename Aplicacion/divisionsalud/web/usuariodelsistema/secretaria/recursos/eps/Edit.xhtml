@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EpsEditDlg" widgetVar="EpsEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleEps.EditEpsTitle}">
+            <h:form id="EpsEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{epsController.selected != null}">
+                        <p:outputLabel value="#{bundleEps.EditEpsLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{epsController.selected.id}" title="#{bundleEps.EditEpsTitle_id}" required="true" requiredMessage="#{bundleEps.EditEpsRequiredMessage_id}"/>
+                        <h:outputText value="#{bundleEps.ViewEpsLabel_id}"/>
+                        <h:outputText value="#{epsController.selected.id}" title="#{bundleEps.ViewEpsTitle_id}"/>
+                        <p:outputLabel value="#{bundleEps.EditEpsLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{epsController.selected.nombre}" title="#{bundleEps.EditEpsTitle_nombre}" required="true" requiredMessage="#{bundleEps.EditEpsRequiredMessage_nombre}"/>
+                        <p:outputLabel value="#{bundleEps.EditEpsLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{epsController.selected.estado}" required="true" requiredMessage="#{bundleEps.EditEpsRequiredMessage_estado}"/>
+                    </p:panelGrid>
+                    <center>
+                        <p:commandButton actionListener="#{epsController.update}" value="#{bundleEps.Save}" update="display,:EpsListForm:datalist" oncomplete="handleSubmit(args, 'EpsEditDialog');" onclick="EpsEditDialog.hide()"/>
+                        <p:commandButton value="#{bundleEps.Cancel}" onclick="EpsEditDialog.hide()"/>
+                    </center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

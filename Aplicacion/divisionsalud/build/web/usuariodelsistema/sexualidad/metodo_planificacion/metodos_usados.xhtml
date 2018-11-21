@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html       xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+            xmlns:h="http://xmlns.jcp.org/jsf/html"
+            xmlns:f="http://xmlns.jcp.org/jsf/core"
+            xmlns:p="http://primefaces.org/ui"
+            >
+    <h:body>
+        
+        <div style=" display: #{historialMetodosUsadosSexualController.viendo == true ? 'none':''}">
+        <div class="ui-messages-info ">
+            <span class="ui-messages-info-detail"><b>Puede agregar métodos de planificación usados por el paciente aquí:</b></span>
+        </div>
+       
+            <p:panelGrid columns="2"  class="gridsinbordes">
+
+
+                <p:column style="width: 200px;">
+                    <p:outputLabel style="font-weight:bold;" value="Tipo de método: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="*" />
+                </p:column>
+
+                <p:column>
+
+
+                    <p:selectOneMenu style=" font-size: 14px; width: 100%;" value="#{historialMetodosUsadosSexualController.idmetodoPlanificacion}">
+                        <f:selectItems value="#{metodoPlanificacionController.items}"
+                                       var="metodo"  
+                                       itemValue="#{metodo.idMetodoPlanificacion}"
+                                       itemLabel="#{metodo.nombreMetodo}"/>
+
+                    </p:selectOneMenu>
+
+                </p:column>
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="Tiempo de Uso (en años): " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="*" />
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu  
+                        style=" font-size: 14px;  width: 100%;"
+                        value="#{historialMetodosUsadosSexualController.tiempoUso}"
+                        class="enable"
+                        required="true"
+                        requiredMessage="Campo obligatorio"  
+                        filter="true"
+
+                        >
+                        <f:selectItems value="#{historialMetodosUsadosSexualController.getRangosTiempoUso()}"
+                                       var="rango"
+                                       itemValue="#{rango}"
+                                       itemLabel="#{rango}"/>
+
+                    </p:selectOneMenu>
+                </p:column> 
+
+
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="Nombre comercial:" />
+                </p:column>
+                <p:column colspan="3">
+                    <p:inputTextarea id="nombreComercial" 
+                        value="#{historialMetodosUsadosSexualController.nombreComercial}" rows="1" style="width:99%;" counter="display4" maxlength="60"  counterTemplate="{0} Caracteres Restantes"  />
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <h:outputText id="display4" />
+                </p:column>
+
+
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="Razón suspensión:" />
+                </p:column>
+                <p:column colspan="3">
+                    <p:inputTextarea  id="razonSuspension"
+                        value="#{historialMetodosUsadosSexualController.razonSuspension}" rows="3" style="width:99%; " counter="display" maxlength="70"  counterTemplate="{0} Caracteres Restantes"  />
+
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <h:outputText id="display" />
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="Problemas presentados:" />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="" />
+                </p:column>
+                <p:column colspan="3">
+                    <p:inputTextarea id="problemasPresentados"
+                        value="#{historialMetodosUsadosSexualController.problemasMetodo}" rows="3" cols="50" style="width:99%; " counter="display2" maxlength="70"  counterTemplate="{0} Caracteres Restantes" />
+                </p:column>
+
+                <p:column/>
+                <p:column>
+                    <h:outputText id="display2" />
+                </p:column>
+
+
+
+                <p:column>
+                    
+                    <p:commandButton style="float: left; height: 35px; width: 150px;" value="Agregar registro" 
+                                     update="table nombreComercial razonSuspension problemasPresentados"
+                                     class="ui-button ui-widget ui-state-default ui-corner-all" action="#{historialMetodosUsadosSexualController.addRegistroHistorial()}">                            
+     
+                     </p:commandButton>
+                   
+                </p:column>
+
+
+
+            </p:panelGrid>
+            
+             <p:dialog header="Información" modal="true" position="center" widgetVar="MetodoNoAgregado">
+               
+                    <h:panelGrid columns="2" >
+                        <p:graphicImage width="50px" height="50px" library="img" name="error.png"/>
+                        <p:outputLabel value="El método seleccionado ya se encuentra en la lista, editelo ó eliminelo." />
+                    </h:panelGrid>
+
+              
+            </p:dialog>
+            
+               
+            <p:spacer height="30px;"/>
+
+
+            <p:separator />
+            <div class="ui-messages-info ">
+                <span class="ui-messages-info-detail"><b>Métodos registrados para este paciente:</b></span>
+
+            </div>
+            
+            </div>
+
+
+            <p:dataTable id="table"
+                value="#{historialMetodosUsadosSexualController.items}" var="item"   editable="true"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,7,10"
+                         emptyMessage="No hay  métodos para este paciente."
+                         rowKey="#{item.metodoPlanificacion}">
+                         
+                <p:column headerText="Método">
+                   
+                       <h:outputText value="#{item.metodoPlanificacion.nombreMetodo}" />
+                </p:column>
+
+                <p:column headerText="Tiempo de Uso:"  style="width: 110px;">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{historialMetodosUsadosSexualController.getStringTiempoUso(item.tiempoUtilizacion)}" /></f:facet>
+                        <f:facet name="input" >
+                            <p:selectOneMenu style=" font-size: 14px;  width: 100%;" value="#{item.tiempoUtilizacion}" >
+                                <f:selectItems value="#{historialMetodosUsadosSexualController.rangosTiempoUso}"
+                                               var="rango"
+                                               itemValue="#{historialMetodosUsadosSexualController.getIntTiempoUso(rango)}"
+                                               itemLabel="#{rango}"/>
+                            </p:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Nombre comercial" style="text-align:center;">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.nombreComercial}" /></f:facet>
+                        <f:facet name="input"><p:inputText id="editNombreComercial" value="#{item.nombreComercial}" 
+                                                           style="width:92%" /></f:facet>
+                    </p:cellEditor>
+                    <p:message for="editNombreComercial" id="msgEditNombreComercial"/>
+                </p:column>
+
+                <p:column headerText="Problemas con el Método" style="text-align:center;">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.problemasMetodo}" /></f:facet>
+                        <f:facet name="input"><p:inputText id="editProblemasMetodo" value="#{item.problemasMetodo}"
+                                                           style="width:92%" /></f:facet>
+                    </p:cellEditor>
+                    <p:message for="editProblemasMetodo" id="msgEditProblemasMetodo"/>
+                </p:column>
+                <p:column headerText="Razón de Suspensión" style="text-align:center;">
+
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{item.razonSuspension}" /></f:facet>
+                        <f:facet name="input"><p:inputText id="editRazonSuspension" value="#{item.razonSuspension}"
+                                                           style="width:92%" /></f:facet>
+                    </p:cellEditor>
+                    <p:message for="editRazonSuspension" id="msgEditRazonSuspension"/>
+
+                </p:column>
+
+
+                
+                <p:column  headerText="Editar" style="width: 50px; display: #{historialMetodosUsadosSexualController.viendo == true ? 'none':''} ">
+                    <p:rowEditor class="ui-button ui-widget ui-state-default ui-corner-all">
+                       
+                    </p:rowEditor>
+
+                </p:column>
+
+                <p:column   style="text-align:center; width: 80px; display: #{historialMetodosUsadosSexualController.viendo == true ? 'none':''} ">
+                    <p:commandButton  value="Eliminar" class="ui-button ui-widget ui-state-default ui-corner-all" 
+                                      style="float: left;"
+                                      action="#{historialMetodosUsadosSexualController.removeRegistroHistorial(item.metodoPlanificacion)}"
+                                     update="table">
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+
+        
+        
+    </h:body>
+
+</html>
+

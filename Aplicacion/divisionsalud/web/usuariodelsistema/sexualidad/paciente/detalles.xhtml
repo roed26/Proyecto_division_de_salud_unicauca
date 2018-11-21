@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/_sexualidadtmp.xhtml">
+        <ui:define name="body">
+            <ui:include src="../../datosBasicosPaciente.xhtml"/>
+
+            <div style="    text-align: center;" class="ui-messages-info ">
+                <span class="ui-messages-info-detail"><b>Información de paciente:</b></span>
+            </div>
+
+            <div  style="text-align: center;" id="botonesInformacion">
+                <p:commandButton action="view?faces-redirect=true" value="Formulario de inscripción a la DSI"  />
+               
+                <c:if test="#{historiaModuloSexualidadController.pacientetieneHistoria(pacienteController.selected.id)}" >
+                     <p:commandButton action="viewinfosexual?faces-redirect=true" value="Formulario de inscripción a Sexualidad"   />
+                </c:if>
+                              
+            </div>
+
+            <div style="text-align: center;" class="ui-messages-info ">
+                <span class="ui-messages-info-detail"><b>Controles del paciente:</b></span>
+            </div>
+
+            <div id="listControlesPaciente" style="padding-bottom: 25px;">
+                 <h:form>
+                    <p:dataTable value="#{historiaModuloSexualidadController.obtenerControles(pacienteController.selected.id)}" var="control"  
+                                 rowIndexVar="index"
+                                 paginator="true"
+                                 rows="10"
+                                lazy="true"
+                                rowsPerPageTemplate="7,10,20,30,40" 
+                                emptyMessage="No se encontró ningún Control.">
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Fecha del control"/>
+                            </f:facet>
+                            <h:outputText value="#{controlSexualController.modificarFecha(control.fechaControl)}"/>    
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Número de Control"/>
+                            </f:facet>
+                            <h:outputText value="Control #{index+1}"/>    
+                        </p:column>
+
+                        <p:column>
+                            <h:commandLink styleClass="fa fa-plus" action="#{controlSexualController.cargar_control(control.idControlSexual,examenFisicoController)}">
+                                <h:outputLabel> <h:graphicImage  value="../../../resources/img/ver.svg" width="60" height="18"
+                                                                 />DETALLES</h:outputLabel>
+                            </h:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

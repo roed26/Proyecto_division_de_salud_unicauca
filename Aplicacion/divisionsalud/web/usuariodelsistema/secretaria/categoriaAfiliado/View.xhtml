@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CategoriaAfiliadoViewDlg" widgetVar="CategoriaAfiliadoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCategoriaAfiliadoTitle}">
+            <h:form id="CategoriaAfiliadoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{categoriaAfiliadoController.selected != null}">
+                        <h:outputText value="#{bundle.ViewCategoriaAfiliadoLabel_id}"/>
+                        <h:outputText value="#{categoriaAfiliadoController.selected.id}" title="#{bundle.ViewCategoriaAfiliadoTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewCategoriaAfiliadoLabel_nombre}"/>
+                        <h:outputText value="#{categoriaAfiliadoController.selected.nombre}" title="#{bundle.ViewCategoriaAfiliadoTitle_nombre}"/>
+                        <h:outputText value="#{bundle.ViewCategoriaAfiliadoLabel_cuotaCot}"/>
+                        <h:outputText value="#{categoriaAfiliadoController.selected.cuotaCot}" title="#{bundle.ViewCategoriaAfiliadoTitle_cuotaCot}"/>
+                        <h:outputText value="#{bundle.ViewCategoriaAfiliadoLabel_copagoCot}"/>
+                        <h:outputText value="#{categoriaAfiliadoController.selected.copagoCot}" title="#{bundle.ViewCategoriaAfiliadoTitle_copagoCot}"/>
+                        <h:outputText value="#{bundle.ViewCategoriaAfiliadoLabel_cuotaBen}"/>
+                        <h:outputText value="#{categoriaAfiliadoController.selected.cuotaBen}" title="#{bundle.ViewCategoriaAfiliadoTitle_cuotaBen}"/>
+                        <h:outputText value="#{bundle.ViewCategoriaAfiliadoLabel_copagoBen}"/>
+                        <h:outputText value="#{categoriaAfiliadoController.selected.copagoBen}" title="#{bundle.ViewCategoriaAfiliadoTitle_copagoBen}"/>
+                        <h:outputText value="#{bundle.ViewCategoriaAfiliadoLabel_maxCopago}"/>
+                        <h:outputText value="#{categoriaAfiliadoController.selected.maxCopago}" title="#{bundle.ViewCategoriaAfiliadoTitle_maxCopago}"/>
+                        <h:outputText value="#{bundle.ViewCategoriaAfiliadoLabel_idRegimen}"/>
+                        <h:outputText value="#{categoriaAfiliadoController.selected.idRegimen}" title="#{bundle.ViewCategoriaAfiliadoTitle_idRegimen}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="CategoriaAfiliadoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

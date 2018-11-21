@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="./css/usuario.css"/>
+        <h:outputStylesheet name="./css/style.css"/>
+        <h:outputScript library="js" name="login.js"/>
+        <title>División de salud</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <h:outputStylesheet name="./css/default.css"/>
+    <h:outputStylesheet name="./css/cssLayout.css"/>
+
+
+    <h:outputScript library="js" name ="Calendario.js"/>
+    <h:outputScript library="js" name="jquery.flexibleArea.js"></h:outputScript>
+
+</h:head>
+<style type="text/css">
+    .title {
+        font-size: 11px;
+    }
+
+    .ui-state-disabled{
+        opacity: 1 !important;    
+    }
+
+</style>
+
+<h:body>  
+
+    <header class="interno">
+        <div id="logoU"></div>
+        <div class="separador"></div>
+        <p id="desc">División de Salud Integral y Desarrollo Humano.</p>
+        <div id="banderaHeader"></div>
+    </header>
+
+    <p:menubar style="margin-left: 20px; margin-right: 20px; margin-top: 7px; margin-bottom: 10px;">   
+        <f:facet name="options">
+            <h:form>
+            <p:commandButton value="Cerrar Sesión" icon="ui-icon-extlink" action="#{usuarioSessionController.logout()}"/>
+            </h:form>
+        </f:facet>        
+    </p:menubar>
+
+
+    <div>
+        <div>
+            <div id="menu_sexualidad" style="float:left; margin-left: 20px; ">
+                <div style="text-align: center; " class="ui-messages-info">
+                    <img style=" max-width:  100px; max-height:  100px; width: auto; height: auto;" src="../resources/img/usericon.png" alt=""/>
+                    <p:separator/>
+                    <div>
+                        <b>Usuario del Sistema</b>
+                    </div>
+                </div>
+
+
+                <div class="ui-messages-info ">
+                    <span class="ui-messages-info-detail"><b>Menú de Usuario</b></span>
+                </div>
+                <ui:insert name="left" >
+                    left
+                </ui:insert>
+
+            </div>
+
+            <div id="contenido_sexualidad" style=" width: 80%; float:left ; margin-left: 10px;">
+                <ui:insert name="content">Content</ui:insert>
+            </div>
+        </div>
+    </div>
+
+
+    <ui:include src="/EfectodeCarga.xhtml"/> 
+</h:body>
+
+</html>

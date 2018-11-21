@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/_sexualidadtmp.xhtml">
+        <ui:define name="body">  
+            <style>
+                .ui-outputlabel {
+                    font-weight:bold;
+                }
+                .ui-outputlabel-rfi {
+                    color: red;
+                }
+            </style>
+            <ui:include src="../../datosBasicosPaciente.xhtml"/>
+            <p:commandLink styleClass="fa fa-plus" action="/usuariodelsistema/sexualidad/paciente/detalles?faces-redirect=true" 
+               actionListener="#{pacienteController.cargarPaciente(pacienteController.selected.id)}">
+                <h:outputLabel> Atrás</h:outputLabel>
+            </p:commandLink>
+            <div style="padding-bottom: 25px;">
+                <p:tabView widgetVar="tabViewWv">
+                    <p:tab  title="Síntomas método adoptado" titleStyleClass="title"  >
+                        <ui:include src="./sintomas/sintomas.xhtml"/>
+                    </p:tab>
+                    <p:tab  title="Examen Físico" titleStyleClass="title" >
+                        <ui:include src="../metodo_planificacion/examen_fisico/examen_fisico.xhtml"/>
+                    </p:tab>
+                    <p:tab  title="Observaciones adicionales" titleStyleClass="title"  >
+                        <ui:include src="./observaciones_adicionales.xhtml"/>
+                    </p:tab>
+                </p:tabView>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

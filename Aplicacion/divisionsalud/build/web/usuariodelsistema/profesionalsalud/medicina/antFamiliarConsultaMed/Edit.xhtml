@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AntFamiliarConsultaMedEditDlg" widgetVar="AntFamiliarConsultaMedEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedTitle}">
+            <h:form id="AntFamiliarConsultaMedEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{antFamiliarConsultaMedController.selected != null}">
+                        <p:outputLabel value="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedLabel_idx}" for="idx" />
+                        <p:inputText id="idx" value="#{antFamiliarConsultaMedController.selected.idx}" title="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedTitle_idx}" required="true" requiredMessage="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedRequiredMessage_idx}"/>
+                        <p:outputLabel value="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedLabel_observaciones}" for="observaciones" />
+                        <p:inputText id="observaciones" value="#{antFamiliarConsultaMedController.selected.observaciones}" title="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedTitle_observaciones}" />
+                        <p:outputLabel value="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedLabel_padre}" for="padre" />
+                        <p:inputText id="padre" value="#{antFamiliarConsultaMedController.selected.padre}" title="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedTitle_padre}" />
+                        <p:outputLabel value="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedLabel_abueloP}" for="abueloP" />
+                        <p:inputText id="abueloP" value="#{antFamiliarConsultaMedController.selected.abueloP}" title="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedTitle_abueloP}" />
+                        <p:outputLabel value="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedLabel_abuelaP}" for="abuelaP" />
+                        <p:inputText id="abuelaP" value="#{antFamiliarConsultaMedController.selected.abuelaP}" title="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedTitle_abuelaP}" />
+                        <p:outputLabel value="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedLabel_madre}" for="madre" />
+                        <p:inputText id="madre" value="#{antFamiliarConsultaMedController.selected.madre}" title="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedTitle_madre}" />
+                        <p:outputLabel value="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedLabel_abueloM}" for="abueloM" />
+                        <p:inputText id="abueloM" value="#{antFamiliarConsultaMedController.selected.abueloM}" title="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedTitle_abueloM}" />
+                        <p:outputLabel value="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedLabel_abuelaM}" for="abuelaM" />
+                        <p:inputText id="abuelaM" value="#{antFamiliarConsultaMedController.selected.abuelaM}" title="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedTitle_abuelaM}" />
+                        <p:outputLabel value="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedLabel_hermanos}" for="hermanos" />
+                        <p:inputText id="hermanos" value="#{antFamiliarConsultaMedController.selected.hermanos}" title="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedTitle_hermanos}" />
+                        <p:outputLabel value="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedLabel_antFamiliaresMedIdx}" for="antFamiliaresMedIdx" />
+                        <p:selectOneMenu id="antFamiliaresMedIdx" value="#{antFamiliarConsultaMedController.selected.antFamiliaresMedIdx}" required="true" requiredMessage="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedRequiredMessage_antFamiliaresMedIdx}">
+                            <f:selectItem itemLabel="#{bundleAntFamiliarConsultaMed.SelectOneMessage}"/>
+                            <f:selectItems value="#{antFamiliaresMedController.itemsAvailableSelectOne}"
+                                           var="antFamiliaresMedIdxItem"
+                                           itemValue="#{antFamiliaresMedIdxItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedLabel_consultaMedicaMedIdx}" for="consultaMedicaMedIdx" />
+                        <p:selectOneMenu id="consultaMedicaMedIdx" value="#{antFamiliarConsultaMedController.selected.consultaMedicaMedIdx}" required="true" requiredMessage="#{bundleAntFamiliarConsultaMed.EditAntFamiliarConsultaMedRequiredMessage_consultaMedicaMedIdx}">
+                            <f:selectItem itemLabel="#{bundleAntFamiliarConsultaMed.SelectOneMessage}"/>
+                            <f:selectItems value="#{consultaMedicaMedController.itemsAvailableSelectOne}"
+                                           var="consultaMedicaMedIdxItem"
+                                           itemValue="#{consultaMedicaMedIdxItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{antFamiliarConsultaMedController.update}" value="#{bundleAntFamiliarConsultaMed.Save}" update="display,:AntFamiliarConsultaMedListForm:datalist" oncomplete="handleSubmit(args, 'AntFamiliarConsultaMedEditDialog');"/>
+                    <p:commandButton value="#{bundleAntFamiliarConsultaMed.Cancel}" onclick="AntFamiliarConsultaMedEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      <h:head>
+      <h:outputStylesheet name="./css/menu.css"/>
+    </h:head>
+
+    <body>
+       
+        
+  
+        <br/>
+        <h:form id="formdiez">
+            <br/><br/><CENTER><h1> TOP 10 DIAGNOSTICOS MAS COMUNES </h1></CENTER><br/><br/>
+            <h:panelGrid  id="panel0" styleClass="panelgrid" columns="2" >
+                
+                <p:column style="font-size: 18px; font-weight:bold; color: black">
+                        <p:outputLabel value="Desde" />
+                        <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    </p:column>
+                    <p:column>
+                        <p:calendar id="fechadesde" value="#{estadisticasMedController.reportesmedicos.fechadesde}" placeholder="dd-mm-aaaa" pattern="dd-MM-yyyy" showOn="button"/>
+                    </p:column>
+                
+                                
+                    <p:column style="font-size: 18px; font-weight:bold; color: black">
+                        <p:outputLabel value="Hasta" />
+                        <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    </p:column>
+                    <p:column>
+                        <p:calendar id="fechahasta" value="#{estadisticasMedController.reportesmedicos.fechahasta}" placeholder="dd-mm-aaaa" pattern="dd-MM-yyyy" showOn="button"/>
+                        <h:message class="estadisticasMedController" for="fechahasta" style="color:red;margin:8px;"/>
+                    </p:column>
+          </h:panelGrid>
+                    <p:commandButton value="GENERAR REPORTE" actionListener="#{estadisticasMedController.generarTop10()}" style="width:150px;height:45px;    border: 1px solid #85b2cb; color: black; background: #7DCEA0;"  ajax="r"/>
+
+
+                
+                <h:panelGrid  id="panel" styleClass="panelgrid" columns="1" >
+                    <p:row >
+                    <p:column>
+                        <br/><br/><CENTER><h3>Reporte General </h3></CENTER>
+                        <br/><br/><h4>Este reporte especifica los 10(diez) diagnósticos más comunes
+                        encontrados en los pacientes de toda la universidad sin discriminar por facultad.
+                        </h4><br/><br/>
+                        
+                    </p:column>
+                </p:row>
+                <p:dataTable id="datalist0" value="#{estadisticasMedController.rGeneral}" var="item" 
+                                 
+                                
+                                 
+                                 rows="10"
+                                 emptyMessage="No hay diagnosticos con este criterio"
+                                 widgetVar="ComisionListDialog"                                 
+                                 >
+                    <p:column headerText="Diagnostico" >
+                        <h:outputText value="#{item.diagnostico}"  />
+                    </p:column>
+                    
+                    <p:column headerText="Total">
+                        <h:outputText value="#{item.total()}" />
+                    </p:column>
+                    
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{item.cantidadHombres}" />
+                    </p:column>
+                    
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{item.cantidadMujeres}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <br/><br/><h4>Los resultados mostrados a continuación muestran los 10 diagnósticos más
+                comunes por facultad.
+                </h4>
+                <p:row >
+                    <p:column>
+                        <br/><br/><CENTER><h3> Facultad de Artes </h3></CENTER>
+                        
+                    </p:column>
+                </p:row>
+                <p:dataTable id="datalist" value="#{estadisticasMedController.rArtes}" var="item" 
+                                 
+                                 
+                                 
+                                 rows="10"
+                                 emptyMessage="No hay diagnosticos con este criterio"
+                                 widgetVar="ComisionListDialog"                                 
+                                 >
+                    <p:column headerText="Diagnostico">
+                        <h:outputText value="#{item.diagnostico}" />
+                    </p:column>
+                    
+                    <p:column headerText="Total">
+                        <h:outputText value="#{item.total()}" />
+                    </p:column>
+                    
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{item.cantidadHombres}" />
+                    </p:column>
+                    
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{item.cantidadMujeres}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                 <p:row>
+                    <p:column>
+                        <br/><br/><CENTER><h3> Facultad de Ciencias Agrarias </h3></CENTER>
+                        
+                    </p:column>
+                </p:row>
+               
+                <p:dataTable id="datalist1" value="#{estadisticasMedController.rAgrarias}" var="item" 
+                                 
+                                rows="10"
+                                 emptyMessage="No hay diagnosticos con este criterio"
+                                 widgetVar="ComisionListDialog"                                 
+                                 >
+                    <p:column headerText="Diagnostico">
+                        <h:outputText value="#{item.diagnostico}" />
+                    </p:column>
+                    
+                    
+                    <p:column headerText="Total">
+                        <h:outputText value="#{item.total()}" />
+                    </p:column>
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{item.cantidadHombres}" />
+                    </p:column>
+                    
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{item.cantidadMujeres}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <p:row> 
+                    <p:column>
+                        <br/><br/><CENTER><h3> Facultad de Ciencias de la Salud </h3></CENTER>
+                        
+                    </p:column>
+                </p:row>
+                <p:dataTable id="datalist2" value="#{estadisticasMedController.rSalud}" var="item" 
+                                 rows="10"
+                                 emptyMessage="No hay diagnosticos con este criterio"
+                                 widgetVar="ComisionListDialog"                                 
+                                 >
+                    <p:column headerText="Diagnostico">
+                        <h:outputText value="#{item.diagnostico}" />
+                    </p:column>
+                    
+                    <p:column headerText="Total">
+                        <h:outputText value="#{item.total()}" />
+                    </p:column>
+                    
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{item.cantidadHombres}" />
+                    </p:column>
+                    
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{item.cantidadMujeres}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                
+                
+                <p:row>
+                    <p:column>
+                        <br/><br/><CENTER><h3> Facultad de Ciencias Contables </h3></CENTER>
+                        
+                    </p:column>
+                </p:row>
+                <p:dataTable id="datalist3" value="#{estadisticasMedController.rContable}" var="item" 
+                                 rows="10"
+                                 emptyMessage="No hay diagnosticos con este criterio"
+                                 widgetVar="ComisionListDialog"                                 
+                                 >
+                    <p:column headerText="Diagnostico">
+                        <h:outputText value="#{item.diagnostico}" />
+                    </p:column>
+                    
+                    <p:column headerText="Total">
+                        <h:outputText value="#{item.total()}" />
+                    </p:column>
+                    
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{item.cantidadHombres}" />
+                    </p:column>
+                    
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{item.cantidadMujeres}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <p:row>
+                    <p:column>
+                        <br/><br/><CENTER><h3> Facultad de Ciencias Humanas </h3></CENTER>
+                        
+                    </p:column>
+                </p:row>
+                <p:dataTable id="datalist4" value="#{estadisticasMedController.rHumanas}" var="item" 
+                                 rows="10"
+                                 emptyMessage="No hay diagnosticos con este criterio"
+                                 widgetVar="ComisionListDialog"                                 
+                                 >
+                    <p:column headerText="Diagnostico">
+                        <h:outputText value="#{item.diagnostico}" />
+                    </p:column>
+                    
+                    <p:column headerText="Total">
+                        <h:outputText value="#{item.total()}" />
+                    </p:column>
+                    
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{item.cantidadHombres}" />
+                    </p:column>
+                    
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{item.cantidadMujeres}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <p:row> 
+                    <p:column>
+                        <br/><br/><CENTER><h3> Facultad de Educacion </h3></CENTER>
+                        
+                    </p:column>
+                </p:row>
+                <p:dataTable id="datalist5" value="#{estadisticasMedController.rEducacion}" var="item" 
+                                 rows="10"
+                                 emptyMessage="No hay diagnosticos con este criterio"
+                                 widgetVar="ComisionListDialog"                                 
+                                 >
+                    <p:column headerText="Diagnostico">
+                        <h:outputText value="#{item.diagnostico}" />
+                    </p:column>
+                    
+                    <p:column headerText="Total">
+                        <h:outputText value="#{item.total()}" />
+                    </p:column>
+                    
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{item.cantidadHombres}" />
+                    </p:column>
+                    
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{item.cantidadMujeres}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <p:row> 
+                    <p:column>
+                        <br/><br/><CENTER><h3> Facultad de Derecho </h3></CENTER>
+                        
+                    </p:column>
+                </p:row>
+                <p:dataTable id="datalist6" value="#{estadisticasMedController.rDerecho}" var="item" 
+                                 rows="10"
+                                 emptyMessage="No hay diagnosticos con este criterio"
+                                 widgetVar="ComisionListDialog"                                 
+                                 >
+                    <p:column headerText="Diagnostico">
+                        <h:outputText value="#{item.diagnostico}" />
+                    </p:column>
+                    
+                    <p:column headerText="Total">
+                        <h:outputText value="#{item.total()}" />
+                    </p:column>
+                    
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{item.cantidadHombres}" />
+                    </p:column>
+                    
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{item.cantidadMujeres}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <p:row> 
+                    <p:column>
+                        <br/><br/><CENTER><h3> Facultad de Ingenieria Civil </h3></CENTER>
+                        
+                    </p:column>
+                </p:row>
+                <p:dataTable id="datalist7" value="#{estadisticasMedController.rCivil}" var="item" 
+                                 rows="10"
+                                 emptyMessage="No hay diagnosticos con este criterio"
+                                 widgetVar="ComisionListDialog"                                 
+                                 >
+                    <p:column headerText="Diagnostico">
+                        <h:outputText value="#{item.diagnostico}" />
+                    </p:column>
+                    
+                    <p:column headerText="Total">
+                        <h:outputText value="#{item.total()}" />
+                    </p:column>
+                    
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{item.cantidadHombres}" />
+                    </p:column>
+                    
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{item.cantidadMujeres}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <p:row>
+                    <p:column>
+                        <br/><br/><CENTER><h3> Facultad de Ingenieria Electronica y Telecomunicaciones </h3></CENTER>
+                        
+                    </p:column>
+                </p:row>
+                <p:dataTable id="datalist8" value="#{estadisticasMedController.rElectronica}" var="item" 
+                                 rows="10"
+                                 emptyMessage="No hay diagnosticos con este criterio"
+                                 widgetVar="ComisionListDialog"                                 
+                                 >
+                    <p:column headerText="Diagnostico">
+                        <h:outputText value="#{item.diagnostico}" />
+                    </p:column>
+                    
+                    <p:column headerText="Total">
+                        <h:outputText value="#{item.total()}" />
+                    </p:column>
+                    
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{item.cantidadHombres}" />
+                    </p:column>
+                    
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{item.cantidadMujeres}" />
+                    </p:column>
+                    
+                </p:dataTable>
+
+             
+               
+      
+            </h:panelGrid>
+      <p:panelGrid  styleClass="panelgrid" columns="3" >
+              
+                  <p:row>
+                   
+                    <p:column>
+                        <p:commandButton  value="IMPRIMIR RESULTADOS" style="width:150px;height:45px;    border: 1px solid #85b2cb; color: black; background: #7DCEA0;">
+                            <p:printer target="panel"/>     
+                        </p:commandButton>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </h:form>
+    </body>
+</html>

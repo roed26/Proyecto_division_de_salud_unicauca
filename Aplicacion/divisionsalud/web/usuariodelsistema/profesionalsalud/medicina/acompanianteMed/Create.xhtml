@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AcompanianteMedCreateDlg" widgetVar="AcompanianteMedCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleAcompanianteMed.CreateAcompanianteMedTitle}">
+            <h:form id="AcompanianteMedCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{acompanianteMedController.selected != null}">
+                        <p:outputLabel value="#{bundleAcompanianteMed.CreateAcompanianteMedLabel_idx}" for="idx" />
+                        <p:inputText id="idx" value="#{acompanianteMedController.selected.idx}" title="#{bundleAcompanianteMed.CreateAcompanianteMedTitle_idx}" required="true" requiredMessage="#{bundleAcompanianteMed.CreateAcompanianteMedRequiredMessage_idx}"/>
+                        <p:outputLabel value="#{bundleAcompanianteMed.CreateAcompanianteMedLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{acompanianteMedController.selected.nombre}" title="#{bundleAcompanianteMed.CreateAcompanianteMedTitle_nombre}" />
+                        <p:outputLabel value="#{bundleAcompanianteMed.CreateAcompanianteMedLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{acompanianteMedController.selected.telefono}" title="#{bundleAcompanianteMed.CreateAcompanianteMedTitle_telefono}" />
+                        <p:outputLabel value="#{bundleAcompanianteMed.CreateAcompanianteMedLabel_celular}" for="celular" />
+                        <p:inputText id="celular" value="#{acompanianteMedController.selected.celular}" title="#{bundleAcompanianteMed.CreateAcompanianteMedTitle_celular}" />
+                        <p:outputLabel value="#{bundleAcompanianteMed.CreateAcompanianteMedLabel_id}" for="id" />
+                        <p:selectOneMenu id="id" value="#{acompanianteMedController.selected.id}" required="true" requiredMessage="#{bundleAcompanianteMed.EditAcompanianteMedRequiredMessage_id}">
+                            <f:selectItems value="#{parentescoController.itemsAvailableSelectOne}"
+                                           var="idItem"
+                                           itemValue="#{idItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{acompanianteMedController.create}" value="#{bundleAcompanianteMed.Save}" update="display,:AcompanianteMedListForm:datalist,:growl" oncomplete="handleSubmit(args,'AcompanianteMedCreateDialog');"/>
+                    <p:commandButton value="#{bundleAcompanianteMed.Cancel}" onclick="AcompanianteMedCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

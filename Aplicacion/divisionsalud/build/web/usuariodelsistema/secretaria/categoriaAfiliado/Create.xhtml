@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CategoriaAfiliadoCreateDlg" widgetVar="CategoriaAfiliadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCategoriaAfiliadoTitle}">
+            <h:form id="CategoriaAfiliadoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{categoriaAfiliadoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCategoriaAfiliadoLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{categoriaAfiliadoController.selected.id}" title="#{bundle.CreateCategoriaAfiliadoTitle_id}" required="true" requiredMessage="#{bundle.CreateCategoriaAfiliadoRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateCategoriaAfiliadoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{categoriaAfiliadoController.selected.nombre}" title="#{bundle.CreateCategoriaAfiliadoTitle_nombre}" />
+                        <p:outputLabel value="#{bundle.CreateCategoriaAfiliadoLabel_cuotaCot}" for="cuotaCot" />
+                        <p:inputText id="cuotaCot" value="#{categoriaAfiliadoController.selected.cuotaCot}" title="#{bundle.CreateCategoriaAfiliadoTitle_cuotaCot}" />
+                        <p:outputLabel value="#{bundle.CreateCategoriaAfiliadoLabel_copagoCot}" for="copagoCot" />
+                        <p:inputText id="copagoCot" value="#{categoriaAfiliadoController.selected.copagoCot}" title="#{bundle.CreateCategoriaAfiliadoTitle_copagoCot}" />
+                        <p:outputLabel value="#{bundle.CreateCategoriaAfiliadoLabel_cuotaBen}" for="cuotaBen" />
+                        <p:inputText id="cuotaBen" value="#{categoriaAfiliadoController.selected.cuotaBen}" title="#{bundle.CreateCategoriaAfiliadoTitle_cuotaBen}" />
+                        <p:outputLabel value="#{bundle.CreateCategoriaAfiliadoLabel_copagoBen}" for="copagoBen" />
+                        <p:inputText id="copagoBen" value="#{categoriaAfiliadoController.selected.copagoBen}" title="#{bundle.CreateCategoriaAfiliadoTitle_copagoBen}" />
+                        <p:outputLabel value="#{bundle.CreateCategoriaAfiliadoLabel_maxCopago}" for="maxCopago" />
+                        <p:inputText id="maxCopago" value="#{categoriaAfiliadoController.selected.maxCopago}" title="#{bundle.CreateCategoriaAfiliadoTitle_maxCopago}" />
+                        <p:outputLabel value="#{bundle.CreateCategoriaAfiliadoLabel_idRegimen}" for="idRegimen" />
+                        <p:selectOneMenu id="idRegimen" value="#{categoriaAfiliadoController.selected.idRegimen}" >
+                            <f:selectItems value="#{tipoRegimenController.itemsAvailableSelectOne}"
+                                           var="idRegimenItem"
+                                           itemValue="#{idRegimenItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{categoriaAfiliadoController.create}" value="#{bundle.Save}" update="display,:CategoriaAfiliadoListForm:datalist,:growl" oncomplete="handleSubmit(args,'CategoriaAfiliadoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CategoriaAfiliadoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

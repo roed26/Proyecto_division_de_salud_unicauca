@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <h:outputStylesheet name="./css/menu.css"/>
+    </h:head>
+
+    <body>
+        <CENTER><h1> REPORTES ESTADISTICOS MEDICOS </h1></CENTER><br/>
+        <br/>
+        <h:form id="resultadosEstadisticos">
+            <p:panelGrid styleClass="panelgrid" id="panelDatos">
+                <p:row>
+                    <p:column style=" font-size: 18px; font-weight:bold; color: black;" colspan="4"  >
+                        <p:outputLabel value="Seleccione el tipo de reporte a consultar" style="font-weight:bold; color: black;" />
+                        <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="font-size: 18px; font-weight:bold; color: black">
+                        <p:outputLabel value="Tipo diagnostico " />
+                        <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    </p:column>
+                    <p:column>
+                        <p:selectOneRadio  id="tipoReporte" value="Si"
+                                           valueChangeListener="#{estadisticasMedController.tipoReporteDiagnostico}" required="true" requiredMessage="¡Debe seleccionar el tipo de reporte a generar!">
+                            <f:selectItem itemLabel="Reporte General" itemValue="Si" />
+                            <f:selectItem itemLabel="Reporte Especifico" itemValue="No" />    
+                            <f:ajax execute="tipoReporte" render="resultadosEstadisticos "/>
+                        </p:selectOneRadio>
+                    </p:column>
+                </p:row>
+
+
+
+                <p:row>
+                    <p:column style=" font-size: 18px; font-weight:bold; color: black;" colspan="4"  >
+                        <p:outputLabel value="Seleccione el tipo de diagnostico a consultar" style="font-weight:bold; color: black;" />
+                        <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="font-size: 18px; font-weight:bold; color: black">
+                        <p:outputLabel value="Diagnostico " />
+                        <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    </p:column>
+                    <p:column>
+                        <p:selectOneMenu filter="true" id="diagnostico" style="width:150px" value="#{estadisticasMedController.reportesmedicos.diagnostico.codigo}" required="true" requiredMessage="¡Debe seleccionar un diagnostico!">
+                            <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                            <f:selectItems value="#{enfermedadesCie10MedController.itemsAvailableSelectOne}"
+                                           var="diagnosticosmed"
+                                           itemValue="#{diagnosticosmed.codigo}"
+                                           itemLabel="#{diagnosticosmed.codigo}"/>
+                        </p:selectOneMenu>                        
+                    </p:column>
+                </p:row>
+
+
+
+
+                <p:row>
+                    <p:column style=" font-size: 18px; font-weight:bold; color: black;" colspan="4"  >
+                        <p:outputLabel value="Seleccione el rango de tiempo que desea consultar" style="font-weight:bold; color: black;" />
+                        <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="font-size: 18px; font-weight:bold; color: black">
+                        <p:outputLabel value="Desde" />
+                        <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    </p:column>
+                    <p:column>
+                        <p:calendar id="fechadesde" value="#{estadisticasMedController.reportesmedicos.fechadesde}" placeholder="dd-mm-aaaa" pattern="dd-MM-yyyy" showOn="button"/>
+                    </p:column>
+                    <p:column style="font-size: 18px; font-weight:bold; color: black">
+                        <p:outputLabel value="Hasta" />
+                        <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    </p:column>
+                    <p:column>
+                        <p:calendar id="fechahasta" value="#{estadisticasMedController.reportesmedicos.fechahasta}" placeholder="dd-mm-aaaa" pattern="dd-MM-yyyy" showOn="button"/>
+                    </p:column>
+                </p:row>
+
+                <p:row rendered="#{!estadisticasMedController.tipoReporte}">
+                    <p:column style="font-size: 18px; font-weight:bold; color: black">
+                        <p:outputLabel value="Facultad"  />
+                    </p:column>
+                    <p:column>
+                        <p:selectOneMenu filter="true" id="facultad" value="#{estadisticasMedController.reportesmedicos.facultad}" required="true" requiredMessage="¡Debe seleccionar una facultad!">
+                            <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                            <f:selectItems value="#{facultadController.itemsAvailableSelectOne}"
+                                           var="facultades"
+                                           itemValue="#{facultades.nombre}"
+                                           itemLabel="#{facultades.nombre}"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:row>
+
+                <p:row rendered="#{!estadisticasMedController.tipoReporte}">
+                    <p:column style="font-size: 18px; font-weight:bold; color: black">
+                        <p:outputLabel value="Programas" />
+                    </p:column>
+                    <p:column colspan="3">
+                        <p:selectOneMenu filter="true" id="programa"  value="#{estadisticasMedController.reportesmedicos.programa}" required="true" requiredMessage="¡Debe seleccionar un programa!">
+                            <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                            <f:selectItems value="#{programasController.itemsAvailableSelectOne}"
+                                           var="programas"
+                                           itemValue="#{programas.nombre}"
+                                           itemLabel="#{programas.nombre}"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:row>  
+
+
+            </p:panelGrid>
+
+            <p:commandButton value="GENERAR REPORTE" actionListener="#{estadisticasMedController.GenerarReporteMed()}" style="width:150px;height:45px;    border: 1px solid #85b2cb; color: black; background: #7DCEA0;" ajax="r"/>
+
+            <h:panelGrid  id="panel" styleClass="panelgrid" columns="1" >
+                <br/><br/><CENTER><h1> RESULTADO DE REPORTES GENERALES </h1></CENTER><br/><br/>
+                <p:row>
+                    <p:column style=" font-size: 18px; font-weight:bold; color: black;" colspan="4"  >
+                        <p:outputLabel value="Datos de consulta: " style="font-weight:bold; color: black; font-size: 18px;" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style=" font-size: 18px; font-weight:bold; color: black;" colspan="2"  >
+                        <p:outputLabel value="Diagnostico:  " style="font-weight:bold; color: black;"/>
+                    </p:column>
+                    <p:column style=" font-size: 18px; font-weight:bold; color: black;" colspan="4"  >
+                        <p:outputLabel value="#{estadisticasMedController.reportesmedicos.diagnostico.codigo}" />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="font-size: 18px; font-weight:bold; color: black" colspan="2">
+                        <p:outputLabel value="Desde:  " style="font-weight:bold; color: black;"/>
+                    </p:column>
+                    <p:column style=" font-size: 18px; font-weight:bold; color: black;" colspan="4"  >
+                        <p:outputLabel value="#{estadisticasMedController.convertirFecha(estadisticasMedController.reportesmedicos.fechadesde)}" />
+                    </p:column>
+                    <p:column style="font-size: 18px; font-weight:bold; color: black" colspan="2">
+                        <p:outputLabel value="Hasta:  " style="font-weight:bold; color: black;"/>
+                    </p:column>
+                    <p:column style=" font-size: 18px; font-weight:bold; color: black;" colspan="4"  >
+                         <p:outputLabel value="#{estadisticasMedController.convertirFecha(estadisticasMedController.reportesmedicos.fechahasta)}" />
+                   </p:column>
+                </p:row>
+                <p:row rendered="#{!estadisticasMedController.tipoReporte}">
+                    <p:column style="font-size: 18px; font-weight:bold; color: black" colspan="2">
+                        <p:outputLabel value="Facultad:  " style="font-weight:bold; color: black;"/>
+                    </p:column>
+                    <p:column style=" font-size: 18px; font-weight:bold; color: black;" colspan="4"  >
+                        <p:outputLabel value="#{estadisticasMedController.reportesmedicos.facultad}" />
+                    </p:column><br/>
+                    <p:column style="font-size: 18px; font-weight:bold; color: black" colspan="2">
+                        <p:outputLabel value="Programa:  " style="font-weight:bold; color: black;"/>
+                    </p:column>
+                    <p:column style=" font-size: 18px; font-weight:bold; color: black;" colspan="4"  >
+                        <p:outputLabel value="#{estadisticasMedController.reportesmedicos.programa}" />
+                    </p:column>
+                </p:row>
+
+                <p:row rendered="#{!estadisticasMedController.tipoReporte}">
+                    <p:column>    
+                        <p:chart type="pie" model="#{estadisticasMedController.pieModel2}" style="width:400px;height:300px" />
+                    </p:column>
+                </p:row>   
+                <p:row rendered="#{!estadisticasMedController.tipoReporte}">
+                    <p:column>
+                        <br/><CENTER><h4> Diagnostico por programa </h4></CENTER><br/><br/>
+                    </p:column>
+                </p:row>
+                <p:dataTable var="result" value="#{estadisticasMedController.reportesmedicos}" id="re" rendered="#{!estadisticasMedController.tipoReporte}">
+                    <!--<f:facet name="header">
+                        <h:outputText value="Diagnostico por programa"></h:outputText>
+                    </f:facet>-->
+                    <p:column headerText="Nombre Programa">
+                        <h:outputText value="#{result.getPrograma()}"  />
+                    </p:column>
+                    <p:column headerText="Cantidad">
+                        <h:outputText value="#{result.getCantidad()}" />
+                    </p:column>
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{result.getContadorhombres()}" />
+                    </p:column>
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{result.getContadormujeres()}" />
+                    </p:column>
+                    <p:column headerText="Diagnostico">
+                        <h:outputText value="#{result.getDiagnostico()}" />
+                    </p:column>
+                </p:dataTable>
+
+                 <!--<p:row rendered="#{estadisticasMedController.tipoReporte}">
+                    <p:column>
+                        <p:chart type="pie" widgetVar="browserChartGeneral" model="#{estadisticasMedController.modeloResultadosHombres}" style="width:250px;height:200px"  />
+                    </p:column>
+                </p:row>-->
+                <p:row rendered="#{estadisticasMedController.tipoReporte}">
+                    <p:column>
+                        <br/><br/><CENTER><h4> Diagnostico general </h4></CENTER>
+                    </p:column>
+                </p:row>
+                <p:dataTable id="reporteGeneral" value="#{estadisticasMedController.diagnosticoGeneral}" var="resultadoG" rendered="#{estadisticasMedController.tipoReporte}">
+                    <!--<f:facet name="header">
+                        <h:outputText value="Diagnostico general por programa"></h:outputText>
+                    </f:facet>-->
+                    <p:column headerText="Total">
+                        <h:outputText value="#{resultadoG.diagnosticoTotal}" />
+                    </p:column>
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{resultadoG.hombresTotales}" />
+                    </p:column>
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{resultadoG.mujeresTotales}" />
+                    </p:column>
+                </p:dataTable>
+
+                 
+                <p:row rendered="#{estadisticasMedController.tipoReporte}">
+                    <p:column>
+                        <br/><br/><CENTER><h4> Diagnostico general por facultades </h4></CENTER>
+                    </p:column>
+                </p:row>
+                <p:dataTable id="reporteF" var="resultadoF" value="#{estadisticasMedController.listaDiagnosticoFacultades}" rendered="#{estadisticasMedController.tipoReporte}">
+                    <!--<f:facet name="header">
+                        <h:outputText value="Diagnostico general por facultades"></h:outputText>
+                    </f:facet>-->
+                    <p:column headerText="Facultad">
+                        <h:outputText value="#{resultadoF.facultad}" />
+                    </p:column>
+                    <p:column headerText="Total">
+                        <h:outputText value="#{resultadoF.contDiagnosticoFacultad}" />
+                    </p:column>
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{resultadoF.contHombreF}" />
+                    </p:column>
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{resultadoF.contMujerF}" />
+                    </p:column>
+                </p:dataTable>
+                 <!--<p:row rendered="#{estadisticasMedController.tipoReporte}">
+                    <p:column>
+                        <p:chart type="pie" widgetVar="browserChartPrograma" model="#{estadisticasMedController.modeloResultadosHombres}" style="width:250px;height:200px"  />
+                    </p:column>
+                </p:row>-->
+                <p:row rendered="#{estadisticasMedController.tipoReporte}">
+                    <p:column>
+                        <br/><br/><CENTER><h4> Diagnostico general por programas </h4></CENTER>
+                    </p:column>
+                </p:row>
+                <p:dataTable id="reporteP" var="resultadoP" value="#{estadisticasMedController.listaDiagnosticoProgramas}" rendered="#{estadisticasMedController.tipoReporte}">
+                    <!--<f:facet name="header">
+                        <h:outputText value="Diagnostico general por programas"></h:outputText>
+                    </f:facet>-->
+                    <p:column headerText="Programa">
+                        <h:outputText value="#{resultadoP.programa}" />
+                    </p:column>
+                    <p:column headerText="Total">
+                        <h:outputText value="#{resultadoP.contDiagnosticoPrograma}" />
+                    </p:column>
+                    <p:column headerText="Hombres">
+                        <h:outputText value="#{resultadoP.contHombresP}" />
+                    </p:column>
+                    <p:column headerText="Mujeres">
+                        <h:outputText value="#{resultadoP.contMujeresP}" />
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+
+            <p:panelGrid  styleClass="panelgrid">
+                <p:row>
+                    <!--<p:column>
+                        <h:commandButton value="Descargar Reporte"  >
+                            <p:dataExporter type="pdf" target="reporteF" fileName="Resultados"/>
+                        </h:commandButton>
+                    </p:column>-->
+                    <p:column>
+                        <p:commandButton  value="IMPRIMIR RESULTADOS" style="width:150px;height:45px;    border: 1px solid #85b2cb; color: black; background: #7DCEA0;">
+                            <p:printer target="panel"/>     
+                        </p:commandButton>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+
+
+
+
+        </h:form>
+    </body>
+</html>

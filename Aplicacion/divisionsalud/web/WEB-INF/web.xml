@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <context-param>
+        <param-name>facelets.SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>redmond</param-value>
+    </context-param>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>faces/sinsesion/inicio.xhtml</welcome-file>
+    </welcome-file-list>
+    <security-constraint>
+        <display-name>odontologo pages</display-name>
+        <web-resource-collection>
+            <web-resource-name>odontologo -</web-resource-name>
+            <description>odontologo - gestion de usuarios e historia odontologica</description>
+            <url-pattern>/faces/usuariodelsistema/profesionalsalud/*</url-pattern>
+            <url-pattern>/faces/usuario/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>odontologo</role-name>
+            <role-name>auxodontologo</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>secretaria page</display-name>
+        <web-resource-collection>
+            <web-resource-name>gestion-informacion</web-resource-name>
+            <description>gestion de la informacion de las tablas</description>
+            <url-pattern>/faces/usuariodelsistema/secretaria/*</url-pattern>
+            <url-pattern>/faces/secretaria/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>usuario secretaria</description>
+            <role-name>secretaria</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>secretaria page</display-name>
+        <web-resource-collection>
+            <web-resource-name>gestion-informacion</web-resource-name>
+            <description>gestion de la informacion de las tablas</description>
+            <url-pattern>/faces/usuariodelsistema/secretaria/*</url-pattern>
+            <url-pattern>/faces/secretaria/*</url-pattern>
+            <url-pattern>/faces/usuariodelsistema/profesionalsalud/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>usuario secretaria</description>
+            <role-name>secretaria</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>medico page</display-name>
+        <web-resource-collection>
+            <web-resource-name>medico</web-resource-name>
+            <description>acceso a usuarios medicina</description>
+            <url-pattern>/faces/usuariodelsistema/profesionalsalud/enComun/*</url-pattern>
+            <url-pattern>/faces/usuariodelsistema/profesionalsalud/medico/*</url-pattern>
+            <url-pattern>/faces/usuario/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>medico</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>divsaludJDBCRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/faces/sinsesion/inicio.xhtml</form-login-page>
+            <form-error-page>/faces/sinsesion/inicio.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description>usuario odontologo</description>
+        <role-name>odontologo</role-name>
+    </security-role>
+    <security-role>
+        <description>usuario secretaria</description>
+        <role-name>secretaria</role-name>
+    </security-role>
+    <security-role>
+        <description>usuario auxiliar de odontologia
+        </description>
+        <role-name>auxodontologo</role-name>
+    </security-role>
+    <security-role>
+        <description>usuario medicina</description>
+        <role-name>medico</role-name>
+    </security-role>
+</web-app>

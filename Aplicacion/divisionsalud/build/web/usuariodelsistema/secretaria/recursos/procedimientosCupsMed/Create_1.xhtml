@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProcedimientosCupsMedCreateDlg" widgetVar="ProcedimientosCupsMedCreateDialog" modal="true" resizable="false" header="#{bundleProcedimientosCups.CreateProcedimientosCupsMedTitle}">
+            <h:form id="ProcedimientosCupsMedCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{procedimientosCupsMedController.selected != null}">
+                        <p:outputLabel value="#{bundleProcedimientosCups.CreateProcedimientosCupsMedLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{procedimientosCupsMedController.selected.codigo}" title="#{bundleProcedimientosCups.CreateProcedimientosCupsMedTitle_codigo}" required="true" requiredMessage="#{bundleProcedimientosCups.CreateProcedimientosCupsMedRequiredMessage_codigo}"/>
+                        <p:outputLabel value="#{bundleProcedimientosCups.CreateProcedimientosCupsMedLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{procedimientosCupsMedController.selected.descripcion}" title="#{bundleProcedimientosCups.CreateProcedimientosCupsMedTitle_descripcion}" />
+                        <p:outputLabel value="#{bundleProcedimientosCups.CreateProcedimientosCupsMedLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{procedimientosCupsMedController.selected.estado}" required="true" requiredMessage="#{bundleProcedimientosCups.EditProcedimientosCupsMedRequiredMessage_estado}"/>
+                    </p:panelGrid>
+                    <center>
+                        <p:commandButton actionListener="#{procedimientosCupsMedController.create}" value="#{bundleProcedimientosCups.Save}" update="display,:ProcedimientosCupsMedListForm:datalist" oncomplete="handleSubmit(args,'ProcedimientosCupsMedCreateDialog');" onclick="ProcedimientosCupsMedCreateDialog.hide()"/>
+                        <p:commandButton value="#{bundleProcedimientosCups.Cancel}" onclick="ProcedimientosCupsMedCreateDialog.hide()"/>
+                    </center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

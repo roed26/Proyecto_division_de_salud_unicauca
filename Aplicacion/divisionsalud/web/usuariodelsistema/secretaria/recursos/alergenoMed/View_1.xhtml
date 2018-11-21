@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <center><p:dialog id="AlergenoMedViewDlg" widgetVar="AlergenoMedViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleAlergeno.ViewAlergenoMedTitle}">
+            <h:form id="AlergenoMedViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid styleClass="panelgrid" rendered="#{alergenoMedController.selected != null}">
+                        
+
+                        <p:row>
+                            <br/><p:column style="font-weight: bold; color: black;">
+                                <h:outputText value="#{bundleAlergeno.ViewAlergenoMedLabel_idx}"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{alergenoMedController.selected.idx}" title="#{bundleAlergeno.ViewAlergenoMedTitle_idx}"/>  
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <br/><p:column style="font-weight: bold; color: black;">
+                                <h:outputText value="#{bundleAlergeno.ViewAlergenoMedLabel_nombre}"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{alergenoMedController.selected.nombre}" title="#{bundleAlergeno.ViewAlergenoMedTitle_nombre}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <br/><p:column style="font-weight: bold; color: black;">
+                                <h:outputText value="#{bundleAlergeno.ViewAlergenoMedLabel_idxTipoAlergeno}"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{alergenoMedController.selected.idxTipoAlergeno.nombre}" title="#{bundleAlergeno.ViewAlergenoMedTitle_idxTipoAlergeno}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <br/><p:column style="font-weight: bold; color: black;">
+                                <h:outputText value="#{bundleAlergeno.ViewAlergenoMedLabel_estado}"/>
+                            </p:column>
+                            <p:column>
+                                <p:selectBooleanCheckbox value="#{alergenoMedController.selected.estado}" disabled="true"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <center><p:commandButton value="#{bundleAlergeno.Close}" action="#{alergenoMedController.inicializar()}" onclick="AlergenoMedViewDialog.hide()" style="background-color:#97AED7; font-weight: bold; color: black "/></center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog></center>
+
+    </ui:composition>
+</html>

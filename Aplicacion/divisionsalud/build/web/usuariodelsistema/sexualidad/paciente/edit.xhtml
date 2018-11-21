@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    
+    <ui:composition template="/templates/_sexualidadtmp.xhtml">
+        <ui:define name="body">
+        <div class="ui-messages-info ">
+            <span class="ui-messages-info-detail"><b>Editar Paciente</b></span>
+        </div>
+        <p:separator />
+        <h:form id="form">
+            <p:commandLink value="Atrás" action="/usuariodelsistema/sexualidad/paciente/list.xhtml"/>
+            <p:tabView id="tabView"  widgetVar="tabViewWv">
+                
+                <p:tab  title="Datos personales" titleStyleClass="title" id="tabDatosPersonales" >
+                    <p:panel header="Datos personales">
+                        <ui:include src="datos_personales.xhtml"/>
+                    </p:panel>
+                </p:tab>
+                <p:tab title="Escolaridad" titleStyleClass="title" id="tabEscolaridad">
+                    <p:panel header="Escolaridad">
+                        <ui:include src="./escolaridad.xhtml"/>
+                    </p:panel>
+                </p:tab>
+                <p:tab  title="Residencia" titleStyleClass="title" id="tabResidencia">
+                    <p:panel header="Residencia">
+                        <ui:include src="residencia.xhtml"/>
+                    </p:panel>
+                </p:tab>
+                <p:tab title="Salud" titleStyleClass="title" id="tabSalud">
+                    <p:panel header="Salud">
+                        <ui:include src="salud.xhtml"/>
+                    </p:panel>
+                </p:tab>
+                
+                <p:tab title="Persona responsable" titleStyleClass="title" id="tabContacto">
+                    <p:panel header="Persona responsable">
+                        <ui:include src="contacto.xhtml"/>
+                    </p:panel>
+                </p:tab>
+                <p:tab title="Estado" titleStyleClass="title" id="tabEstado">
+                    <p:panel header="Estado">
+                        <ui:include src="estado.xhtml"/>
+                    </p:panel>
+                    
+                </p:tab>
+                
+            </p:tabView>
+            <p:commandButton value="Guardar" id="save" style="float:right"
+                                     action="#{pacienteController.editar}" 
+                                    oncomplete="changeIncorrectTab()" update="form">
+            </p:commandButton>
+        </h:form>
+          
+        <p:dialog header="Información" modal="true" closable="false" position="center" widgetVar="ActualizacionExitosa">
+            <h:form id="mensajeForm">
+                <h:panelGrid columns="2" >
+                    <p:graphicImage width="50px" height="50px" library="img" name="exitoso.png" />
+                    <p:outputLabel value="La información del paciente se editó con éxito" />
+                    <p:commandButton value="Aceptar" action="list?faces-redirect=true" />
+                </h:panelGrid>
+
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog header="Información" modal="true" position="center" widgetVar="ActualizacionNoExitosa">
+            <h:form id="mensajeForm2">
+                <h:panelGrid columns="2" >
+                    <p:graphicImage width="50px" height="50px" library="img" name="error.png" />
+                    <p:outputLabel value="La información del paciente NO editó con exito" />
+                </h:panelGrid>
+
+            </h:form>
+        </p:dialog>
+        </ui:define>
+    </ui:composition>>
+</html>
+
+    

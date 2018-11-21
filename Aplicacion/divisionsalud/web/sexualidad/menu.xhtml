@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <head>
+        <h:outputStylesheet name="https://use.fontawesome.com/4f92878ce5.js"/>
+        <h:outputStylesheet name="./css/bootstrap.css"/>
+    </head>
+
+    <body>
+
+        <ui:composition >
+            <h:form>
+                <p:menu id="menu_sexualidad">
+                    <p:submenu label = "Pacientes" >
+                        <p:menuitem value="Listar"                                      
+                                    icon=" ui-icon-bookmark" 
+                                    action="#{pacienteController.tipoListarPacientes(1)}" ajax="false"
+                                    />
+                        <p:menuitem value="Registrar" 
+                                    outcome="/usuariodelsistema/sexualidad/paciente/create.xhtml" 
+                                    icon="ui-icon-circle-plus" ajax="false"/>
+                    </p:submenu>
+                    <p:submenu label = "Métodos de planificación">
+                        <p:menuitem value="Iniciar"                                     
+                                    icon="ui-icon-document-b" 
+                                    action="#{pacienteController.tipoListarPacientes(3)}" ajax="false"/>
+                        
+                        
+                        <p:menuitem value="Control"                                     
+                                    icon="ui-icon-document-b"
+                                    action="#{pacienteController.tipoListarPacientes(2)}" ajax="false">          
+                            
+                        </p:menuitem>
+                    </p:submenu>
+                    <p:submenu label = "Informes">
+                        <p:menuitem value="Estadísticas" outcome="/usuariodelsistema/sexualidad/reportes/reportes.xhtml"  icon="ui-icon-signal" ajax="false">
+                            
+                        </p:menuitem>
+                        <p:menuitem value="Exportar a Excel" action="#{estadisticasController.cargarVistaEstadisticas()}" icon="ui-icon-document" ajax="false">
+                        </p:menuitem>
+                    </p:submenu>
+                </p:menu>
+            </h:form>  
+        </ui:composition>
+
+    </body>
+</html>

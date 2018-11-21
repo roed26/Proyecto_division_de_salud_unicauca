@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GinecostetricosMedEditDlg" widgetVar="GinecostetricosMedEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleGinecostetricosMed.EditGinecostetricosMedTitle}">
+            <h:form id="GinecostetricosMedEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{ginecostetricosMedController.selected != null}">
+                        <p:outputLabel value="#{bundleGinecostetricosMed.EditGinecostetricosMedLabel_idx}" for="idx" />
+                        <p:inputText id="idx" value="#{ginecostetricosMedController.selected.idx}" title="#{bundleGinecostetricosMed.EditGinecostetricosMedTitle_idx}" required="true" requiredMessage="#{bundleGinecostetricosMed.EditGinecostetricosMedRequiredMessage_idx}"/>
+                        <p:outputLabel value="#{bundleGinecostetricosMed.EditGinecostetricosMedLabel_fechaUltimaMestruacion}" for="fechaUltimaMestruacion" />
+                        <p:calendar id="fechaUltimaMestruacion" pattern="MM/dd/yyyy" value="#{ginecostetricosMedController.selected.fechaUltimaMestruacion}" title="#{bundleGinecostetricosMed.EditGinecostetricosMedTitle_fechaUltimaMestruacion}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleGinecostetricosMed.EditGinecostetricosMedLabel_g}" for="g" />
+                        <p:inputText id="g" value="#{ginecostetricosMedController.selected.g}" title="#{bundleGinecostetricosMed.EditGinecostetricosMedTitle_g}" />
+                        <p:outputLabel value="#{bundleGinecostetricosMed.EditGinecostetricosMedLabel_p}" for="p" />
+                        <p:inputText id="p" value="#{ginecostetricosMedController.selected.p}" title="#{bundleGinecostetricosMed.EditGinecostetricosMedTitle_p}" />
+                        <p:outputLabel value="#{bundleGinecostetricosMed.EditGinecostetricosMedLabel_a}" for="a" />
+                        <p:inputText id="a" value="#{ginecostetricosMedController.selected.a}" title="#{bundleGinecostetricosMed.EditGinecostetricosMedTitle_a}" />
+                        <p:outputLabel value="#{bundleGinecostetricosMed.EditGinecostetricosMedLabel_c}" for="c" />
+                        <p:inputText id="c" value="#{ginecostetricosMedController.selected.c}" title="#{bundleGinecostetricosMed.EditGinecostetricosMedTitle_c}" />
+                        <p:outputLabel value="#{bundleGinecostetricosMed.EditGinecostetricosMedLabel_m}" for="m" />
+                        <p:inputText id="m" value="#{ginecostetricosMedController.selected.m}" title="#{bundleGinecostetricosMed.EditGinecostetricosMedTitle_m}" />
+                        <p:outputLabel value="#{bundleGinecostetricosMed.EditGinecostetricosMedLabel_fechaUltimoParto}" for="fechaUltimoParto" />
+                        <p:calendar id="fechaUltimoParto" pattern="MM/dd/yyyy" value="#{ginecostetricosMedController.selected.fechaUltimoParto}" title="#{bundleGinecostetricosMed.EditGinecostetricosMedTitle_fechaUltimoParto}"  showOn="button"/>
+                        <p:outputLabel value="#{bundleGinecostetricosMed.EditGinecostetricosMedLabel_metodoPlanificacion}" for="metodoPlanificacion" />
+                        <p:inputText id="metodoPlanificacion" value="#{ginecostetricosMedController.selected.metodoPlanificacion}" title="#{bundleGinecostetricosMed.EditGinecostetricosMedTitle_metodoPlanificacion}" />
+                        <p:outputLabel value="#{bundleGinecostetricosMed.EditGinecostetricosMedLabel_citologia}" for="citologia" />
+                        <p:inputText id="citologia" value="#{ginecostetricosMedController.selected.citologia}" title="#{bundleGinecostetricosMed.EditGinecostetricosMedTitle_citologia}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{ginecostetricosMedController.update}" value="#{bundleGinecostetricosMed.Save}" update="display,:GinecostetricosMedListForm:datalist,:growl" oncomplete="handleSubmit(args, 'GinecostetricosMedEditDialog');"/>
+                    <p:commandButton value="#{bundleGinecostetricosMed.Cancel}" onclick="GinecostetricosMedEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:body>
+        <p:panelGrid styleClass="gridsinbordes">
+            <p:row>
+                <p:column style="font-weight:bold;">
+                    <h:outputLabel value="#{bundlePaciente.CreatePacienteLabel_escolaridad}" for="escolaridad" />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu  disabled="#{pacienteController.ver_paciente}" 
+                                      required="true" 
+                                      id="escolaridad" 
+                                      value="#{pacienteController.escolaridad}" >
+                        <f:selectItems value="#{escolaridadController.itemsAvailableSelectOne}"
+                                       var="escolaridadItem"
+                                       itemValue="#{escolaridadItem}"
+                                       itemLabel="#{escolaridadItem.nombre}"
+                                       />
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column style="font-weight:bold;">
+                    <p:outputLabel value="#{bundlePaciente.CreatePacienteLabel_facultad}"  />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="*" />
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu disabled="#{pacienteController.ver_paciente}" 
+                                     required="true" filter="true" id="facultad" 
+                                     value="#{pacienteController.facultad}"
+                                     requiredMessage="Campo obligatorio">
+                        <p:ajax event="change" update="programa"/>
+                        <p:ajax event="change" update="msgPrograma"/>
+                        <p:ajax event="change" update="msgFacultad"/>
+                        <f:selectItem itemLabel="" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{facultadController.itemsAvailableSelectOne}"
+                          var="facultadItem"
+                          itemValue="#{facultadItem}"
+                          itemLabel="#{facultadItem.nombre}"
+                          />
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="facultad" id="msgFacultad"/> 
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column style="font-weight:bold;">
+                    <p:outputLabel value="#{bundlePaciente.CreatePacienteLabel_programa}"/>
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu  disabled="#{pacienteController.ver_paciente}" 
+                                      required="true" filter="true" 
+                                      id="programa" 
+                                      value="#{pacienteController.programa}"
+                                      requiredMessage="Campo obligatorio">
+                        
+                        <p:ajax event="change" update="msgPrograma"/>
+                        <f:selectItems value="#{pacienteController.facultad.programasCollection}"
+                                       var="programaItem"
+                                       itemValue="#{programaItem}"
+                                       itemLabel="#{programaItem.nombre}"
+                                       />
+                    </p:selectOneMenu>
+                    
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="programa" id="msgPrograma"/>  
+                </p:column>
+            </p:row>
+            
+        </p:panelGrid>
+    </h:body>
+</html>
+

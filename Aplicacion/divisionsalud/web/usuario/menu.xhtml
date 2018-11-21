@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <!--<link href="../resources/css/styles-menu.css" rel="stylesheet" type="text/css"/>-->
+    </h:head>
+    <h:body>
+        <div id="contenidoMenu">
+            <h:form id="formMenu">
+                <p:menu>
+                    <p:menuitem value="Inicio" icon="ui-icon-home" action="#{cargarVistaController.cargarInicio()}" ajax="false"/>
+                    <p:submenu label="Paciente">
+                        
+                        <p:menuitem value="Registrar paciente" action="#{cargarVistaController.cargarRegistrarPaciente()}" ajax="false"/>
+                        <p:menuitem value="Listar" action="#{cargarVistaController.cargarListaPaciente()}" ajax="false"/>
+                        
+                    </p:submenu>
+                    <p:submenu label="Historia odontologica">
+                        <p:menuitem  value="Apertura" action="#{cargarVistaController.cargarAperturaHistoriaOdontologica()}" ajax="false"/>
+                        <p:menuitem value="Evolución" action="#{cargarVistaController.cargarEvolucionHistoriaOdontologica()}" ajax="false"/>
+                        <!--<p:menuitem value="Control"  ajax="false"/>                        -->
+                        <p:menuitem value="Gestión de historias" action="#{cargarVistaController.cargarGestionHistoriaOdontologica()}" ajax="false"/>
+                    </p:submenu>
+                    <p:submenu label="Pagos">
+                        <p:menuitem  value="Registrar pago" action="#{cargarVistaController.cargarRegistrarPagos()}" ajax="false"/>
+                        <p:menuitem value="Historial de pagos"  ajax="false"/>
+                        
+                    </p:submenu>
+                    <p:submenu label="Reportes">
+                        <p:menuitem value="Indice COP" action="#{cargarVistaController.cargarIndiceCOP()}" ajax="false" />
+                        <p:menuitem value="Tipo de diagnóstico - facultades" action="#{cargarVistaController.cargarEstadisticaFacultadDiagnostico()}" ajax="false"/>
+                        <!--<p:menuitem value="Tipo de diagnóstico - programas académicos" />                        
+                        <p:menuitem value="Tipo de diagnóstico - género (M, F)"/>
+                        <p:menuitem value="Tipo de diagnóstico - edad de usuario"/>
+                        <p:menuitem value="Tipo de diagnóstico - fechas"/>
+                        <p:menuitem value="Actividad realizada"/>-->
+                    </p:submenu>
+                </p:menu>
+            </h:form>
+        </div>
+
+    </h:body>
+</html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedicamentoMedEditDlg" widgetVar="MedicamentoMedEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleMedicamentosMed.EditMedicamentoMedTitle}">
+            <h:form id="MedicamentoMedEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{medicamentoMedController.selected != null}">
+                        <p:outputLabel value="#{bundleMedicamentosMed.EditMedicamentoMedLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{medicamentoMedController.selected.codigo}" title="#{bundleMedicamentosMed.EditMedicamentoMedTitle_codigo}" required="true" requiredMessage="#{bundleMedicamentosMed.EditMedicamentoMedRequiredMessage_codigo}"/>
+                        <p:outputLabel value="#{bundleMedicamentosMed.EditMedicamentoMedLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{medicamentoMedController.selected.nombre}" title="#{bundleMedicamentosMed.EditMedicamentoMedTitle_nombre}" />
+                        <p:outputLabel value="#{bundleMedicamentosMed.EditMedicamentoMedLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{medicamentoMedController.selected.estado}" required="true" requiredMessage="#{bundleMedicamentosMed.EditMedicamentoMedRequiredMessage_estado}"/>
+                        <p:outputLabel value="#{bundleMedicamentosMed.EditMedicamentoMedLabel_concentracion}" for="concentracion" />
+                        <p:inputText id="concentracion" value="#{medicamentoMedController.selected.concentracion}" title="#{bundleMedicamentosMed.EditMedicamentoMedTitle_concentracion}" />
+                        <p:outputLabel value="#{bundleMedicamentosMed.EditMedicamentoMedLabel_viaIdx}" for="viaIdx" />
+                        <p:selectOneMenu filter="true" id="viaIdx" value="#{medicamentoMedController.selected.viaIdx}" required="true" requiredMessage="#{bundleMedicamentosMed.EditMedicamentoMedRequiredMessage_viaIdx}">
+                            <f:selectItem itemLabel="#{bundleMedicamentosMed.SelectOneMessage}"/>
+                            <f:selectItems value="#{viaAdministracionMedController.itemsAvailableSelectOne}"
+                                           var="viaIdxItem"
+                                           itemValue="#{viaIdxItem}"
+                                           itemLabel="#{viaIdxItem.nombreAdminis}"
+                                           />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleMedicamentosMed.EditMedicamentoMedLabel_preIdx}" for="preIdx" />
+                        <p:selectOneMenu filter="true" id="preIdx" value="#{medicamentoMedController.selected.preIdx}" required="true" requiredMessage="#{bundleMedicamentosMed.EditMedicamentoMedRequiredMessage_preIdx}">
+                            <f:selectItem itemLabel="#{bundleMedicamentosMed.SelectOneMessage}"/>
+                            <f:selectItems value="#{presentacionMedicamentoMedController.itemsAvailableSelectOne}"
+                                           var="preIdxItem"
+                                           itemValue="#{preIdxItem}"
+                                           itemLabel="#{preIdxItem.nombrePresen}"
+                                           />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <center>
+                        <p:commandButton actionListener="#{medicamentoMedController.update}" value="#{bundleMedicamentosMed.Save}" update="display,:MedicamentoMedListForm:datalist" oncomplete="handleSubmit(args, 'MedicamentoMedEditDialog');" onclick="MedicamentoMedEditDialog.hide()"/>
+                        <p:commandButton value="#{bundleMedicamentosMed.Cancel}" onclick="MedicamentoMedEditDialog.hide()"/>
+                    </center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

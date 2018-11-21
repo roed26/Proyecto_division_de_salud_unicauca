@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GinecostetricosMedViewDlg" widgetVar="GinecostetricosMedViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleGinecostetricosMed.ViewGinecostetricosMedTitle}">
+            <h:form id="GinecostetricosMedViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{ginecostetricosMedController.selected != null}">
+                        <h:outputText value="#{bundleGinecostetricosMed.ViewGinecostetricosMedLabel_idx}"/>
+                        <h:outputText value="#{ginecostetricosMedController.selected.idx}" title="#{bundleGinecostetricosMed.ViewGinecostetricosMedTitle_idx}"/>
+                        <h:outputText value="#{bundleGinecostetricosMed.ViewGinecostetricosMedLabel_fechaUltimaMestruacion}"/>
+                        <h:outputText value="#{ginecostetricosMedController.selected.fechaUltimaMestruacion}" title="#{bundleGinecostetricosMed.ViewGinecostetricosMedTitle_fechaUltimaMestruacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleGinecostetricosMed.ViewGinecostetricosMedLabel_g}"/>
+                        <h:outputText value="#{ginecostetricosMedController.selected.g}" title="#{bundleGinecostetricosMed.ViewGinecostetricosMedTitle_g}"/>
+                        <h:outputText value="#{bundleGinecostetricosMed.ViewGinecostetricosMedLabel_p}"/>
+                        <h:outputText value="#{ginecostetricosMedController.selected.p}" title="#{bundleGinecostetricosMed.ViewGinecostetricosMedTitle_p}"/>
+                        <h:outputText value="#{bundleGinecostetricosMed.ViewGinecostetricosMedLabel_a}"/>
+                        <h:outputText value="#{ginecostetricosMedController.selected.a}" title="#{bundleGinecostetricosMed.ViewGinecostetricosMedTitle_a}"/>
+                        <h:outputText value="#{bundleGinecostetricosMed.ViewGinecostetricosMedLabel_c}"/>
+                        <h:outputText value="#{ginecostetricosMedController.selected.c}" title="#{bundleGinecostetricosMed.ViewGinecostetricosMedTitle_c}"/>
+                        <h:outputText value="#{bundleGinecostetricosMed.ViewGinecostetricosMedLabel_m}"/>
+                        <h:outputText value="#{ginecostetricosMedController.selected.m}" title="#{bundleGinecostetricosMed.ViewGinecostetricosMedTitle_m}"/>
+                        <h:outputText value="#{bundleGinecostetricosMed.ViewGinecostetricosMedLabel_fechaUltimoParto}"/>
+                        <h:outputText value="#{ginecostetricosMedController.selected.fechaUltimoParto}" title="#{bundleGinecostetricosMed.ViewGinecostetricosMedTitle_fechaUltimoParto}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleGinecostetricosMed.ViewGinecostetricosMedLabel_metodoPlanificacion}"/>
+                        <h:outputText value="#{ginecostetricosMedController.selected.metodoPlanificacion}" title="#{bundleGinecostetricosMed.ViewGinecostetricosMedTitle_metodoPlanificacion}"/>
+                        <h:outputText value="#{bundleGinecostetricosMed.ViewGinecostetricosMedLabel_citologia}"/>
+                        <h:outputText value="#{ginecostetricosMedController.selected.citologia}" title="#{bundleGinecostetricosMed.ViewGinecostetricosMedTitle_citologia}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleGinecostetricosMed.Close}" onclick="GinecostetricosMedViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

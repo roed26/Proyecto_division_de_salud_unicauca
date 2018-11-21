@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <!--<link href="../resources/css/styles-menu.css" rel="stylesheet" type="text/css"/>-->
+        <script src="https://use.fontawesome.com/47275c2aa8.js"></script>
+    </h:head>
+    <h:body>
+        <div id="contenidoMenu">
+            <h:form id="formMenu">
+                <p:menu>
+                    <p:menuitem value="Inicio" action="#{cargarVistaSecretariaController.cargarInicio()}" ajax="false"/>
+                    <p:submenu label="Gestión de pacientes">
+                        <p:menuitem value="Registrar paciente" action="#{cargarVistaSecretariaController.cargarRegistrarPaciente()}" ajax="false"/>
+                        <p:menuitem value="Editar paciente" action="#{cargarVistaSecretariaController.cargarEditarPaciente()}" ajax="false"/>
+                        <p:menuitem value="Ver información de paciente" action="#{cargarVistaSecretariaController.cargarVerPaciente()}" ajax="false"/>
+                    </p:submenu>
+                    <p:submenu label=" Generar Reportes">
+                            <p:menuitem value="Generales" action="#{cargarVistaSecretariaController.cargarReportes()}" ajax="false"/>
+                            <p:menuitem value="Top 10 diagnosticos mas comunes" action="#{cargarVistaSecretariaController.cargarReportesTop10()}" ajax="false"/>
+                    </p:submenu>
+                    
+                
+                
+                    <p:submenu label="Otros">
+                            <p:menuitem value="Gestión de usuarios" action="#{cargarVistaSecretariaController.cargarGestionarUsuarios()}" ajax="false"/>
+                    <p:menuitem value="Gestión de recursos" action="#{cargarVistaSecretariaController.cargarRecursos()}" ajax="false"/>
+                    <p:menuitem value="Gestión de citas" action="#{cargarVistaSecretariaController.cargarGestionarCitas()}" ajax="false"/>
+                    </p:submenu>
+                    
+                </p:menu>
+            </h:form>
+        </div>
+
+    </h:body>
+</html>

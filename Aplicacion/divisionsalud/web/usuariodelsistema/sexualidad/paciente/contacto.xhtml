@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:body>
+        <p:panelGrid styleClass="gridsinbordes">
+            <p:row>
+                <p:column style="font-weight:bold;">
+                    <p:outputLabel value="#{bundlePaciente.CreatePacienteLabel_parentesco}" />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu disabled="#{pacienteController.ver_paciente}" 
+                                     id="parentesco" 
+                                     value="#{pacienteController.parentesco}" 
+                                     required="true">
+                        <f:selectItems value="#{parentescoController.itemsAvailableSelectOne}"
+                               var="parentescoItem"
+                               itemValue="#{parentescoItem}"
+                               itemLabel="#{parentescoItem.nombre}"
+                               />
+                     </p:selectOneMenu>
+                </p:column>
+                <p:column style="font-weight:bold;">
+                    <p:outputLabel value="Nombre del Responsable:"/>
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:inputText disabled="#{pacienteController.ver_paciente}" 
+                                 id="personaResponsable"
+                                 value="#{pacienteController.selected.personaResponsable}">
+                        <p:ajax update="msgPersonaResponsable" event ="keyup" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <f:validator validatorId="ValidarCampoSoloLetrasYespacio"/>
+                        <f:validator validatorId="ValidarCampo60Caracteres"/>
+                    </p:inputText>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column/>
+                <p:column/>
+                <p:column>
+                    <p:message for="personaResponsable" id="msgPersonaResponsable"/> 
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column style="font-weight:bold;">
+                    <p:outputLabel value="Dirección del Responsable:" />
+                </p:column>
+                <p:column>
+                    <p:inputText disabled="#{pacienteController.ver_paciente}" 
+                                 id="direccionPresponsable"
+                                 value="#{pacienteController.selected.direccionPresponsable}"
+                                 title="#{bundlePaciente.CreatePacienteTitle_direccionPresponsable}">
+                        <p:ajax update="msgDireccionResponsable" event ="keyup" />
+                        <f:validator validatorId="ValidarCampo60Caracteres"/>
+                    </p:inputText>
+                </p:column>
+                <p:column style="font-weight:bold;">
+                    <p:outputLabel value="Teléfono del Responsable:"/>
+                </p:column>
+                <p:column>
+                    <p:inputText disabled="#{pacienteController.ver_paciente}" 
+                                 id="telefonoPresponsable" 
+                                 value="#{pacienteController.selected.telefonoPresponsable}" 
+                                 title="#{bundlePaciente.CreatePacienteTitle_telefonoPresponsable}" >
+                        <p:ajax update="msgTelefonoResponsable" event ="keyup" />
+                        <f:validator validatorId="ValidarCampoMaximo30Caracteres"/>  
+                        <f:validator validatorId="ValidarSoloNumeros"/>
+                    </p:inputText>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="direccionPresponsable" id="msgDireccionResponsable"/> 
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="telefonoPresponsable" id="msgTelefonoResponsable"/> 
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+    </h:body>
+</html>
+

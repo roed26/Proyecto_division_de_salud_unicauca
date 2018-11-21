@@ -1,0 +1,212 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+        <!--quitar la composicion!-->
+        <!--ui:composition template="/templates/_sexualidadtmp.xhtml">
+        <ui:define name="body"-->
+        <h:body>
+            <script>
+                $(document).ready(function() {
+                   $('.ui-inputtextarea').flexible();
+                });
+                 $(document).change(function() {
+                   $('.ui-inputtextarea').flexible();
+                });
+            </script>
+            <div class="ui-messages-info ">
+                <span class="ui-messages-info-detail"><b>Examen físico</b></span>
+            </div>
+            <!--h:form-->
+                <p:panelGrid styleClass="gridsinbordes">
+                    <p:row>
+                        <p:column style="font-weight:bold;">
+                            <p:outputLabel value="Peso:" for="peso" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id = "peso"
+                                         style = "width: 50px;" value = "#{examenFisicoController.actual.peso}"
+                                         disabled="#{examenFisicoController.viendo}">
+                                <p:ajax update = "msgPeso" event="keyup"/>
+                                <f:validator validatorId="ValidarCampoObligatorio"/>
+                                <f:validator validatorId="ValidarPesoExamenFisico"/>
+                                <p:ajax update = "imc" listener="#{examenFisicoController.calcular_imc()}" event="blur"/>
+                                <p:ajax update = "clasificacion" event="blur"/>
+                                <p:ajax update = "clasificacion" event="change"/>
+                                <p:ajax update = "imc" event="change"/>
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value = "Kilogramos"/>
+                        </p:column>
+
+                        <p:column style="font-weight:bold;">
+                            <p:outputLabel value="Talla:" for="talla" />
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id = "talla" value ="#{examenFisicoController.actual.talla}"
+                                         style = "width: 50px;"
+                                         disabled="#{examenFisicoController.viendo}">
+                                <p:ajax update = "msgTalla" event="keyup"/>
+                                <p:ajax update = "imc" listener="#{examenFisicoController.calcular_imc()}" 
+                                        event = "blur" />
+                                <f:validator validatorId="ValidarCampoObligatorio"/>
+                                <f:validator validatorId="ValidarTallaExamenFisicoSexual"/>
+                                <p:ajax update = "imc" listener="#{examenFisicoController.calcular_imc()}" event="blur"/>
+                                <p:ajax update = "clasificacion" event="blur"/>
+                                <p:ajax update = "clasificacion" event="change"/>
+                                <p:ajax update = "imc" event="change"/>
+                            </p:inputText>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value = "Metros"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column/>
+                        <p:column colspan="2">
+                            <p:message for="peso" id="msgPeso"/> 
+                        </p:column>
+                        <p:column/>
+                        <p:column colspan="2">
+                            <p:message for="talla" id="msgTalla"/> 
+                        </p:column>
+                        <p:column/>
+                    </p:row>
+                    <p:row>
+                        <p:column style="font-weight:bold;">
+                            <p:outputLabel value = "IMC:"/>
+                        </p:column>
+                        <p:column colspan="2">
+                            <p:inputText id ="imc" rendered="true"
+                                         value = "${examenFisicoController.actual.imc}" 
+                                         disabled = "true"
+                                         style = "width: 50px;"
+                                         >
+                                <p:ajax update = "msgImc" event="keyup"/>
+                                <f:convertNumber maxFractionDigits="3" minFractionDigits="2"/>
+                            </p:inputText>
+                        </p:column>
+                        <p:column style="font-weight:bold;">
+                            <p:outputLabel value = "Clasificación:"/>
+                        </p:column>
+                        <p:column colspan="2">
+                            <p:inputText id ="clasificacion"
+                                         value = "#{examenFisicoController.clasificacion_imc}" disabled = "true"
+                                         >
+                                <p:ajax update = "msgClasificacion" event="keyup"/>
+                            </p:inputText>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column/>
+                        <p:column colspan="2">
+                            <p:message for="imc" id="msgImc"/> 
+                        </p:column>
+                        <p:column/>
+                        <p:column colspan="2">
+                            <p:message for="clasificacion" id="msgClasificacion"/> 
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="font-weight:bold;">
+                            <p:outputLabel value = "Presión arterial sistólica:" for="presion_arterial_sistolica"/>
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column colspan="2">
+                            <p:inputText id ="presion_arterial_sistolica"
+                                         value = "#{examenFisicoController.actual.presionArterialSistolica}"
+                                         style = "width: 50px;"
+                                         disabled="#{examenFisicoController.viendo}">
+                                <p:ajax update = "msgPresionArterialSistolica" event="keyup"/>
+                                <f:validator validatorId="ValidarLongitudMaximo4Numeros"/>
+                                <f:validator validatorId="ValidarCampoObligatorio"/>
+                                <f:validator validatorId="ValidarCampoNumericoPositivo"/>
+                            </p:inputText>
+                        </p:column>
+                        <p:column style="font-weight:bold;">
+                            <p:outputLabel value = "Presión arterial distólica:" for ="presion_arterial_distolica"/>
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column colspan="2">
+                            <p:inputText id ="presion_arterial_distolica"
+                                         value = "#{examenFisicoController.actual.presionArterialDistolica}"
+                                         style = "width: 50px;"
+                                         disabled="#{examenFisicoController.viendo}">
+                                <p:ajax update = "msgPresionArterialDistolica" event="keyup"/>
+                                <f:validator validatorId="ValidarLongitudMaximo4Numeros"/>
+                                <f:validator validatorId="ValidarCampoObligatorio"/>
+                                <f:validator validatorId="ValidarCampoNumericoPositivo"/>
+                            </p:inputText>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column/>
+                        <p:column colspan="2">
+                            <p:message for="presion_arterial_sistolica" id="msgPresionArterialSistolica"/> 
+                        </p:column>
+                        <p:column/>
+                        <p:column colspan="2">
+                            <p:message for="presion_arterial_distolica" id="msgPresionArterialDistolica"/> 
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="font-weight:bold;">
+                            <p:outputLabel value = "Pulso:" for="pulso"/>
+                            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                        </p:column>
+                        <p:column colspan="5">
+                            <p:inputText id ="pulso"
+                                         value = "#{examenFisicoController.actual.pulso}"
+                                         style = "width: 50px;"
+                                         disabled="#{examenFisicoController.viendo}">
+                                <p:ajax update = "msgPulso" event="keyup"/>
+                                <f:validator validatorId="ValidarCampoObligatorio"/>
+                                <f:validator validatorId="ValidarLongitudMaximo4Numeros"/>
+                            </p:inputText>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column/>
+                        <p:column colspan="2">
+                            <p:message for="pulso" id="msgPulso"/> 
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <ui:include src ="sistemas_fisicos.xhtml"/>
+                <div class="ui-messages-info ">
+                    <span class="ui-messages-info-detail"><b>Otros Hallazgos</b></span>
+                </div>
+                <p:panelGrid styleClass="gridsinbordes" style="width: 100%;">
+                    <p:row>
+                        <p:column style="font-weight:bold;" colspan="6">
+                            <p:outputLabel value="Otros hallazgos"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column width="200">
+                            <p:inputTextarea id="otros_hallazgos"
+                                             value="#{examenFisicoController.actual.otrosHallazgos}"
+                                            style="width: 100%;"
+                                            disabled="#{examenFisicoController.viendo}">
+                                <p:ajax update="msgOtros_hallazgos" event="keyup"/>
+                                <f:validator validatorId="Validar300Caracteres"/>
+                            </p:inputTextarea>
+                        </p:column>
+                    </p:row>  
+                    <p:row>
+                        <p:column>
+                            <p:message for="otros_hallazgos" id="msgOtros_hallazgos"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            <!--/h:form-->
+        <!--/ui:define>
+        </ui:composition-->
+        </h:body>
+</html>

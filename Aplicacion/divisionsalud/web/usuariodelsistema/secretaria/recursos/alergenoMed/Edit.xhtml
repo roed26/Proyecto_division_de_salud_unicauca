@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AlergenoMedEditDlg" widgetVar="AlergenoMedEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleAlergeno.EditAlergenoMedTitle}">
+            <h:form id="AlergenoMedEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{alergenoMedController.selected != null}">
+                         <p:outputLabel value="#{bundleAlergeno.EditAlergenoMedLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{alergenoMedController.selected.nombre}" title="#{bundleAlergeno.EditAlergenoMedTitle_nombre}" />
+                        <p:outputLabel value="#{bundleAlergeno.EditAlergenoMedLabel_idxTipoAlergeno}" for="idxTipoAlergeno" />
+                        <p:selectOneMenu id="idxTipoAlergeno" value="#{alergenoMedController.selected.idxTipoAlergeno}" >
+                            <f:selectItem itemLabel="#{bundleAlergeno.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoAlergenoMedController.itemsAvailableSelectOne}"
+                                           var="idxTipoAlergenoItem"
+                                           itemValue="#{idxTipoAlergenoItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleAlergeno.EditAlergenoMedLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{alergenoMedController.selected.estado}" required="true" requiredMessage="#{bundleAlergeno.EditAlergenoMedRequiredMessage_estado}"/>
+                        
+                    </p:panelGrid>
+                    <center>
+                        <p:commandButton actionListener="#{alergenoMedController.update}" value="#{bundleAlergeno.Save}" update="display,:AlergenoMedListForm:datalist" oncomplete="handleSubmit(args, 'AlergenoMedEditDialog');" onclick="AlergenoMedEditDialog.hide()"/>
+                        <p:commandButton value="#{bundleAlergeno.Cancel}" onclick="AlergenoMedEditDialog.hide()"/>
+</center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

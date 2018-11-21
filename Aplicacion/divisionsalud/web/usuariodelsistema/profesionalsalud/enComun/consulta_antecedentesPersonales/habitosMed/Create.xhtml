@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HabitosMedCreateDlg" widgetVar="HabitosMedCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleHabitosMed.CreateHabitosMedTitle}">
+            <h:form id="HabitosMedCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{habitosMedController.selected != null}">
+                        <p:outputLabel value="#{bundleHabitosMed.CreateHabitosMedLabel_descripcion}" for="descripcion" />
+                        <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{habitosMedController.selected.descripcion}" title="#{bundleHabitosMed.CreateHabitosMedTitle_descripcion}" />
+                        <p:outputLabel value="#{bundleHabitosMed.CreateHabitosMedLabel_consumeSiNoEx}" for="consumeSiNoEx" />
+                        <p:inputText id="consumeSiNoEx" value="#{habitosMedController.selected.consumeSiNoEx}" title="#{bundleHabitosMed.CreateHabitosMedTitle_consumeSiNoEx}" />
+                        <p:outputLabel value="#{bundleHabitosMed.CreateHabitosMedLabel_consultaMedicaMed}" for="consultaMedicaMed" />
+                        <p:selectOneMenu id="consultaMedicaMed" value="#{habitosMedController.selected.consultaMedicaMed}" required="true" requiredMessage="#{bundleHabitosMed.EditHabitosMedRequiredMessage_consultaMedicaMed}">
+                            <f:selectItems value="#{consultaMedicaMedController.itemsAvailableSelectOne}"
+                                           var="consultaMedicaMedItem"
+                                           itemValue="#{consultaMedicaMedItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleHabitosMed.CreateHabitosMedLabel_tipoHabito}" for="tipoHabito" />
+                        <p:selectOneMenu id="tipoHabito" value="#{habitosMedController.selected.tipoHabito}" required="true" requiredMessage="#{bundleHabitosMed.EditHabitosMedRequiredMessage_tipoHabito}">
+                            <f:selectItems value="#{tipoHabitoController.itemsAvailableSelectOne}"
+                                           var="tipoHabitoItem"
+                                           itemValue="#{tipoHabitoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{habitosMedController.create}" value="#{bundleHabitosMed.Save}" update="display,:HabitosMedListForm:datalist,:growl" oncomplete="handleSubmit(args,'HabitosMedCreateDialog');"/>
+                    <p:commandButton value="#{bundleHabitosMed.Cancel}" onclick="HabitosMedCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

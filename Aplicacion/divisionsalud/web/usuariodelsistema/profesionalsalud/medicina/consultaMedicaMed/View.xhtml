@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConsultaMedicaMedViewDlg" widgetVar="ConsultaMedicaMedViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle}">
+            <h:form id="ConsultaMedicaMedViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{consultaMedicaMedController.selected != null}">
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_idx}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.idx}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_idx}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_fecha}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.fecha}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_motivo}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.motivo}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_motivo}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_enfermedadActual}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.enfermedadActual}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_enfermedadActual}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_peso}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.peso}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_peso}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_talla}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.talla}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_talla}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_imc}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.imc}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_imc}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_temperatura}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.temperatura}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_temperatura}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_frecCardiaca}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.frecCardiaca}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_frecCardiaca}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_frecRespiratoria}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.frecRespiratoria}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_frecRespiratoria}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_analisis}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.analisis}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_analisis}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_diagnosticoMedIdx}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.diagnosticoMedIdx}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_diagnosticoMedIdx}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_pacienteIdx}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.pacienteIdx}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_pacienteIdx}"/>
+                        <h:outputText value="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedLabel_acompanianteMedIdx}"/>
+                        <h:outputText value="#{consultaMedicaMedController.selected.acompanianteMedIdx}" title="#{bundleConsultaMedicaMed.ViewConsultaMedicaMedTitle_acompanianteMedIdx}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleConsultaMedicaMed.Close}" onclick="ConsultaMedicaMedViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

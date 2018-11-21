@@ -1,0 +1,298 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <div style = "float: right;">
+            <p:inputText id="id_paciente" value="#{pacienteController.selected.id}" style="visibility: hidden;"/>
+        </div>
+        <p:panelGrid id="datos_personales"  styleClass="gridsinbordes" >
+            <p:row >
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_tipoIdentificacion}"/>
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+
+                    <p:selectOneMenu filter="true" id="tipoIdentificacion" 
+                                     value ="#{pacienteController.tipoIdentificacion}"
+                                     disabled="#{pacienteController.ver_paciente}"
+                                     class="enable"
+                                     required="true"
+                                     requiredMessage="Campo obligatorio"                                     
+                                     >
+                        <p:ajax event="change" update="identificacion"/>  
+                        <p:ajax event="select" update="identificacion"/>
+                        <p:ajax event="change" update="msgTipoIdentificacion"/>
+                        <p:ajax event="select" update="msgTipoIdentificacion"/>
+                        <!--f:validator validatorId="ValidarPacienteRegistradoTipoIdentificacion"/-->
+                        <f:selectItem itemLabel="" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{tipoIdentificacionController.itemsAvailableSelectOne}"
+                                       var="tipoIdentificacionItem"
+                                       itemValue="#{tipoIdentificacionItem}"
+                                       itemLabel="#{tipoIdentificacionItem.nombre}"/>
+
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_identificacion}"/>
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:inputText id="identificacion" 
+                                 value="#{pacienteController.selected.identificacion}"
+                                 styleClass="hintable"
+                                 title="Ingresar identificacion"
+                                 disabled="#{pacienteController.ver_paciente}">
+                        <p:ajax update="msgIdentificacion" event = "keyup"/>
+                        <f:validator validatorId="validarIdentificacion"/> 
+                        <f:validator validatorId="ValidarPacienteRegistrado"/>
+                    </p:inputText>
+                </p:column>
+            </p:row>
+
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="tipoIdentificacion" id="msgTipoIdentificacion"/>
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="identificacion" id="msgIdentificacion"/>
+                </p:column>
+            </p:row> 
+
+            <p:row>
+                <p:column >
+                    <p:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_sexo}" for="sexo" />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneRadio  disabled="#{pacienteController.ver_paciente}" id="sexo" value="#{pacienteController.selected.sexo}" >
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <f:selectItem itemLabel="F" itemValue='F' />
+                        <f:selectItem itemLabel="M" itemValue='M' />    
+
+                    </p:selectOneRadio>
+                </p:column>
+                <p:column >
+                    <p:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_raza}" for="raza" />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu  disabled="#{pacienteController.ver_paciente}" 
+                                      id="raza" value="#{pacienteController.raza}">
+                        <f:selectItems value="#{razaController.itemsAvailableSelectOne}"
+                                       var="razaItem"
+                                       itemValue="#{razaItem}"
+                                       itemLabel="#{razaItem.nombre}"/>
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+
+            <p:row>
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_nombre1}"/>
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:inputText readonly="#{pacienteController.ver_paciente}" type="text" id="nombre1"
+                                 value="#{pacienteController.selected.nombre1}"
+                                 title="Ingresar primer nombre" >
+                        <f:validator validatorId="ValidarCampoSoloLetrasYespacio"/>
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <f:validator validatorId="ValidarCampoMaximo20Caracteres"/>
+                        <p:ajax update="msgNombre1" event ="keyup" />
+                    </p:inputText> 
+                </p:column>
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_nombre2}" />
+                </p:column>
+                <p:column>
+                    <p:inputText readonly="#{pacienteController.ver_paciente}" type="text" id="nombre2" 
+                                 value="#{pacienteController.selected.nombre2}" 
+                                 title="Ingresar segundo nombre" > 
+                        <f:validator validatorId="ValidarCampoSoloLetrasYespacio"/>
+                        <f:validator validatorId="ValidarCampoMaximo20Caracteres"/>
+                        <p:ajax update="msgNombre2" event ="keyup" />
+                    </p:inputText>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="nombre1" id="msgNombre1"/>
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="nombre2" id="msgNombre2"/>
+                </p:column>
+            </p:row> 
+            <p:row>
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_apellido1}"/>
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:inputText  readonly="#{pacienteController.ver_paciente}" type="text" id="apellido1" 
+                                  value="#{pacienteController.selected.apellido1}" 
+                                  title="Ingresar primer apellido" >
+                        <f:validator validatorId="ValidarCampoSoloLetrasYespacio"/>
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <f:validator validatorId="ValidarCampoMaximo30Caracteres"/>
+                        <p:ajax update="msgApellido1" event ="keyup" />
+                    </p:inputText>
+                </p:column>
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_apellido2}"  />
+                </p:column> 
+                <p:column>
+                    <p:inputText readonly="#{pacienteController.ver_paciente}" type="text"  id="apellido2"
+                                 value="#{pacienteController.selected.apellido2}" 
+                                 title="Ingresar segundo apellido" >
+                        <f:validator validatorId="ValidarCampoSoloLetrasYespacio"/>
+                        <f:validator validatorId="ValidarCampoMaximo30Caracteres"/>
+                        <p:ajax update="msgApellido2" event ="keyup" />
+                    </p:inputText>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="apellido1" id="msgApellido1"/> 
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="apellido2" id="msgApellido2"/> 
+                </p:column>
+            </p:row>
+
+            <p:row>
+                <p:column>
+                    <h:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_fechaNacimiento}" for="fechaNacimiento" />
+                    <h:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:calendar  id="fechaNacimiento" yearRange="c-80:c" 
+                                 navigator="true" pattern="MM-dd-yyyy" 
+                                 value="#{pacienteController.selected.fechaNacimiento}" 
+                                 title="Fecha nacimiento del paciente"  showOn="button"
+                                 required = "true"
+                                 readonlyInput="true"
+                                 locale="es"
+                                 maxdate="#{pacienteController.getMaxDate()}"
+                                 requiredMessage="Campo obligatorio." >
+                        <p:ajax update="msg_fecha_nacimiento" event ="dateSelect" />
+                    </p:calendar>
+                </p:column>
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_estadoCivil}" for="estadoCivil" />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu disabled="#{pacienteController.ver_paciente}" 
+                                     id="estadoCivil" 
+                                     value="#{pacienteController.estadoCivil}" >
+                        <f:selectItems value="#{estadoCivilController.itemsAvailableSelectOne}"
+                                       var="estadoCivilItem"
+                                       itemValue="#{estadoCivilItem}"
+                                       itemLabel="#{estadoCivilItem.nombre}"
+                                       />
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="fechaNacimiento" id="msg_fecha_nacimiento"/> 
+                </p:column>
+                <p:column/>
+                <p:column/>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_estrato}" for="estrato" />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu disabled="#{pacienteController.ver_paciente}" 
+                                     id="estrato" value="#{pacienteController.estrato}" >
+                        <f:selectItems value="#{estratoController.itemsAvailableSelectOne}"
+                                       var="estratoItem"
+                                       itemValue="#{estratoItem}"
+                                       itemLabel="#{estratoItem.nombre}"
+                                       />
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:outputLabel style="font-weight:bold;" value="#{bundlePaciente.CreatePacienteLabel_ocupacion}"/>
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>         
+                    <p:selectOneMenu disabled="#{pacienteController.ver_paciente}" id="ocupacion" value="#{pacienteController.selected.ocupacion}">
+                        <f:selectItem itemLabel="Estudiante" itemValue="Estudiante"/>
+                        <f:selectItem itemLabel="Docente" itemValue="Docente"/>
+                        <f:selectItem itemLabel="Administrativo" itemValue="Administrativo"/>
+                    </p:selectOneMenu> 
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column style=" font-weight:bold;">
+                    <p:outputLabel value="#{bundlePaciente.CreatePacienteLabel_deptoNacimiento}"  />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu disabled="#{pacienteController.ver_paciente}" 
+                                     filter="true" id="deptoNacimiento" 
+                                     value="#{pacienteController.deptoNacimiento}"
+                                     required="true"
+                                     requiredMessage="Campo obligatorio">
+                        <p:ajax event="change" update="msgDeptoNacimiento"/>
+                        <p:ajax event="change" update="msgMunicipioNacimiento"/>
+                        <p:ajax event="change" update="municipioNacimiento"/>
+                        <p:ajax event="select" update="municipioNacimiento"/>
+                        <f:selectItem itemLabel="" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{deptoController.itemsAvailableSelectOne}"
+                                       var="deptoNacimientoItem"
+                                       itemValue="#{deptoNacimientoItem}"
+                                       itemLabel="#{deptoNacimientoItem.nombre}"/>
+
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column style="font-weight:bold;">
+                    <p:outputLabel value="#{bundlePaciente.CreatePacienteLabel_municipioNacimiento}"/>
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column >                        
+                    <p:selectOneMenu disabled="#{pacienteController.ver_paciente}" 
+                                     filter="true" id="municipioNacimiento" 
+                                     value="#{pacienteController.municipioNacimiento}"
+                                     required="true"
+                                     requiredMessage="Campo obligatorio">
+                        <p:ajax event="change" update="msgMunicipioNacimiento"/>
+                        <f:selectItems value="#{pacienteController.deptoNacimiento.municipioCollection}"
+                                       var="municipioNacimientoItem"
+                                       itemValue="#{municipioNacimientoItem}"
+                                       itemLabel="#{municipioNacimientoItem.nombre}"
+                                       />                        
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="deptoNacimiento" id="msgDeptoNacimiento"/> 
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="municipioNacimiento" id="msgMunicipioNacimiento"/> 
+                </p:column>
+            </p:row>
+            
+        </p:panelGrid>
+    </ui:component>
+</html>
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="QuirurgicoMedViewDlg" widgetVar="QuirurgicoMedViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleQuirurgicoMed.ViewQuirurgicoMedTitle}">
+            <h:form id="QuirurgicoMedViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{quirurgicoMedController.selected != null}">
+                        <h:outputText value="#{bundleQuirurgicoMed.ViewQuirurgicoMedLabel_idx}"/>
+                        <h:outputText value="#{quirurgicoMedController.selected.idx}" title="#{bundleQuirurgicoMed.ViewQuirurgicoMedTitle_idx}"/>
+                        <h:outputText value="#{bundleQuirurgicoMed.ViewQuirurgicoMedLabel_observaciones}"/>
+                        <h:outputText value="#{quirurgicoMedController.selected.observaciones}" title="#{bundleQuirurgicoMed.ViewQuirurgicoMedTitle_observaciones}"/>
+                        <h:outputText value="#{bundleQuirurgicoMed.ViewQuirurgicoMedLabel_consultaMedicaMedIdx}"/>
+                        <h:outputText value="#{quirurgicoMedController.selected.consultaMedicaMedIdx}" title="#{bundleQuirurgicoMed.ViewQuirurgicoMedTitle_consultaMedicaMedIdx}"/>
+                        <h:outputText value="#{bundleQuirurgicoMed.ViewQuirurgicoMedLabel_procedimientosCupsMedCodigo}"/>
+                        <h:outputText value="#{quirurgicoMedController.selected.procedimientosCupsMedCodigo}" title="#{bundleQuirurgicoMed.ViewQuirurgicoMedTitle_procedimientosCupsMedCodigo}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleQuirurgicoMed.Close}" onclick="QuirurgicoMedViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

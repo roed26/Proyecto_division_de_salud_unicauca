@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <h:outputStylesheet name="./css/default.css"/>
+      <h:outputStylesheet name="./css/cssLayout.css"/>
+      <h:outputStylesheet name="./css/usuario.css"/>
+      <h:outputStylesheet name="./css/style.css"/>
+      <h:outputScript library="js" name="login.js"/>
+   </h:head>
+    <h:body>
+        <div class="container">
+            <div class="jumbotron">
+                <div class="container-fluid text-center">
+                    <h1>#{usuarioSessionController.actual.nombres} </h1> 
+                    <p>Esta es la información que puedes gestionar: </p>
+                    <h:form> 
+                    <div class="row">
+                        <div class="col-sm-3">
+                        </div>
+                      <div class="col-sm-3">
+                            <p:commandLink  actionListener="#{cargarVistaMedicinaController.cargarGestionarAgenda()}" ajax="false">
+                                <div id="service" class="panel panel-primary">
+                                      <i class="fa fa-address-card fa-5x"></i> 
+                                      <p>Agenda</p>
+                                </div>
+                            </p:commandLink>
+                      </div>
+                      <div class="col-sm-3">
+                          <p:commandLink  actionListener="#{consultaMedicaMedController.prepareCreateconsultaMedicaMed(cargarVistaMedicinaController)}" ajax="false">
+                            <div id="service" class="panel panel-primary">
+                              <i class="fa fa-heartbeat fa-5x"></i> 
+                              <p>Historias</p>
+                            </div>
+                          </p:commandLink>
+                      </div>
+                        <div class="col-sm-3">
+                        </div>
+                        <div class="col-sm-3">
+                          <p:commandLink  actionListener="#{cargarVistaMedicinaController.cargarReportes()}" ajax="false">
+                          <div id="service" class="panel panel-primary">
+                            <i class="fa fa-file-pdf-o fa-5x"></i> 
+                            <p>Reportes</p>
+                          </div>
+                          </p:commandLink>
+                      </div>
+                    </div>
+                    </h:form>
+                </div>
+            </div>
+          </div>
+    </h:body>
+</html>
+

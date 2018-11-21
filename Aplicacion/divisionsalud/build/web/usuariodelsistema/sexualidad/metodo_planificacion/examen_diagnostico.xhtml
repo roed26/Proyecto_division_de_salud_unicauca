@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    >
+        <script>
+            $(document).ready(function() {
+               $('.ui-inputtextarea').flexible();
+            });
+             $(document).change(function() {
+               $('.ui-inputtextarea').flexible();
+            });
+            </script>
+ 
+            <p:separator />
+
+            <div class="ui-messages-info ">
+                <span class="ui-messages-info-detail"><b>Puede agregar los exámenes diagnósticos que ha realizado el paciente, aquí:</b></span>
+            </div>
+          
+            <p:dataTable value="#{historiaModuloSexualidadController.getResultadoExamenes(historiaModuloSexualidadController.historia.id)}"  
+                             var="examenDiagnostico">
+                    <p:column >
+                        <f:facet name="header">
+                            <h:outputText value="Nombre examen"/>
+                        </f:facet>
+                        <h:outputText value="#{examenDiagnostico.tipoExamDiagnosticoSexual.nombre}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Resultado"/>
+                        </f:facet>
+                        <p:selectOneRadio value="#{examenDiagnostico.resultadoExamenFisico}" >
+                            <f:selectItem itemLabel="Si" itemValue="si"/>
+                            <f:selectItem itemLabel="No" itemValue="no"/>
+                        </p:selectOneRadio>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Especificación"/>
+                        </f:facet>
+                        <p:row>
+                            <p:inputTextarea value="#{examenDiagnostico.especificacionExamenFisico}"
+                                             id="especificacionExamenDiagnostico"
+                                             rows="3" style="width:98%;" autoResize="false"
+                                             validatorMessage="La especificación de #{examen.tipoExamDiagnosticoSexual.nombre} admite máximo 300 caracteres">
+                                <f:validator validatorId = "Validar300Caracteres"/>
+                                <p:ajax event="keyup" update="msgEspecificacionExamenDiagnostico"/>
+                            </p:inputTextarea>
+                        </p:row>
+                        <p:message for="especificacionExamenDiagnostico" id="msgEspecificacionExamenDiagnostico"></p:message>
+
+                    </p:column>
+                </p:dataTable>             
+
+                <p:separator />
+                <div class="ui-messages-info ">
+                    <span class="ui-messages-info-detail"><b>Puede agregar tipos de exámenes diagnósticos, aquí:</b></span>
+                </div>
+                <p:panelGrid styleClass="gridsinbordes">
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Nombre del tipo de examen diagnóstico:"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="nombreTipo" 
+                                         value="#{examenesDiagnosticosPacienteSexualController.tmp1}"
+                                         styleClass="hintable"
+                                         title="Ingresar nombre tipo examen diagnostico" required="#{not empty param.valNombreTipo}"
+                                         requiredMessage="Campo obligatorio">
+                            </p:inputText>
+                            <p:message for="nombreTipo" id="msgNombreTipo"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel style="font-weight:bold;" value="Resultado:"/> 
+                        </p:column>
+                        <p:column>
+                            <p:inputTextarea id="descripcionTipo"
+                                             value="#{examenesDiagnosticosPacienteSexualController.tmp2}"
+                                             rows="3" cols="40"  autoResize="false"
+                                             validatorMessage="La especificación de #{examenesDiagnosticosPacienteSexualController.tmp1} admite máximo 300 caracteres"
+                                             required="#{not empty param.valDescripcionTipo}"
+                                             requiredMessage="Campo obligatorio">
+                                <f:validator validatorId = "Validar300Caracteres"/>
+                                <p:ajax event="keyup"/>
+                            </p:inputTextarea>
+                            <p:message for="descripcionTipo" id="msgDescripcionTipo"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column />
+                        <p:column />
+                        <p:column />
+                        <p:column>                            
+                            <p:commandButton value="Añadir a la lista" style="float: right" update="tableD nombreTipo descripcionTipo msgNombreTipo msgDescripcionTipo"
+                                             action="#{examenesDiagnosticosPacienteSexualController.añadirExamen()}">                            
+                            <f:param name="valNombreTipo" value="true" />
+                            <f:param name="valDescripcionTipo" value="true" />
+                            </p:commandButton>
+                                
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+
+                <p:separator />
+                <div class="ui-messages-info ">
+                    <span class="ui-messages-info-detail"><b>Exámenes diagnósticos del paciente:</b></span>
+                </div>
+                
+                <p:dataTable id="tableD"
+                value="#{examenesDiagnosticosPacienteSexualController.otrosExamenes}" 
+                var="examen" emptyMessage="No ha agregado ningún tipo de examen diagnóstico."   editable="true"
+                         paginator="true"
+                         rows="5"
+                         rowsPerPageTemplate="5,7,10"
+                         rowKey="#{examen.tipo}">
+                    
+                <f:facet name="header">
+                    Otros exámenes diagnósticos del paciente
+                </f:facet>
+
+                <p:column headerText="Nombre del examen">
+                    <h:outputText value="#{examen.tipo}" />
+                </p:column>
+
+                <p:column headerText="Resultado" style="text-align:center;">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText id="editDescripcion" value="#{examen.descripcion}" /></f:facet>
+                        <f:facet name="input"><p:inputTextarea maxlength="300" required="true" value="#{examen.descripcion}" style="width:95%" /></f:facet>
+                    </p:cellEditor>
+                    <p:message for="editDescripcion" id="msgEditDescripcion"/>
+                </p:column>
+                                
+                <p:column  headerText="Editar" style="width: 60px;">
+                    <p:rowEditor class="ui-button ui-widget ui-state-default ui-corner-all">
+                       
+                    </p:rowEditor>
+
+                </p:column>
+                    
+                <p:column   style="width: 80px; text-align:center;">
+                    <p:commandButton  value="Eliminar" class="ui-button ui-widget ui-state-default ui-corner-all" 
+                                      style="float: left;"
+                                     action="#{examenesDiagnosticosPacienteSexualController.removeExamen(examen)}"
+                                     update="tableD">
+                    </p:commandButton>
+                </p:column>
+                </p:dataTable>
+    
+                
+                <p:dialog header="Información" modal="true" position="center" widgetVar="DiagnosticoNoAgregado">
+               
+                    <h:panelGrid columns="2" >
+                        <p:graphicImage width="50px" height="50px" library="img" name="error.png"/>
+                        <p:outputLabel value="El examen seleccionado ya se encuentra en la lista." />
+                    </h:panelGrid>
+
+            </p:dialog>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AntFamiliarConsultaMedViewDlg" widgetVar="AntFamiliarConsultaMedViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle}">
+            <h:form id="AntFamiliarConsultaMedViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{antFamiliarConsultaMedController.selected != null}">
+                        <h:outputText value="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedLabel_idx}"/>
+                        <h:outputText value="#{antFamiliarConsultaMedController.selected.idx}" title="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle_idx}"/>
+                        <h:outputText value="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedLabel_observaciones}"/>
+                        <h:outputText value="#{antFamiliarConsultaMedController.selected.observaciones}" title="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle_observaciones}"/>
+                        <h:outputText value="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedLabel_padre}"/>
+                        <h:outputText value="#{antFamiliarConsultaMedController.selected.padre}" title="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle_padre}"/>
+                        <h:outputText value="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedLabel_abueloP}"/>
+                        <h:outputText value="#{antFamiliarConsultaMedController.selected.abueloP}" title="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle_abueloP}"/>
+                        <h:outputText value="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedLabel_abuelaP}"/>
+                        <h:outputText value="#{antFamiliarConsultaMedController.selected.abuelaP}" title="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle_abuelaP}"/>
+                        <h:outputText value="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedLabel_madre}"/>
+                        <h:outputText value="#{antFamiliarConsultaMedController.selected.madre}" title="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle_madre}"/>
+                        <h:outputText value="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedLabel_abueloM}"/>
+                        <h:outputText value="#{antFamiliarConsultaMedController.selected.abueloM}" title="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle_abueloM}"/>
+                        <h:outputText value="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedLabel_abuelaM}"/>
+                        <h:outputText value="#{antFamiliarConsultaMedController.selected.abuelaM}" title="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle_abuelaM}"/>
+                        <h:outputText value="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedLabel_hermanos}"/>
+                        <h:outputText value="#{antFamiliarConsultaMedController.selected.hermanos}" title="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle_hermanos}"/>
+                        <h:outputText value="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedLabel_antFamiliaresMedIdx}"/>
+                        <h:outputText value="#{antFamiliarConsultaMedController.selected.antFamiliaresMedIdx}" title="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle_antFamiliaresMedIdx}"/>
+                        <h:outputText value="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedLabel_consultaMedicaMedIdx}"/>
+                        <h:outputText value="#{antFamiliarConsultaMedController.selected.consultaMedicaMedIdx}" title="#{bundleAntFamiliarConsultaMed.ViewAntFamiliarConsultaMedTitle_consultaMedicaMedIdx}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleAntFamiliarConsultaMed.Close}" onclick="AntFamiliarConsultaMedViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

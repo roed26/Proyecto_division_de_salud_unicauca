@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+        <h:form id="InformacionPaciente" >
+            <p:panelGrid styleClass="panelgrid">
+                <p:row>
+                    <p:column colspan="10" style="text-align: center; font-size: 18px; font-weight:bold; color: black; background: #339cdf"
+                              rendered="#{evolucionHOdontologicaController.pacienteSeleccionado}">
+                        <p:outputLabel value="Información de paciente"/>
+                    </p:column>
+                    <p:column rowspan="2">
+                        <p:commandButton onclick="PF('seleccionPacienteDialog').show()" value="Seleccionar paciente" />
+                    </p:column>  
+                    <p:column rowspan="2">
+                        <center><p:commandButton value="Cancelar evolución" 
+                                                 action="#{evolucionHOdontologicaController.inicializarVariablesCancelar(cargarVistaController)}" ajax="false"/></center>
+                    </p:column>   
+                </p:row>
+                <p:row rendered="#{evolucionHOdontologicaController.pacienteSeleccionado}">
+                    <p:column>
+                        <p:outputLabel style="font-weight: bold; color: black;" value="Fecha de registro" />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{evolucionHOdontologicaController.fechaRegistro}" />
+                    </p:column>   
+                    <p:column>
+                        <p:outputLabel style="font-weight: bold; color: black;" value="#{bundlePaciente.CreatePacienteLabel_identificacion}" />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{evolucionHOdontologicaController.paciente.identificacion}" />
+                    </p:column>    
+                    <p:column>
+                        <p:outputLabel style="font-weight: bold;" value="Nombre: " />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{evolucionHOdontologicaController.paciente.nombre1} #{evolucionHOdontologicaController.paciente.nombre2}" />
+                        <p:outputLabel value=" #{evolucionHOdontologicaController.paciente.apellido1} #{evolucionHOdontologicaController.paciente.apellido2}" />
+                    </p:column> 
+                    <p:column>
+                        <p:outputLabel style="font-weight: bold; color: black;" value="#{bundlePaciente.CreatePacienteLabel_ocupacion}" />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{evolucionHOdontologicaController.paciente.ocupacion}" />
+                    </p:column>   
+                    <p:column>
+                        <p:outputLabel style="font-weight: bold; color: black;" value="#{bundlePaciente.CreatePacienteLabel_estado}" />
+                    </p:column>
+                    <p:column style="background: green;">
+                        <p:outputLabel rendered="#{evolucionHOdontologicaController.paciente.estado==1}" style="color: white;" value="Activo" />
+                    </p:column>   
+                </p:row>                
+            </p:panelGrid>
+        </h:form>
+        <p:separator style="height:3px; color: #000000"/>
+
+        <h:form id="evolucionHistoriaOdontologica" >
+            <p:wizard widgetVar="evolucionHistoriaWizard" showNavBar="true" 
+                      nextLabel="Siguiente" backLabel="Anterior"
+                      rendered="#{evolucionHOdontologicaController.pacienteSeleccionado}">
+                <p:tab title="Datos de acompañante">
+                    <p:panel header="Datos de acompañante">
+
+                        <p:panelGrid  id="panel" styleClass="panelgrid">
+                            <p:row>
+                                <p:column colspan="4">
+                                    <p:selectOneRadio  id="acompaniante" value="No"
+                                                       valueChangeListener="#{evolucionHOdontologicaController.respuestaAcompanante}"
+                                                       >
+                                        <f:selectItem itemLabel="Con acompañante" itemValue="Si" />
+                                        <f:selectItem itemLabel="Sin acompañante" itemValue="No" />    
+                                        <f:ajax   execute="acompaniante" render="panel" /> 
+                                    </p:selectOneRadio>
+                                </p:column>
+                            </p:row>
+                            <p:row rendered="#{evolucionHOdontologicaController.conAcompaniante}">
+                                <p:column >
+                                    <p:outputLabel value="#{bundleActualizacionOdo.CreateActualizacionOdoLabel_acompanante}" 
+                                                   for="acompanante" />
+                                </p:column>
+                                <p:column >
+                                    <p:inputText id="acompanante" 
+                                                 value="#{evolucionHOdontologicaController.actualizacionOdo.acompanante}" 
+                                                 title="#{bundleActualizacionOdo.CreateActualizacionOdoTitle_acompanante}" />
+                                </p:column>
+
+                                <p:column >
+                                    <p:outputLabel value="#{bundleActualizacionOdo.CreateActualizacionOdoLabel_parentesco}" for="parentesco" />
+
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="parentesco" value="#{evolucionHOdontologicaController.actualizacionOdo.parentesco}" >
+                                        <f:selectItems value="#{parentescoController.itemsAvailableSelectOne}"
+                                                       var="idParentescoItem"
+                                                       itemValue="#{idParentescoItem.id}"
+                                                       itemLabel="#{idParentescoItem.nombre}"/>
+                                    </p:selectOneMenu>
+
+                                </p:column>
+
+                            </p:row>
+
+                            <p:row rendered="#{evolucionHOdontologicaController.conAcompaniante}">
+                                <p:column >
+                                    <p:outputLabel value="#{bundleActualizacionOdo.CreateActualizacionOdoLabel_telefono}" for="telefono" />
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="telefono" value="#{evolucionHOdontologicaController.actualizacionOdo.telefono}" title="#{bundleActualizacionOdo.CreateActualizacionOdoTitle_telefono}" />
+                                </p:column>
+                                <p:column >
+                                    <p:outputLabel value="#{bundleActualizacionOdo.CreateActualizacionOdoLabel_celular}" for="celular" />
+                                </p:column>
+                                <p:column>
+                                    <p:inputText id="celular" value="#{evolucionHOdontologicaController.actualizacionOdo.celular}" title="#{bundleActualizacionOdo.CreateActualizacionOdoTitle_celular}" />
+                                </p:column>
+
+                            </p:row>
+                        </p:panelGrid>
+                    </p:panel>
+                </p:tab>
+
+                <p:tab title="Odontograma">
+                    <ui:include src="odontogramaEvolucion.xhtml"/>
+                </p:tab>
+                <p:tab title="Diagnostico">
+                    <br/>
+                    <br/>
+                    <p:panelGrid styleClass="panelgrid">
+                        <p:row> 
+                            <p:column  >
+                                <p:commandButton value="Agregar diagnostico" icon="ui-icon-plus" onclick="PF('agregarDiagnosticoDialog').show()"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="3" style=" width: 600px; text-align: center; font-size: 18px; font-weight:bold; color: white; background: #339cdf">
+                                <p:outputLabel value="Diagnosticos" />
+                            </p:column>
+                        </p:row>
+                        <p:row> 
+                            <p:column>
+                                <p:dataTable id="datalistDiagnosticosTipo" 
+                                             value="#{evolucionHOdontologicaController.listaDiagnosticosTipo}" var="item"
+                                             paginator="true"
+                                             paginatorPosition="bottom"
+                                             rows="10"
+                                             rowsPerPageTemplate="10,20,30"
+                                             >
+                                    <p:column style="width: 70px;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Identificador"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.diagnosticoCie10.id}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Descripcion"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.diagnosticoCie10.nombre}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Tipo de diagnostico"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.diagnostico.nombre}"/>
+                                    </p:column>
+                                    <p:column style="width: 180px;">
+                                        <f:facet name="header">
+                                            <h:outputText value="Acción"/>
+                                        </f:facet>
+                                        <p:commandButton id="createButton" icon="ui-icon-plus" value="Eliminar"
+                                                         action="#{evolucionHOdontologicaController.abrirMensajeAdvertencia(item)}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="nombreDiadnosticoDX1" value="#{evolucionHOdontologicaController.diagnosticoDX1}" />
+                            </p:column>
+                        </p:row>
+
+                    </p:panelGrid>
+                </p:tab>
+                <p:tab title="Evolución">
+
+                    <p:panel header="Evolución del paciente">
+                        <p:panelGrid columns="3" styleClass="panelgrid" >
+                            <p:inputTextarea placeholder="Descripción de la evolucion del paciente" 
+                                             rows="4" 
+                                             cols="100" 
+                                             id="descripcionEvolucion" 
+                                             value="#{evolucionHOdontologicaController.descripcionEvolucion}" 
+                                             title="Descripción evolución" />
+                            <p:outputLabel value="Diente: "/>
+                            <p:selectOneMenu filter="true" value="#{evolucionHOdontologicaController.diente}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="0"/>
+                                <f:selectItem itemLabel="11" itemValue="11"/>
+                                <f:selectItem itemLabel="12" itemValue="12"/>
+                                <f:selectItem itemLabel="13" itemValue="13"/>
+                                <f:selectItem itemLabel="14" itemValue="14"/>
+                                <f:selectItem itemLabel="15" itemValue="15"/>
+                                <f:selectItem itemLabel="16" itemValue="16"/>
+                                <f:selectItem itemLabel="17" itemValue="17"/>
+                                <f:selectItem itemLabel="18" itemValue="18"/>
+                                <f:selectItem itemLabel="21" itemValue="21"/>
+                                <f:selectItem itemLabel="22" itemValue="22"/>
+                                <f:selectItem itemLabel="23" itemValue="23"/>
+                                <f:selectItem itemLabel="24" itemValue="24"/>
+                                <f:selectItem itemLabel="25" itemValue="25"/>
+                                <f:selectItem itemLabel="26" itemValue="26"/>
+                                <f:selectItem itemLabel="27" itemValue="27"/>
+                                <f:selectItem itemLabel="28" itemValue="28"/>
+                                <f:selectItem itemLabel="31" itemValue="31"/>
+                                <f:selectItem itemLabel="32" itemValue="32"/>
+                                <f:selectItem itemLabel="33" itemValue="33"/>
+                                <f:selectItem itemLabel="34" itemValue="34"/>
+                                <f:selectItem itemLabel="35" itemValue="35"/>
+                                <f:selectItem itemLabel="36" itemValue="36"/>
+                                <f:selectItem itemLabel="37" itemValue="37"/>
+                                <f:selectItem itemLabel="38" itemValue="38"/>
+                                <f:selectItem itemLabel="41" itemValue="41"/>
+                                <f:selectItem itemLabel="42" itemValue="42"/>
+                                <f:selectItem itemLabel="43" itemValue="43"/>
+                                <f:selectItem itemLabel="44" itemValue="44"/>
+                                <f:selectItem itemLabel="45" itemValue="45"/>
+                                <f:selectItem itemLabel="46" itemValue="46"/>
+                                <f:selectItem itemLabel="47" itemValue="47"/>
+                                <f:selectItem itemLabel="48" itemValue="48"/>
+
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+
+                    </p:panel>
+                    <br/>
+                    <br/>
+                    <center>
+                        <p:commandButton value="Guardar evolucion" 
+                                         action="#{evolucionHOdontologicaController.guardarEvolucionHistoria()}"
+                                         onstart="PF('cargando').show()"  onsuccess="PF('cargando').hide()"
+                                         />
+                    </center>
+                </p:tab>
+            </p:wizard>
+        </h:form>
+
+        <p:dialog visible="#{!evolucionHOdontologicaController.pacienteSeleccionado}" id="PacienteSeleccion" 
+                  widgetVar="seleccionPacienteDialog" modal="true" width="850" position="center"   header="Seleccionar paciente">
+            <h:form id="PacienteListForm">
+                <p:dataTable id="datalist" value="#{pacienteController.listaPacientesActivosEvolucion}" var="item"
+                             paginator="true"
+                             rowKey="#{item.id}"
+                             rows="10"
+                             >
+                    <p:column filterBy="#{item.identificacion}">
+                        <f:facet name="header">
+                            <h:outputText value="#{bundlePaciente.ListPacienteTitle_identificacion}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.identificacion}"/>
+                    </p:column>
+                    <p:column filterBy="#{item.nombre1}">
+                        <f:facet name="header">
+                            <h:outputText value="Nombres"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombre1} #{item.nombre2}"/>
+                    </p:column>
+
+                    <p:column filterBy="#{item.apellido1}">
+                        <f:facet name="header">
+                            <h:outputText value="Apellidos"/>
+                        </f:facet>
+                        <h:outputText value="#{item.apellido1} #{item.apellido2}"/>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton id="botonSeleccionarPaciente" value="Selecionar" 
+                                         icon="ui-icon-plus"  action="#{evolucionHOdontologicaController.seleccionarPaciente(item)}" 
+                                         oncomplete="#{evolucionHOdontologicaController.cambiarEstadoBoolSeleccion()}"/>
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </p:dialog>    
+
+        <p:dialog  id="AlergiasPaciente" resizable="false"
+                   widgetVar="AlergiasPacienteDialog" modal="true" width="450" position="center"  
+                   header="Alergias">
+            <p:messages id="msgAlergias" style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
+           
+        </p:dialog>    
+        <p:dialog   widgetVar="registroEvolucionExitosoDialog" closable="false" modal="true" position="center"   header="Mensaje">
+            <h:form id="mensajeForm">
+                <h:panelGrid columns="2" >
+                    <p:graphicImage width="50px" height="50px" library="img" name="exitoso.png" />
+                    <p:outputLabel value="La evolución del paciente se ha realizado con exito" />
+                    <p:commandButton value="Aceptar" 
+                                     action="#{evolucionHOdontologicaController.volverAInicio(cargarVistaController)}" 
+                                     ajax="r" update="@all"/>
+                </h:panelGrid>
+
+            </h:form>
+        </p:dialog>
+
+        <p:dialog widgetVar="agregarDiagnosticoDialog" width="750" modal="true" header="Listado de diagnosticos">
+            <h:form id="DiagnosticosCieOdoListForm">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Buscar por:" />
+                    <p:inputText  placeholder="Identificador o nombre" style="width: 340px;"  value="#{diagnosticocie10OdoController.busquedaDiagnostico}" >
+                        <p:ajax event="keyup" update="datalist" listener="#{diagnosticocie10OdoController.buscarPorNombreId()}" oncomplete="#{diagnosticocie10OdoController.reiniciarCampoBusqueda()}" />                                
+                    </p:inputText>                          
+                </h:panelGrid>
+                <p:dataTable id="datalist" value="#{diagnosticocie10OdoController.items}" var="item"
+                             paginator="true"
+                             rowKey="#{item.id}"
+                             rows="5" paginatorPosition="bottom"
+                             rowsPerPageTemplate="5,10"
+                             >
+                    <p:column style="width: 70px;">
+                        <f:facet name="header">
+                            <h:outputText value="Identificador"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+                    <p:column style="width: 180px;">
+                        <f:facet name="header">
+                            <h:outputText value="Acción"/>
+                        </f:facet>
+                        <p:commandButton id="createButton" icon="ui-icon-plus" value="Seleccionar"
+                                         action="#{evolucionHOdontologicaController.seleccionarDiagnostico(item)}"/>
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+        <p:dialog widgetVar="seleccionarTipoDiagnostico" width="400" modal="true">
+            <h:form id="tipoDiagnostico">
+                <p:dataTable id="datalist" value="#{tipodiagnosticoController.items}" var="item"
+                             paginator="true"
+                             rowKey="#{item.id}"
+                             rows="5"
+                             rowsPerPageTemplate="5,10"
+                             >
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nombre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombre}"/>
+                    </p:column>
+                    <p:column style="width: 180px;">
+                        <f:facet name="header">
+                            <h:outputText value="Acción"/>
+                        </f:facet>
+                        <p:commandButton id="createButton" icon="ui-icon-plus" value="Seleccionar"
+                                         action="#{evolucionHOdontologicaController.agregarDiagnosticoTipo(item)}"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+        <p:dialog header="Información" modal="true" position="center" widgetVar="dlgMensajeAdventencia" closable="false">
+            <p:messages  style="font-size: 15px;"  showDetail="true" autoUpdate="true"/>
+            <h:form>
+                <center>
+                    <p:commandButton  value="Aceptar" style="font-weight: normal;"
+                                      action="#{evolucionHOdontologicaController.eliminarDiagnosticoTipoDeLista()}"/>
+                    <p:commandButton  value="Cancelar" style="font-weight: normal;"
+                                      onclick="PF('dlgMensajeAdventencia').hide()"/>
+                </center>
+            </h:form>
+        </p:dialog>
+    </body>
+
+</html>
+

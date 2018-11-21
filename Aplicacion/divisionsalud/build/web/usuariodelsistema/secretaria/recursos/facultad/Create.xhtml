@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FacultadCreateDlg" widgetVar="FacultadCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleProgramas.CreateFacultadTitle}">
+            <h:form id="FacultadCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{facultadController.selected != null}">
+                        <p:outputLabel value="#{bundleProgramas.CreateFacultadLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{facultadController.selected.id}" title="#{bundleProgramas.CreateFacultadTitle_id}" required="true" requiredMessage="#{bundleProgramas.CreateFacultadRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundleProgramas.CreateFacultadLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{facultadController.selected.nombre}" title="#{bundleProgramas.CreateFacultadTitle_nombre}" />
+                        <p:outputLabel value="#{bundleProgramas.CreateFacultadLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{facultadController.selected.estado}" required="true" requiredMessage="#{bundleProgramas.EditFacultadRequiredMessage_estado}"/>
+                    </p:panelGrid>
+                    <center>
+                        <p:commandButton actionListener="#{facultadController.create}" value="#{bundleProgramas.Save}" update="display,:FacultadListForm:datalist" oncomplete="handleSubmit(args,'FacultadCreateDialog');" onclick="FacultadCreateDialog.hide()"/>
+                        <p:commandButton value="#{bundleProgramas.Cancel}" onclick="FacultadCreateDialog.hide()"/>
+                    </center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

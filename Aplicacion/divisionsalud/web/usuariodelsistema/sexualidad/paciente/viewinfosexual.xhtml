@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/templates/_sexualidadtmp.xhtml">
+        <ui:define name="body">
+            <style>
+                .ui-outputlabel {
+                    font-weight:bold;
+                }
+                .ui-outputlabel-rfi {
+                    color: red;
+                }
+            </style>
+            #{antecedentesPersonalesSexualController.cargarAntecedentes(pacienteController.selected.id)}
+            #{historialMetodosUsadosSexualController.cargarMetodosUsados(pacienteController.selected.id)}
+            #{metodoAdoptadoSexualController.cargarMetodoAdoptado(pacienteController.selected.id)}
+            #{examenFisicoController.cargar_examen_fisicoIDPaciente(pacienteController.selected.id)}
+            #{examenesDiagnosticosPacienteSexualController.cargarExamenesDiagnosticos(pacienteController.selected.id)}
+            <ui:include src="../../datosBasicosPaciente.xhtml"/>
+            <p:commandLink styleClass="fa fa-plus" action="detalles?faces-redirect=true" 
+               actionListener="#{pacienteController.cargarPaciente(pacienteController.selected.id)}">
+                <h:outputLabel> Atrás</h:outputLabel>
+            </p:commandLink>
+             <h:form style="padding-bottom: 25px;">
+            <p:tabView >
+                    <p:tab title="Antecedentes Clínicos" titleStyleClass="title">
+                        <p:panel header="Antecedentes Clínicos">
+                            <ui:include src="../metodo_planificacion/antecedentes_clinicos.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab title="Métodos Usados" titleStyleClass="title">
+                        <p:panel header="Métodos Usados">
+                            <ui:include src="../metodo_planificacion/metodos_usados.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Examen Físico" titleStyleClass="title">
+                        <p:panel header="Examen Físico">
+                            <ui:include src="../metodo_planificacion/examen_fisico/examen_fisico.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Examen Diagnóstico" titleStyleClass="title">
+                        <p:panel header="Examen Diagnóstico">
+                            <ui:include src="../metodo_planificacion/ver_examen_diagnostico.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Método Adoptado" titleStyleClass="title">
+                        <p:panel header="Método Adoptado" id="tab_adoptado">
+                            <ui:include src="../metodo_planificacion/metodo_adoptado.xhtml"/>
+                        </p:panel>
+                       
+                    </p:tab>
+            </p:tabView>
+             </h:form>      
+        </ui:define>
+    </ui:composition>
+</html>

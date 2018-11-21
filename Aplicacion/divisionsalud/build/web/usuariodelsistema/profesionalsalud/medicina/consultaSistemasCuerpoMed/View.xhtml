@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ConsultaSistemasCuerpoMedViewDlg" widgetVar="ConsultaSistemasCuerpoMedViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleConsultaSistemasCuerpoMed.ViewConsultaSistemasCuerpoMedTitle}">
+            <h:form id="ConsultaSistemasCuerpoMedViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{consultaSistemasCuerpoMedController.selected != null}">
+                        <h:outputText value="#{bundleConsultaSistemasCuerpoMed.ViewConsultaSistemasCuerpoMedLabel_idx}"/>
+                        <h:outputText value="#{consultaSistemasCuerpoMedController.selected.idx}" title="#{bundleConsultaSistemasCuerpoMed.ViewConsultaSistemasCuerpoMedTitle_idx}"/>
+                        <h:outputText value="#{bundleConsultaSistemasCuerpoMed.ViewConsultaSistemasCuerpoMedLabel_estado}"/>
+                        <h:outputText value="#{consultaSistemasCuerpoMedController.selected.estado}" title="#{bundleConsultaSistemasCuerpoMed.ViewConsultaSistemasCuerpoMedTitle_estado}"/>
+                        <h:outputText value="#{bundleConsultaSistemasCuerpoMed.ViewConsultaSistemasCuerpoMedLabel_observaciones}"/>
+                        <h:outputText value="#{consultaSistemasCuerpoMedController.selected.observaciones}" title="#{bundleConsultaSistemasCuerpoMed.ViewConsultaSistemasCuerpoMedTitle_observaciones}"/>
+                        <h:outputText value="#{bundleConsultaSistemasCuerpoMed.ViewConsultaSistemasCuerpoMedLabel_consultaMedicaMedIdx}"/>
+                        <h:outputText value="#{consultaSistemasCuerpoMedController.selected.consultaMedicaMedIdx}" title="#{bundleConsultaSistemasCuerpoMed.ViewConsultaSistemasCuerpoMedTitle_consultaMedicaMedIdx}"/>
+                        <h:outputText value="#{bundleConsultaSistemasCuerpoMed.ViewConsultaSistemasCuerpoMedLabel_sistemaCuerpoMedIdx}"/>
+                        <h:outputText value="#{consultaSistemasCuerpoMedController.selected.sistemaCuerpoMedIdx}" title="#{bundleConsultaSistemasCuerpoMed.ViewConsultaSistemasCuerpoMedTitle_sistemaCuerpoMedIdx}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleConsultaSistemasCuerpoMed.Close}" onclick="ConsultaSistemasCuerpoMedViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

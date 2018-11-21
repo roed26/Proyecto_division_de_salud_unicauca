@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HabitosMedViewDlg" widgetVar="HabitosMedViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleHabitosMed.ViewHabitosMedTitle}">
+            <h:form id="HabitosMedViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{habitosMedController.selected != null}">
+                        <h:outputText value="#{bundleHabitosMed.ViewHabitosMedLabel_descripcion}"/>
+                        <h:outputText value="#{habitosMedController.selected.descripcion}" title="#{bundleHabitosMed.ViewHabitosMedTitle_descripcion}"/>
+                        <h:outputText value="#{bundleHabitosMed.ViewHabitosMedLabel_consumeSiNoEx}"/>
+                        <h:outputText value="#{habitosMedController.selected.consumeSiNoEx}" title="#{bundleHabitosMed.ViewHabitosMedTitle_consumeSiNoEx}"/>
+                        <h:outputText value="#{bundleHabitosMed.ViewHabitosMedLabel_consultaMedicaMed}"/>
+                        <h:outputText value="#{habitosMedController.selected.consultaMedicaMed}" title="#{bundleHabitosMed.ViewHabitosMedTitle_consultaMedicaMed}"/>
+                        <h:outputText value="#{bundleHabitosMed.ViewHabitosMedLabel_tipoHabito}"/>
+                        <h:outputText value="#{habitosMedController.selected.tipoHabito}" title="#{bundleHabitosMed.ViewHabitosMedTitle_tipoHabito}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundleHabitosMed.Close}" onclick="HabitosMedViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PatologicoConsultaMedViewDlg" widgetVar="PatologicoConsultaMedViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlePatologicoConsultaMed.ViewPatologicoConsultaMedTitle}">
+            <h:form id="PatologicoConsultaMedViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{patologicoConsultaMedController.selected != null}">
+                        <h:outputText value="#{bundlePatologicoConsultaMed.ViewPatologicoConsultaMedLabel_idx}"/>
+                        <h:outputText value="#{patologicoConsultaMedController.selected.idx}" title="#{bundlePatologicoConsultaMed.ViewPatologicoConsultaMedTitle_idx}"/>
+                        <h:outputText value="#{bundlePatologicoConsultaMed.ViewPatologicoConsultaMedLabel_estadoSiNo}"/>
+                        <h:outputText value="#{patologicoConsultaMedController.selected.estadoSiNo}" title="#{bundlePatologicoConsultaMed.ViewPatologicoConsultaMedTitle_estadoSiNo}"/>
+                        <h:outputText value="#{bundlePatologicoConsultaMed.ViewPatologicoConsultaMedLabel_descripcion}"/>
+                        <h:outputText value="#{patologicoConsultaMedController.selected.descripcion}" title="#{bundlePatologicoConsultaMed.ViewPatologicoConsultaMedTitle_descripcion}"/>
+                        <h:outputText value="#{bundlePatologicoConsultaMed.ViewPatologicoConsultaMedLabel_consultaMedicaMedIdx}"/>
+                        <h:outputText value="#{patologicoConsultaMedController.selected.consultaMedicaMedIdx}" title="#{bundlePatologicoConsultaMed.ViewPatologicoConsultaMedTitle_consultaMedicaMedIdx}"/>
+                        <h:outputText value="#{bundlePatologicoConsultaMed.ViewPatologicoConsultaMedLabel_patologicosMedIdx}"/>
+                        <h:outputText value="#{patologicoConsultaMedController.selected.patologicosMedIdx}" title="#{bundlePatologicoConsultaMed.ViewPatologicoConsultaMedTitle_patologicosMedIdx}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundlePatologicoConsultaMed.Close}" onclick="PatologicoConsultaMedViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

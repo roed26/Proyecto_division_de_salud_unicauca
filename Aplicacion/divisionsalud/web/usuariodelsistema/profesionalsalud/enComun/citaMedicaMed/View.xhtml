@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CitaMedicaMedViewDlg" widgetVar="CitaMedicaMedViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCitaMedicaMedTitle}">
+            <h:form id="CitaMedicaMedViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{citaMedicaMedController.selected != null}">
+                        <h:outputText value="#{bundle.ViewCitaMedicaMedLabel_fechaProgramada}"/>
+                        <h:outputText value="#{citaMedicaMedController.selected.fechaProgramada}" title="#{bundle.ViewCitaMedicaMedTitle_fechaProgramada}">
+                            <f:convertDateTime pattern="MM/dd/yyyy"
+                                       type="date"
+                                       timeZone="America/Bogota"
+                                       timeStyle="short"  />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewCitaMedicaMedLabel_horaInicio}"/>
+                        <h:outputText value="#{citaMedicaMedController.selected.horaInicio}" title="#{bundle.ViewCitaMedicaMedTitle_horaInicio}">
+                            <f:convertDateTime pattern="h:mm a"
+                                               type="time"
+                                               timeZone="America/Bogota"
+                                               timeStyle="short"
+                                               locale="es_CO" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewCitaMedicaMedLabel_horaFin}"/>
+                        <h:outputText value="#{citaMedicaMedController.selected.horaFin}" title="#{bundle.ViewCitaMedicaMedTitle_horaFin}">
+                            <f:convertDateTime pattern="h:mm a"
+                                               type="time"
+                                               timeZone="America/Bogota"
+                                               timeStyle="short"
+                                               locale="es_CO" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewCitaMedicaMedLabel_estado}"/>
+                        <h:outputText value="#{citaMedicaMedController.selected.estado}" title="#{bundle.ViewCitaMedicaMedTitle_estado}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="CitaMedicaMedViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/templates/_sexualidadtmp.xhtml">
+
+        <ui:define name="body">
+
+            <div class="ui-messages-info ">
+                <span class="ui-messages-info-detail">
+                    <c:if test="#{pacienteController.tipoListar eq 1}">
+                        <b>Listado General de Pacientes</b>
+                    </c:if>
+                    <c:if test="#{pacienteController.tipoListar eq 3}">
+                        <b>Listado de Pacientes no inscritos en el Programa de Sexualidad</b>
+                    </c:if>
+                    <c:if test="#{pacienteController.tipoListar eq 2}">
+                        <b>Listado de Pacientes inscritos en el Programa de Sexualidad</b>
+                    </c:if>
+                </span>
+            </div>
+
+            <p:separator />
+
+            <h:form>
+
+                <strong><p:outputLabel value="Buscar Paciente: " /></strong>
+                <p:inputText   style="width: 300px;" placeholder="Ingrese nombre, apellidos o identificación" value="#{pacienteController.busquedaPaciente}">
+                </p:inputText>
+
+                <p:commandButton style="margin-left: 10px;"
+                    value="Buscar" update="datalist" action="#{pacienteController.tipoBuscarPacientes()}">
+                </p:commandButton>
+
+                <p:separator/>
+
+                <c:set var="Busqueda" value="#{pacienteController.busquedaPaciente != '' }" />
+
+                <c:if  test="#{pacienteController.busquedaPaciente != '' or pacienteController.busquedaPaciente eq null}" >
+
+                        <p:panelGrid class=" ui-messages-info gridsinbordes">
+                            <p:row>
+                                <p:column>
+                                    <span class="ui-messages-info-detail"><b>Resultado búsqueda: #{pacienteController.busquedaPaciente}</b></span>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton value="Volver al listado"   update="datalist" action="#{pacienteController.limpiarBusquedaAndRedirect()}">                            
+                                    </p:commandButton>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                </c:if>
+
+                <p:dataTable id="datalist" value="#{pacienteController.dataModel}" var="item"
+                             selectionMode="single" selection="#{pacienteController.selected}"
+                             paginator="true"
+                             rowKey="#{item.id}"
+                             rows="10"
+                             lazy="true"
+                             rowsPerPageTemplate="7,10,20,30,40"
+                             >
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Identificación"/>
+                        </f:facet>
+                        <h:outputText value="#{item.identificacion}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Fecha Apertura"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaApertura}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nombres"/>
+                        </f:facet>
+                        <h:outputText value="#{item.nombre1.toUpperCase()} #{item.nombre2.toUpperCase()}"/>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Apellidos"/>
+                        </f:facet>
+                        <h:outputText value="#{item.apellido1.toUpperCase()} #{item.apellido2.toUpperCase()}"/>
+                    </p:column>
+                    <!-- Para listar -->
+                    <p:column rendered="#{pacienteController.tipoListar eq 1}">
+
+                        <h:commandLink styleClass="fa fa-plus" action="detalles?faces-redirect=true" actionListener="#{pacienteController.cargarPaciente(item.id)}">
+
+                            <f:setPropertyActionListener  value="#{item}" 
+                                                          target="#{pacienteController.selected}" />
+                            <h:outputLabel> <h:graphicImage  value="../../../resources/img/ver.svg" width="60" height="18"/>DETALLES</h:outputLabel>
+
+                        </h:commandLink>
+                    </p:column>
+                    <!-- Para Listar -->
+                    <p:column rendered="#{pacienteController.tipoListar eq 1}">
+                        <h:commandLink styleClass="fa fa-plus" action="edit?faces-redirect=true" actionListener="#{pacienteController.cargarPaciente(item.id)}">
+                            #{pacienteController.noViendoPaciente()}
+                            <f:setPropertyActionListener  value="#{item}" 
+                                                          target="#{pacienteController.selected}" />
+                            <h:outputLabel><h:graphicImage  value="../../../resources/img/editar.svg" width="60" height="18"/>  EDITAR </h:outputLabel>
+                        </h:commandLink>
+
+                    </p:column>
+                    <!-- Para iniciar control -->
+                    <p:column rendered="#{pacienteController.tipoListar eq 3}">
+
+                        <h:commandLink styleClass="fa fa-plus" action="#{historiaModuloSexualidadController.modificarId(item.id)}">
+                            <f:setPropertyActionListener  value="#{item}" 
+                                                          target="#{pacienteController.selected}" />
+                            <h:outputLabel> <h:graphicImage  value="../../../resources/img/control.svg" width="60" height="18"/>INICIAR</h:outputLabel>
+                        </h:commandLink>
+                    </p:column>
+                    
+                    <p:column rendered="#{pacienteController.tipoListar eq 3}">                        
+                        <h:commandLink styleClass="fa fa-plus" action="detalles?faces-redirect=true" actionListener="#{pacienteController.cargarPaciente(item.id)}">
+
+                            <f:setPropertyActionListener  value="#{item}" 
+                                                          target="#{pacienteController.selected}" />
+                            <h:outputLabel> <h:graphicImage  value="../../../resources/img/ver.svg" width="60" height="18"/>DETALLES</h:outputLabel>
+
+                        </h:commandLink>
+                    </p:column>
+                    <!-- Para registrar control -->
+                    <p:column rendered="#{pacienteController.tipoListar eq 2}">
+
+                        <h:commandLink styleClass="fa fa-plus" action="/usuariodelsistema/sexualidad/control/control.xhtml?faces-redirect=true" actionListener="#{pacienteController.cargarPaciente(item.id)}">
+                            <f:actionListener binding="#{examenFisicoController.setViendo(false)}"/>
+                            <f:setPropertyActionListener  value="#{item}" 
+                                                          target="#{pacienteController.selected}" />
+                            <h:outputLabel> <h:graphicImage  value="../../../resources/img/control.svg" width="60" height="18"/>CONTROL</h:outputLabel>
+                            <f:actionListener binding="#{controlSexualController.limpiar()}"/>
+                        </h:commandLink>
+                    </p:column>
+                    <!-- Para registrar control -->
+                    <p:column rendered="#{pacienteController.tipoListar eq 2}">                        
+                        <h:commandLink styleClass="fa fa-plus" action="detalles?faces-redirect=true" actionListener="#{pacienteController.cargarPaciente(item.id)}">
+
+                            <f:setPropertyActionListener  value="#{item}" 
+                                                          target="#{pacienteController.selected}" />
+                            <h:outputLabel> <h:graphicImage  value="../../../resources/img/ver.svg" width="60" height="18"/>DETALLES</h:outputLabel>
+
+                        </h:commandLink>
+                    </p:column>
+                    <!-- Para registrar control -->
+                    <p:column rendered="#{pacienteController.tipoListar eq 2}">
+                        <h:commandLink styleClass="fa fa-plus" action="edit?faces-redirect=true" actionListener="#{pacienteController.cargarPaciente(item.id)}">
+                            #{pacienteController.noViendoPaciente()}
+                            <f:setPropertyActionListener  value="#{item}" 
+                                                          target="#{pacienteController.selected}" />
+                            <h:outputLabel><h:graphicImage  value="../../../resources/img/editar.svg" width="60" height="18"/>  EDITAR </h:outputLabel>
+                        </h:commandLink>
+
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+            <br/>
+          
+        </ui:define>
+    </ui:composition>
+</html>
+

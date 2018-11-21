@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+        <p:panelGrid styleClass="gridsinbordes" >
+            <p:row>
+                <p:column style="font-weight:bold;black">
+                    <p:outputLabel value="Depto. Residencia:" />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu disabled="#{pacienteController.ver_paciente}" 
+                                     required="true" filter="true" 
+                                     id="deptoResidencia" 
+                                     value="#{pacienteController.deptoResidencia}" 
+                                     requiredMessage="Campo obligatorio">
+                        <p:ajax event="change" update="municipioResidencia"/>
+                        <p:ajax event="change" update="msgMunicipioResidencia"/>
+                        <p:ajax update="msgDeptoResidencia" event="change"/>
+                        <f:selectItem itemLabel="" itemValue="" noSelectionOption="true"/>
+                        <f:selectItems value="#{deptoController.itemsAvailableSelectOne}"
+                                       var="deptoResidenciaItem"
+                                       itemValue="#{deptoResidenciaItem}"
+                                       itemLabel="#{deptoResidenciaItem.nombre}">
+
+                        </f:selectItems>
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column style="font-weight:bold;">
+                    <p:outputLabel value="#{bundlePaciente.CreatePacienteLabel_municipioResidencia}"  />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu disabled="#{pacienteController.ver_paciente}" 
+                                     required="true" filter="true"
+                                     id="municipioResidencia" 
+                                     value="#{pacienteController.municipioResidencia}" 
+                                     requiredMessage="Campo obligatorio">
+                        <p:ajax update="msgMunicipioResidencia" event="change"/>
+                        <f:selectItems value="#{pacienteController.deptoResidencia.municipioCollection}"
+                                       var="municipioResidenciaItem"
+                                       itemValue="#{municipioResidenciaItem}"
+                                       itemLabel="#{municipioResidenciaItem.nombre}"
+                                       />                        
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="deptoResidencia" id="msgDeptoResidencia"/> 
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="municipioResidencia" id="msgMunicipioResidencia"/> 
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column style="font-weight:bold;">
+                    <p:outputLabel value="#{bundlePaciente.CreatePacienteLabel_direccion}"/>
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:inputText disabled="#{pacienteController.ver_paciente}" id="direccion" 
+                                 value="#{pacienteController.selected.direccion}" 
+                                 title  ="#{bundle.CreatePacienteTitle_direccion}" >
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <f:validator validatorId="ValidarCampo60Caracteres"/>
+                        <p:ajax update="msgDireccionResidencia" event ="keyup" />
+                    </p:inputText>
+                </p:column>
+                <p:column style="font-weight:bold;">
+                    <p:outputLabel value="Teléfono:"/>
+                </p:column>
+                <p:column>
+                    <p:inputText disabled="#{pacienteController.ver_paciente}" 
+                                 id="telefono" 
+                                 value="#{pacienteController.selected.telefono}" 
+                                 title="#{bundle.CreatePacienteTitle_telefono}" >                       
+                        <f:validator validatorId="ValidarCampoMaximo30Caracteres"/>
+                        <f:validator validatorId="ValidarSoloNumeros"/>
+                        <p:ajax update="msgTelefono" event ="keyup" />
+                    </p:inputText>
+                </p:column>
+            </p:row>   
+
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="direccion" id="msgDireccionResidencia"/> 
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="telefono" id="msgTelefono"/> 
+                </p:column>
+            </p:row> 
+        </p:panelGrid>
+    </h:body>
+</html>
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HistoricoGinecostetricosCreateDlg" widgetVar="HistoricoGinecostetricosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleHistoricoGinecostetricosMed.CreateHistoricoGinecostetricosTitle}">
+            <h:form id="HistoricoGinecostetricosCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{historicoGinecostetricosController.selected != null}">
+                        <p:outputLabel value="#{bundleHistoricoGinecostetricosMed.CreateHistoricoGinecostetricosLabel_observaciones}" for="observaciones" />
+                        <p:inputTextarea rows="4" cols="30" id="observaciones" value="#{historicoGinecostetricosController.selected.observaciones}" title="#{bundleHistoricoGinecostetricosMed.CreateHistoricoGinecostetricosTitle_observaciones}" />
+                        <p:outputLabel value="#{bundleHistoricoGinecostetricosMed.CreateHistoricoGinecostetricosLabel_ginecostetricosMed}" for="ginecostetricosMed" />
+                        <p:selectOneMenu id="ginecostetricosMed" value="#{historicoGinecostetricosController.selected.ginecostetricosMed}" required="true" requiredMessage="#{bundleHistoricoGinecostetricosMed.EditHistoricoGinecostetricosRequiredMessage_ginecostetricosMed}">
+                            <f:selectItems value="#{ginecostetricosMedController.itemsAvailableSelectOne}"
+                                           var="ginecostetricosMedItem"
+                                           itemValue="#{ginecostetricosMedItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleHistoricoGinecostetricosMed.CreateHistoricoGinecostetricosLabel_consultaMedicaMed}" for="consultaMedicaMed" />
+                        <p:selectOneMenu id="consultaMedicaMed" value="#{historicoGinecostetricosController.selected.consultaMedicaMed}" required="true" requiredMessage="#{bundleHistoricoGinecostetricosMed.EditHistoricoGinecostetricosRequiredMessage_consultaMedicaMed}">
+                            <f:selectItems value="#{consultaMedicaMedController.itemsAvailableSelectOne}"
+                                           var="consultaMedicaMedItem"
+                                           itemValue="#{consultaMedicaMedItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{historicoGinecostetricosController.create}" value="#{bundleHistoricoGinecostetricosMed.Save}" update="display,:HistoricoGinecostetricosListForm:datalist,:growl" oncomplete="handleSubmit(args,'HistoricoGinecostetricosCreateDialog');"/>
+                    <p:commandButton value="#{bundleHistoricoGinecostetricosMed.Cancel}" onclick="HistoricoGinecostetricosCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

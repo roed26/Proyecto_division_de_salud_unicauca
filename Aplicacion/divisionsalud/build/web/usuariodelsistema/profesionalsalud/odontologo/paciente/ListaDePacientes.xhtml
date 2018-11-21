@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <h:form id="PacienteListForm">
+        <h:panelGrid columns="4" >
+            <p:outputLabel value="Buscar paciente:" />
+            <p:inputText  placeholder="Digite los nombres, apellidos o identificación" style="width: 300px;"  value="#{pacienteController.busquedaPaciente}" >
+                <p:ajax event="keyup" update="datalist" listener="#{pacienteController.buscarPaciente()}" />                                
+            </p:inputText> 
+            <p:spacer width="10"/>
+            <p:commandButton value="Registrar paciente" 
+                             action="#{cargarVistaController.cargarRegistrarPaciente()}" ajax="false"/>
+        </h:panelGrid>
+
+        <p:dataTable id="datalist" value="#{pacienteController.items}" var="item"
+                     paginator="true"
+                     rowKey="#{item.id}"
+                     rows="10"
+                     >
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="#{bundlePaciente.ListPacienteTitle_identificacion}"/>
+                </f:facet>
+                <h:outputText value="#{item.identificacion}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="#{bundlePaciente.ListPacienteTitle_nombre1}"/>
+                </f:facet>
+                <h:outputText value="#{item.nombre1}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="#{bundlePaciente.ListPacienteTitle_nombre2}"/>
+                </f:facet>
+                <h:outputText value="#{item.nombre2}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="#{bundlePaciente.ListPacienteTitle_apellido1}"/>
+                </f:facet>
+                <h:outputText value="#{item.apellido1}"/>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="#{bundlePaciente.ListPacienteTitle_apellido2}"/>
+                </f:facet>
+                <h:outputText value="#{item.apellido2}"/>
+            </p:column>
+
+            <p:column>
+                <p:commandButton id="botonSeleccionarPacienteApertura" value="Abir historia"  
+                                 rendered="#{!aperturaHOdontologicaController.verificarApertura(item)}"
+                                 icon="ui-icon-plus"  action="#{aperturaHOdontologicaController.seleccionarPaciente(item,cargarVistaController)}" 
+                                 oncomplete="#{aperturaHOdontologicaController.cambiarEstadoBool()}"/>
+                <p:commandButton id="botonSeleccionarPacienteEvolucion" value="Atender"  icon="ui-icon-plus"  
+                                 rendered="#{aperturaHOdontologicaController.verificarApertura(item)}"
+                                 action="#{aperturaHOdontologicaController.seleccionarPaciente(item,cargarVistaController)}" 
+                                 oncomplete="#{aperturaHOdontologicaController.cambiarEstadoBool()}"/>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+
+
+
+</html>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    
+    
+            <h:form id="AntFamiliarConsultaMedListForm">
+                <p:panel header="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle}">
+                    <p:dataTable id="datalist" value="#{antFamiliarConsultaMedController.items}" var="item"
+                                 selectionMode="single" selection="#{antFamiliarConsultaMedController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idx}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle_idx}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idx}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle_observaciones}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.observaciones}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle_padre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.padre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle_abueloP}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.abueloP}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle_abuelaP}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.abuelaP}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle_madre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.madre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle_abueloM}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.abueloM}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle_abuelaM}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.abuelaM}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle_hermanos}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.hermanos}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle_antFamiliaresMedIdx}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.antFamiliaresMedIdx}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAntFamiliarConsultaMed.ListAntFamiliarConsultaMedTitle_consultaMedicaMedIdx}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.consultaMedicaMedIdx}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleAntFamiliarConsultaMed.Create}" actionListener="#{antFamiliarConsultaMedController.prepareCreate}" update=":AntFamiliarConsultaMedCreateForm" oncomplete="PF('AntFamiliarConsultaMedCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleAntFamiliarConsultaMed.View}" update=":AntFamiliarConsultaMedViewForm" oncomplete="PF('AntFamiliarConsultaMedViewDialog').show()" disabled="#{empty antFamiliarConsultaMedController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleAntFamiliarConsultaMed.Edit}" update=":AntFamiliarConsultaMedEditForm" oncomplete="PF('AntFamiliarConsultaMedEditDialog').show()" disabled="#{empty antFamiliarConsultaMedController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundleAntFamiliarConsultaMed.Delete}" actionListener="#{antFamiliarConsultaMedController.destroy}" update="datalist" disabled="#{empty antFamiliarConsultaMedController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>       
+
+</html>

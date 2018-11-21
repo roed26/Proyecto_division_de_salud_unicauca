@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="QuirurgicoMedCreateDlg" widgetVar="QuirurgicoMedCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleQuirurgicoMed.CreateQuirurgicoMedTitle}">
+            <h:form id="QuirurgicoMedCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{quirurgicoMedController.selected != null}">
+                        <p:outputLabel value="#{bundleQuirurgicoMed.CreateQuirurgicoMedLabel_idx}" for="idx" />
+                        <p:inputText id="idx" value="#{quirurgicoMedController.selected.idx}" title="#{bundleQuirurgicoMed.CreateQuirurgicoMedTitle_idx}" required="true" requiredMessage="#{bundleQuirurgicoMed.CreateQuirurgicoMedRequiredMessage_idx}"/>
+                        <p:outputLabel value="#{bundleQuirurgicoMed.CreateQuirurgicoMedLabel_observaciones}" for="observaciones" />
+                        <p:inputTextarea rows="4" cols="30" id="observaciones" value="#{quirurgicoMedController.selected.observaciones}" title="#{bundleQuirurgicoMed.CreateQuirurgicoMedTitle_observaciones}" />
+                        <p:outputLabel value="#{bundleQuirurgicoMed.CreateQuirurgicoMedLabel_consultaMedicaMedIdx}" for="consultaMedicaMedIdx" />
+                        <p:selectOneMenu id="consultaMedicaMedIdx" value="#{quirurgicoMedController.selected.consultaMedicaMedIdx}" required="true" requiredMessage="#{bundleQuirurgicoMed.EditQuirurgicoMedRequiredMessage_consultaMedicaMedIdx}">
+                            <f:selectItems value="#{consultaMedicaMedController.itemsAvailableSelectOne}"
+                                           var="consultaMedicaMedIdxItem"
+                                           itemValue="#{consultaMedicaMedIdxItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundleQuirurgicoMed.CreateQuirurgicoMedLabel_procedimientosCupsMedCodigo}" for="procedimientosCupsMedCodigo" />
+                        <p:selectOneMenu id="procedimientosCupsMedCodigo" value="#{quirurgicoMedController.selected.procedimientosCupsMedCodigo}" >
+                            <f:selectItems value="#{procedimientosCupsMedController.itemsAvailableSelectOne}"
+                                           var="procedimientosCupsMedCodigoItem"
+                                           itemValue="#{procedimientosCupsMedCodigoItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{quirurgicoMedController.create}" value="#{bundleQuirurgicoMed.Save}" update="display,:QuirurgicoMedListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuirurgicoMedCreateDialog');"/>
+                    <p:commandButton value="#{bundleQuirurgicoMed.Cancel}" onclick="QuirurgicoMedCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

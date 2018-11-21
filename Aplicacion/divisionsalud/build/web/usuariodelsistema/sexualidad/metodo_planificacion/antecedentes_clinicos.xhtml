@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <style>
+        .input_number_small .ui-spinner-input {
+            width: 50px;
+        }
+
+        .ui-outputlabel {
+
+            font-weight:bold;
+
+        }
+        .hide { 
+            display: none;
+        }
+
+    </style>
+
+    <h:body>
+       <p:separator/>
+        <p:panelGrid>
+            <p:row>
+                <p:column>
+                    <p:dataTable   rowIndexVar="rowId" value="#{antecedentesPersonalesSexualController.tiposDeAntecedentes}" var="enfermedad" first="0" rows="10">
+                        <p:column  headerText="Enfermedad">
+                            #{enfermedad.nombreAntecedente} 
+                        </p:column>
+                        <p:column headerText="">                                
+                            <p:selectOneRadio disabled="#{antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.informacionAntecedentes.get(rowId).resultadoAntecedente}" >
+                                <f:selectItem itemLabel="Si" itemValue="si" />
+                                <f:selectItem itemLabel="No" itemValue="no" />
+                                <f:selectItem itemLabel="Ns" itemValue="ns" />
+                                <p:ajax event="change"/>
+                            </p:selectOneRadio>                         
+                        </p:column> 
+
+                    </p:dataTable>
+                </p:column>
+                <p:column>
+                    <p:dataTable rowIndexVar="rowId" value="#{antecedentesPersonalesSexualController.tiposDeAntecedentes}" var="enfermedad" first="10" >
+                        <p:column  headerText="Enfermedad">
+                            #{enfermedad.nombreAntecedente}
+                        </p:column>
+                        <p:column headerText="">                                
+                            <p:selectOneRadio disabled="#{antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.informacionAntecedentes.get(rowId).resultadoAntecedente}">
+                                <f:selectItem itemLabel="Si" itemValue="si" />
+                                <f:selectItem itemLabel="No" itemValue="no" />
+                                <f:selectItem itemLabel="Ns" itemValue="ns" />
+                                <p:ajax event="change"/>
+                            </p:selectOneRadio>                         
+                        </p:column> 
+                    </p:dataTable>
+                </p:column>
+
+            </p:row>
+
+        </p:panelGrid>
+
+
+        <p:separator/>
+
+        <!-- Fuma -->
+
+        <p:panelGrid id="grid_fuma"  styleClass="input_number_small gridsinbordes">
+            <p:row>
+                <p:column>
+                    <p:outputLabel  value="¿Fuma?:" />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>                    
+                    <p:selectOneRadio disabled="#{antecedentesPersonalesSexualController.viendo}"  value="#{antecedentesPersonalesSexualController.selected.fumador }" id="fuma" >
+                        <f:selectItem itemLabel="Si" itemValue="si" />
+                        <f:selectItem itemLabel="No" itemValue="no" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax update="msgFuma msgFuma_cuantos_dia fuma_cuantos_dia outPutFuma outPutFumaAst" event="change"/>
+                    </p:selectOneRadio> 
+                </p:column>    
+                <p:column>
+                    <p:outputLabel id="outPutFuma"   style="display:#{antecedentesPersonalesSexualController.selected.fumador == 'no'or  antecedentesPersonalesSexualController.selected.fumador== null  ?'none':'block'}" value="Cuántos/Día: " />       
+                    <p:outputLabel id="outPutFumaAst" style="display:#{antecedentesPersonalesSexualController.selected.fumador == 'no' or  antecedentesPersonalesSexualController.selected.fumador== null?'none':'block'}; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>   
+
+                    <p:spinner  styleClass="#{ antecedentesPersonalesSexualController.selected.fumador == 'no' or  antecedentesPersonalesSexualController.selected.fumador== null  ? 'hide':''}" disabled="#{antecedentesPersonalesSexualController.selected.fumador == 'no' or  antecedentesPersonalesSexualController.selected.fumador== null or antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.selected.cigarrillosPorDia}" min="0"  id="fuma_cuantos_dia"  >
+                        <f:validateLength  />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <f:validator validatorId="ValidarLongitudMaximo3Numeros" />
+                        <p:ajax update="msgFuma_cuantos_dia" event="change"/>
+                    </p:spinner  >
+
+
+                </p:column>    
+            </p:row> 
+            <p:row>
+                <p:column/>
+                <p:column>
+
+                    <p:message for="fuma" id="msgFuma"/>
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="fuma_cuantos_dia" id="msgFuma_cuantos_dia"/>
+                </p:column>
+            </p:row>
+
+
+
+        </p:panelGrid>
+
+        <p:separator/>
+        <!-- Info mestruacion -->
+        <p:panelGrid id="grid_menstruacion" styleClass="input_number_small gridsinbordes">
+            <p:row>
+                <p:column>
+                    <p:outputLabel  value="Edad menarca: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+
+                <p:column>                    
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}" min="0"  id="edad_Menarca" value="#{antecedentesPersonalesSexualController.selected.edadMenarca}" >
+                        <f:validateLength maximum="3" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax update="msgEdad_menarca" event="change"/> 
+                    </p:spinner>
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel  value="Ciclos de:" />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}" 
+                        value="#{antecedentesPersonalesSexualController.selected.ciclosPeriodo}" min="0"  id="ciclosPeriodo">
+                        <f:validateLength maximum="2"/>                  
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax update="msgCiclosPeriodo" event="change"/>
+                    </p:spinner>
+                    <span style="display:inline-block; width: 16px;"></span>X                    
+                </p:column>
+                <p:column>                   
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}"
+                        value="#{antecedentesPersonalesSexualController.selected.ciclosDuracion}" min="0"  id="ciclosDuracion">
+                        <f:validateLength maximum="2" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax update="msgCiclosDuracion" event="change"/>
+                    </p:spinner> 
+                </p:column>
+                <p:column>
+                    <p:outputLabel  value="¿Regulares?: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneRadio disabled="#{antecedentesPersonalesSexualController.viendo}"  value="#{antecedentesPersonalesSexualController.selected.ciclosRegulares}" id="ciclos_regulares" >
+                        <f:selectItem itemLabel="Si" itemValue="si" />
+                        <f:selectItem itemLabel="No" itemValue="no" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax update="msgCiclos_regulares" event="change"/>
+                    </p:selectOneRadio> 
+                </p:column>
+            </p:row>
+
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="edad_Menarca" id="msgEdad_menarca"/>
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="ciclosPeriodo" id="msgCiclosPeriodo"/>
+                </p:column>
+                <p:column>
+                    <p:message for="ciclosDuracion" id="msgCiclosDuracion"/>
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="ciclos_regulares" id="msgCiclos_regulares"/>
+                </p:column>
+            </p:row>
+
+
+        </p:panelGrid>
+
+        <p:separator/>
+        <!--  Informacion sexual -->
+        <p:panelGrid id="grid_informacion_Sexual"  styleClass="input_number_small gridsinbordes" >
+            <p:row>
+                <p:column>
+                    <p:outputLabel  value=" Edad inicio vida  sexual:" />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>  
+                <p:column>
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}" min="0" value="#{antecedentesPersonalesSexualController.selected.edadInicioVidaSexual}" id="EDAD_INICIO_SEXUAL"   >
+                        <f:validator validatorId="ValidarLongitudMaximo3Numeros"/>
+                        <f:validator validatorId="ValidarCampoObligatorio"/>  
+                        <p:ajax  update="msgEDAD_INICIO_SEXUAL" event="change"/>
+
+                    </p:spinner  >
+                </p:column>
+                <p:column>
+                    <p:outputLabel value="Número de parejas sexuales: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>                    
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.selected.numParejasSexuales}" min="0"  id="NUMERO_PAREJAS_SEXUALES"   >
+                        <f:validateLength maximum="4" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax update="msgNUMERO_PAREJAS_SEXUALES" event="change"/>  
+                    </p:spinner>
+                </p:column>
+                <p:column>
+                    <p:outputLabel  value="Número parejas sexuales último año: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>                    
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}" min="0" value="#{antecedentesPersonalesSexualController.selected.numParejasUltimoAnio}" id="NUMERO_PAREJAS_SEXUALES_AÑO"   >
+                        <f:validateLength maximum="4" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax update="msgNUMERO_PAREJAS_SEXUALES_AÑO" event="change"/>
+                    </p:spinner  >
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="EDAD_INICIO_SEXUAL" id="msgEDAD_INICIO_SEXUAL"/>
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="NUMERO_PAREJAS_SEXUALES" id="msgNUMERO_PAREJAS_SEXUALES"/>
+                </p:column>
+                <p:column/>
+                <p:column>
+                    <p:message for="NUMERO_PAREJAS_SEXUALES_AÑO" id="msgNUMERO_PAREJAS_SEXUALES_AÑO"/>
+                </p:column>
+
+            </p:row>
+
+        </p:panelGrid>
+
+        <p:separator/>
+        <!-- Info Abortos -->
+        <p:panelGrid id="grid_info_abortos" styleClass="input_number_small gridsinbordes" >
+            <p:row>
+                <p:column>                     
+                    <p:outputLabel  value="Fecha último parto: " />
+
+                </p:column>
+                <p:column>
+                    <p:calendar disabled="#{antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.selected.fechaUltParto}" id="fechaultimoparto" yearRange="c-80:c" 
+                                navigator="true" pattern="MM-dd-yyyy" 
+                                title="Fecha último parto"  showOn="button"
+                                required = "false"
+                                readonlyInput="true"
+                                locale="es"
+                                requiredMessage="Campo obligatorio." 
+                                maxdate="#{antecedentesPersonalesSexualController.getMaxDate()}"
+                                >
+                        <p:ajax event="dateSelect"/>
+
+                    </p:calendar>
+                </p:column>
+                <p:column>
+                    <p:outputLabel  value="¿Lactando?:" />
+                </p:column>
+                <p:column>                    
+                    <p:selectOneRadio disabled="#{antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.selected.estaLactando}" id="lactando" >
+                        <f:selectItem itemLabel="Si" itemValue="si" />
+                        <f:selectItem itemLabel="No" itemValue="no" />
+                        <p:ajax event="change"/>
+                    </p:selectOneRadio> 
+                </p:column> 
+            </p:row> 
+            <p:row>
+                <p:column>
+                    <p:outputLabel  value="¿Exclusiva?:" />
+                </p:column>
+                <p:column>
+                    <p:selectOneRadio disabled="#{antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.selected.exclusiva}" id="exclusiva" >
+                        <f:selectItem itemLabel="Si" itemValue="Si" />
+                        <f:selectItem itemLabel="No" itemValue="No" />
+                        <p:ajax event="change"/>
+                    </p:selectOneRadio> 
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel  value="Fecha última menstruación: " />
+
+                </p:column>
+
+                <p:column>                    
+                    <p:calendar disabled="#{antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.selected.fechaUltMenstruacion}" id="fechaultimamestruacion" yearRange="c-80:c" 
+                                navigator="true" pattern="MM-dd-yyyy" 
+                                title="Fecha última menstruación"  showOn="button"
+                                required = "false"
+                                readonlyInput="true"
+                                maxdate="#{antecedentesPersonalesSexualController.getMaxDate()}"
+                                locale="es"
+                                requiredMessage="Campo obligatorio" >
+                        <p:ajax event="dateSelect"/>
+                    </p:calendar>
+                </p:column>                
+            </p:row> 
+
+        </p:panelGrid>
+
+        <p:separator/>
+
+        <!-- Informacion citologia -->
+        <p:panelGrid id="grid_infocitologia" styleClass="input_number_small gridsinbordes">
+            <p:row>
+                <p:column>
+                    <p:outputLabel   value="¿Citología previa?: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                </p:column>
+                <p:column>
+                    <p:selectOneRadio disabled="#{antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.selected.citologiaPrevia}" id="citologiaprevia" >
+                        <f:selectItem itemLabel="Si" itemValue="si" />
+                        <f:selectItem itemLabel="No" itemValue="no" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax  update="msgCitologiaprevia msgAÑO_ULTIMA_CITOLOGIA AÑO_ULTIMA_CITOLOGIA RESULTADO_CITOLOGIA_PREVIA  outPutAÑO_ULTIMA_CITOLOGIA_ast outPutAÑO_ULTIMA_CITOLOGIA outPutRESULTADO_CITOLOGIA_PREVIA" event="change" />
+                    </p:selectOneRadio> 
+                </p:column>  
+                <c:set var="citologia" value="#{antecedentesPersonalesSexualController.selected.citologiaPrevia == 'no' || antecedentesPersonalesSexualController.selected.citologiaPrevia == null}"/>
+                <p:column>
+                    <p:outputLabel id="outPutAÑO_ULTIMA_CITOLOGIA" style="padding-left:0px; display:#{citologia ?'none':'initial'}"  value="Año última citología: "/>
+                    <p:outputLabel id="outPutAÑO_ULTIMA_CITOLOGIA_ast" style=" display:#{citologia ?'none':'initial'}; font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    <p:spinner styleClass=" #{ citologia ? 'hide':''}" 
+                               disabled="#{citologia or antecedentesPersonalesSexualController.viendo}" 
+                               value="#{antecedentesPersonalesSexualController.selected.anioCitPrev}" 
+                               min="0"  id="AÑO_ULTIMA_CITOLOGIA" required="true" requiredMessage="Campo obligatorio.">
+                        <f:validateLength maximum="7" />
+    
+                        <p:ajax update="msgAÑO_ULTIMA_CITOLOGIA"  event="change" />
+                    </p:spinner  >
+                </p:column>
+                <p:column>
+                    <p:outputLabel id="outPutRESULTADO_CITOLOGIA_PREVIA" style="padding-left:0px; display:#{citologia?'none':'initial'}"  value="Resultado Citología previa: " />
+                </p:column>
+                <p:column>
+                    <p:selectOneRadio  styleClass="#{ citologia ? 'hide':''}" disabled="#{citologia or antecedentesPersonalesSexualController.viendo} " 
+                                       value="#{antecedentesPersonalesSexualController.selected.resultCitPrev}" id="RESULTADO_CITOLOGIA_PREVIA" >
+                        <f:selectItem itemLabel="Negativo" itemValue="negativo" />
+                        <f:selectItem itemLabel="Positivo" itemValue="positivo" />
+                        <f:selectItem itemLabel="NS" itemValue="ns" />
+                        <p:ajax event="change"/>
+                    </p:selectOneRadio> 
+                </p:column> 
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column>
+                    <p:message for="citologiaprevia" id="msgCitologiaprevia" />
+                </p:column>
+                <p:column>
+                    <p:message for="AÑO_ULTIMA_CITOLOGIA" id="msgAÑO_ULTIMA_CITOLOGIA" />
+                </p:column>
+
+                <p:column/>
+                <p:column/>
+
+            </p:row>
+
+        </p:panelGrid>
+        <!-- Transtornos -->
+        <p:panelGrid id="grid_trastornos">
+            <p:row>
+                <p:column> 
+                    <p:dataTable rowIndexVar="rowId" value="#{antecedentesPersonalesSexualController.listTranstornosMenstruales}" var="enfermedad" 
+                                 emptyMessage="No hay trastornos menstruales registrados para este paciente.">
+                        <f:facet name="header">
+                            Trastornos Menstruales
+                        </f:facet>
+                        <p:column>
+                            #{enfermedad.nombreTranstorno}
+                        </p:column>
+                        <p:column>
+                            <p:selectBooleanCheckbox disabled="#{antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.listTranstornosMenstruales.get(rowId).presenta}"/> 
+                        </p:column>
+                    </p:dataTable>
+                </p:column>                   
+            </p:row>
+        </p:panelGrid>
+
+        <p:separator/>
+
+        <!-- Abortos tipos -->
+        <p:panelGrid id="grid_abortos" styleClass="input_number_small gridsinbordes" >
+                    <p:row>
+
+                <p:column>
+                    <p:outputLabel  value="A.G.O. G: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.selected.agoG}" min="0"  id="AGO_G"   >
+                        <f:validateLength maximum="3" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax update="msgAGO_G" event="change"/>
+                    </p:spinner  >
+                </p:column>    
+                <p:column>
+                    <p:outputLabel   value="P: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}" value="#{antecedentesPersonalesSexualController.selected.agoP}" min="0"  id="AGO_P"   >
+                        <f:validateLength maximum="3" />
+
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax update="msgAGO_P" event="change"/>
+                    </p:spinner  >
+                </p:column> 
+                <p:column>
+                    <p:outputLabel   value="A: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}" min="0" value="#{antecedentesPersonalesSexualController.selected.agoA}" id="AGO_A"   >
+                        <f:validateLength maximum="3" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax update="msgAGO_A labelTipoAborto labelFechaUltimoAborto tipoAborto fechaUltimoAborto" event="change"/>
+                    </p:spinner  >
+                </p:column> 
+                <p:column>
+                    <p:outputLabel   value="C: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}" min="0" value="#{antecedentesPersonalesSexualController.selected.agoC}" id="AGO_C"   >
+                        <f:validateLength maximum="3" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax  update="msgAGO_C" event="change"/>
+                    </p:spinner  >
+                </p:column>    
+                <p:column>
+                    <p:outputLabel  value="V: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}" min="0" value="#{antecedentesPersonalesSexualController.selected.agoV}" id="AGO_V"   >
+                        <f:validateLength maximum="3" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax  update="msgAGO_V" event="change"/>
+                    </p:spinner  >
+                </p:column> 
+                <p:column>
+                    <p:outputLabel   value="M: " />
+                    <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+                    <p:spinner disabled="#{antecedentesPersonalesSexualController.viendo}" min="0" value="#{antecedentesPersonalesSexualController.selected.agoM}"  id="AGO_M"   >
+                        <f:validateLength maximum="3" />
+                        <f:validator validatorId="ValidarCampoObligatorio"/>
+                        <p:ajax update="msgAGO_M" event="change"/>
+                    </p:spinner  >
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:message for="AGO_G" id="msgAGO_G"/>
+                </p:column>
+                <p:column>
+                    <p:message for="AGO_P" id="msgAGO_P"/>
+                </p:column>
+                <p:column>
+                    <p:message for="AGO_A" id="msgAGO_A"/>
+                </p:column>
+                <p:column>
+                    <p:message for="AGO_C" id="msgAGO_C"/>
+                </p:column>
+                <p:column>
+                    <p:message for="AGO_V" id="msgAGO_V"/>
+                </p:column>
+                <p:column>
+                    <p:message for="AGO_M" id="msgAGO_M"/>
+                </p:column>
+                <p:column>
+
+                </p:column>
+
+
+            </p:row>
+        </p:panelGrid >
+        <p:panelGrid styleClass="input_number_small gridsinbordes">
+            <p:row>
+
+                <c:set id="variableAbortos" var="numAbortos" value="#{antecedentesPersonalesSexualController.selected.agoA > 0}"/>
+                <p:column >
+                    <p:outputLabel  value="Tipo de aborto: " id="labelTipoAborto"
+                                    style="display:#{numAbortos?'block':'none'}"/>
+                    <p:selectOneRadio   value="#{antecedentesPersonalesSexualController.selected.agoEspecificar }"
+                                       styleClass="#{numAbortos?'':'hide'}" disabled="#{not numAbortos or antecedentesPersonalesSexualController.viendo}" id="tipoAborto" >
+                        <f:selectItem itemLabel="Espontáneo" itemValue="espontaneo" />
+                        <f:selectItem itemLabel="Inducido" itemValue="inducido" />
+                        <p:ajax  event="change"/>
+                    </p:selectOneRadio> 
+
+                </p:column>
+
+                <p:column>
+                    <p:outputLabel  value="Fecha último Aborto: " id="labelFechaUltimoAborto"
+                                    style="display:#{numAbortos?'block':'none'}"/>
+                </p:column>
+                <p:column>
+                    <p:calendar value="#{antecedentesPersonalesSexualController.selected.agoFechaUltimoAborto}" id="fechaUltimoAborto" yearRange="c-80:c" 
+                                styleClass="#{numAbortos?'':'hide'}" disabled="#{not numAbortos or antecedentesPersonalesSexualController.viendo }"
+                                navigator="true" pattern="MM-dd-yyyy" 
+                                title="Fecha último aborto"  showOn="button"
+                                required = "false"
+                                readonlyInput="true"
+                                locale="es"
+                                requiredMessage="Campo obligatorio." 
+                                maxdate="#{antecedentesPersonalesSexualController.getMaxDate()}"
+                                >
+                        <p:ajax event="dateSelect"/>
+
+                    </p:calendar>
+                </p:column>
+
+            </p:row>
+            <p:row>
+                <p:column/>
+                <p:column/>
+                <p:column/>
+                <p:column/>
+
+            </p:row>
+        </p:panelGrid>
+        <h3>Observaciones:</h3>
+
+        <p:inputTextarea value="#{antecedentesPersonalesSexualController.selected.observacionesAdicionales}" disabled="#{antecedentesPersonalesSexualController.viendo}" maxlength="500" style="width:99%;" />
+
+    </h:body>
+
+</html>

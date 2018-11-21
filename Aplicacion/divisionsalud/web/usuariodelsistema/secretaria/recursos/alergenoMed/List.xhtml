@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </h:head>
+    <h1 class="text-center">Lista de Alérgenos</h1>    
+
+    <h:form id="botonRegistroalergeno">
+        <p:commandButton style="font-weight: bold; color: black" id="createButton" icon="ui-icon-plus" value="Crear Nuevo Alérgeno" action="#{alergenoMedController.inicirObjetoAlergeno()}" oncomplete="PF('AlergenoMedCreateDialog').show()"/>
+    </h:form>
+    <p:separator/>
+    <center>
+
+        
+            <h:form id="AlergenoMedListForm">
+                
+                <h:panelGrid columns="2" >
+                    <p:outputLabel value="Buscar Alérgeno:" />
+                    <p:inputText  placeholder="Digite Código o Descripción" style="width: 300px;"  value="#{alergenoMedController.datoBusqueda}" >
+                        <p:ajax event="keyup" update="datalist" listener="#{alergenoMedController.buscarAlergeno()}" />                                
+                    </p:inputText>                          
+                </h:panelGrid>
+                
+                    <p:dataTable id="datalist" value="#{alergenoMedController.items}" var="item"
+
+                                 paginator="true"
+                                 rowKey="#{item.idx}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+				style=" width: 900px"
+                                 >
+
+
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAlergeno.ListAlergenoMedTitle_nombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAlergeno.ListAlergenoMedTitle_idxTipoAlergeno}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idxTipoAlergeno.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleAlergeno.ListAlergenoMedTitle_estado}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.estado}" disabled="true"/>
+                        </p:column>
+                        
+                        <p:column style="background: #C8CDD6; width: 120px">
+                    <f:facet name="header"> 
+                        <h:outputText value="Acciones"/>
+                    </f:facet>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" action="#{alergenoMedController.seleccionarAlergeno(item)}" update=":AlergenoMedViewForm" oncomplete="PF('AlergenoMedViewDialog').show()"/> 
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" action="#{alergenoMedController.seleccionarAlergeno(item)}" update=":AlergenoMedEditForm" oncomplete="PF('AlergenoMedEditDialog').show()"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"   actionListener="#{alergenoMedController.destroy}" update="datalist" />
+                </p:column>
+                    </p:dataTable>
+                
+            </h:form>
+  </center>
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        
+</html>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="GinecostetricosMedListForm">
+                <p:panel header="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle}">
+                    <p:dataTable id="datalist" value="#{ginecostetricosMedController.items}" var="item"
+                                 selectionMode="single" selection="#{ginecostetricosMedController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.idx}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle_idx}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idx}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle_fechaUltimaMestruacion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaUltimaMestruacion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle_g}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.g}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle_p}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.p}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle_a}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.a}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle_c}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.c}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle_m}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.m}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle_fechaUltimoParto}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fechaUltimoParto}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle_metodoPlanificacion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.metodoPlanificacion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundleGinecostetricosMed.ListGinecostetricosMedTitle_citologia}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.citologia}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundleGinecostetricosMed.Create}" actionListener="#{ginecostetricosMedController.prepareCreate}" update=":GinecostetricosMedCreateForm" oncomplete="PF('GinecostetricosMedCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundleGinecostetricosMed.View}" update=":GinecostetricosMedViewForm" oncomplete="PF('GinecostetricosMedViewDialog').show()" disabled="#{empty ginecostetricosMedController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundleGinecostetricosMed.Edit}" update=":GinecostetricosMedEditForm" oncomplete="PF('GinecostetricosMedEditDialog').show()" disabled="#{empty ginecostetricosMedController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundleGinecostetricosMed.Delete}" actionListener="#{ginecostetricosMedController.destroy}" update=":growl,datalist" disabled="#{empty ginecostetricosMedController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

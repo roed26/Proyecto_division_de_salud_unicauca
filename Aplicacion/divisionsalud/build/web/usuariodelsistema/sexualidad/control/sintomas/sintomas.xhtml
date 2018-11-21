@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <div class="ui-messages-info ">
+            <span class="ui-messages-info-detail"><b>Síntoma(s) experimentado(s) por el paciente con el método de planificación:</b></span>
+        </div>
+        <center>
+        <p:dataTable value="#{controlSexualController.sintomas}" 
+                     var="sintoma" rowIndexVar="index"
+                     emptyMessage="El paciente no registra sintomas."
+                     style="width: 300px;">
+            <p:column >
+                <f:facet name="header">
+                    <h:outputText value="Síntoma"/>
+                </f:facet>
+                <h:outputText value="#{sintoma.nombre}"/>
+            </p:column>
+            <p:column width="55">
+                <f:facet name="header">
+                    <h:outputText value="Presenta"/>
+                </f:facet>
+                <center>
+                <p:selectBooleanCheckbox value="#{sintoma.seleccionado}" disabled="#{controlSexualController.viendo}">
+                    <p:ajax event="change"/>
+                </p:selectBooleanCheckbox>
+                </center>
+            </p:column>
+        </p:dataTable>
+        </center>
+    </h:body>
+</html>
+

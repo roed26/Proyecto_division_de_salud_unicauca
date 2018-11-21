@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EnfermedadesCie10MedEditDlg" widgetVar="EnfermedadesCie10MedEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundleEnfermedadesCie10.EditEnfermedadesCie10MedTitle}">
+            <h:form id="EnfermedadesCie10MedEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{enfermedadesCie10MedController.selected != null}">
+                        <p:outputLabel value="#{bundleEnfermedadesCie10.EditEnfermedadesCie10MedLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{enfermedadesCie10MedController.selected.codigo}" title="#{bundleEnfermedadesCie10.EditEnfermedadesCie10MedTitle_codigo}" required="true" requiredMessage="#{bundleEnfermedadesCie10.EditEnfermedadesCie10MedRequiredMessage_codigo}"/>
+                        <p:outputLabel value="#{bundleEnfermedadesCie10.EditEnfermedadesCie10MedLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{enfermedadesCie10MedController.selected.descripcion}" title="#{bundleEnfermedadesCie10.EditEnfermedadesCie10MedTitle_descripcion}" />
+                        <p:outputLabel value="#{bundleEnfermedadesCie10.EditEnfermedadesCie10MedLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{enfermedadesCie10MedController.selected.estado}" required="true" requiredMessage="#{bundleEnfermedadesCie10.EditEnfermedadesCie10MedRequiredMessage_estado}"/>
+                    </p:panelGrid>
+                    <center>
+                        <p:commandButton actionListener="#{enfermedadesCie10MedController.update}" value="#{bundleEnfermedadesCie10.Save}" update="display,:EnfermedadesCie10MedListForm:datalist" oncomplete="handleSubmit(args, 'EnfermedadesCie10MedEditDialog');" onclick="EnfermedadesCie10MedEditDialog.hide()"/>
+                        <p:commandButton value="#{bundleEnfermedadesCie10.Cancel}" onclick="EnfermedadesCie10MedEditDialog.hide()"/>
+                    </center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

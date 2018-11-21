@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PatologicoConsultaMedCreateDlg" widgetVar="PatologicoConsultaMedCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundlePatologicoConsultaMed.CreatePatologicoConsultaMedTitle}">
+            <h:form id="PatologicoConsultaMedCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{patologicoConsultaMedController.selected != null}">
+                        <p:outputLabel value="#{bundlePatologicoConsultaMed.CreatePatologicoConsultaMedLabel_idx}" for="idx" />
+                        <p:inputText id="idx" value="#{patologicoConsultaMedController.selected.idx}" title="#{bundlePatologicoConsultaMed.CreatePatologicoConsultaMedTitle_idx}" required="true" requiredMessage="#{bundlePatologicoConsultaMed.CreatePatologicoConsultaMedRequiredMessage_idx}"/>
+                        <p:outputLabel value="#{bundlePatologicoConsultaMed.CreatePatologicoConsultaMedLabel_estadoSiNo}" for="estadoSiNo" />
+                        <p:inputText id="estadoSiNo" value="#{patologicoConsultaMedController.selected.estadoSiNo}" title="#{bundlePatologicoConsultaMed.CreatePatologicoConsultaMedTitle_estadoSiNo}" />
+                        <p:outputLabel value="#{bundlePatologicoConsultaMed.CreatePatologicoConsultaMedLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{patologicoConsultaMedController.selected.descripcion}" title="#{bundlePatologicoConsultaMed.CreatePatologicoConsultaMedTitle_descripcion}" />
+                        <p:outputLabel value="#{bundlePatologicoConsultaMed.CreatePatologicoConsultaMedLabel_consultaMedicaMedIdx}" for="consultaMedicaMedIdx" />
+                        <p:selectOneMenu id="consultaMedicaMedIdx" value="#{patologicoConsultaMedController.selected.consultaMedicaMedIdx}" required="true" requiredMessage="#{bundlePatologicoConsultaMed.EditPatologicoConsultaMedRequiredMessage_consultaMedicaMedIdx}">
+                            <f:selectItems value="#{consultaMedicaMedController.itemsAvailableSelectOne}"
+                                           var="consultaMedicaMedIdxItem"
+                                           itemValue="#{consultaMedicaMedIdxItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundlePatologicoConsultaMed.CreatePatologicoConsultaMedLabel_patologicosMedIdx}" for="patologicosMedIdx" />
+                        <p:selectOneMenu id="patologicosMedIdx" value="#{patologicoConsultaMedController.selected.patologicosMedIdx}" required="true" requiredMessage="#{bundlePatologicoConsultaMed.EditPatologicoConsultaMedRequiredMessage_patologicosMedIdx}">
+                            <f:selectItems value="#{patologicosMedController.itemsAvailableSelectOne}"
+                                           var="patologicosMedIdxItem"
+                                           itemValue="#{patologicosMedIdxItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{patologicoConsultaMedController.create}" value="#{bundlePatologicoConsultaMed.Save}" update="display,:PatologicoConsultaMedListForm:datalist,:growl" oncomplete="handleSubmit(args,'PatologicoConsultaMedCreateDialog');"/>
+                    <p:commandButton value="#{bundlePatologicoConsultaMed.Cancel}" onclick="PatologicoConsultaMedCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,8 @@
+
+.ui-selectonemenu.with-placeholder .ui-selectonemenu-label {
+     color: #141414;
+}
+.ui-selectonemenu-panel.hide-disabled .ui-selectonemenu-list-item.ui-state-disabled {
+   
+    display: none;
+}

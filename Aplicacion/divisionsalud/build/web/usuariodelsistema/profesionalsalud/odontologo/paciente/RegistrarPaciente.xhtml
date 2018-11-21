@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+        
+        
+        
+        <div class="ui-messages-info ">
+            <span class="ui-messages-info-detail"><b>Registrar Paciente</b></span>
+        </div>
+            
+        <p:separator />
+        
+        <div style = "float: right;">
+            <p:outputLabel style="font-weight:bold; " value="Campos obligatorios"/>
+            <p:outputLabel style="font-style: italic; font-size: 16px; text-align: left; color: red;"  value="* " />
+        </div>
+        <h:form id="form_registrar">
+                <p:wizard nextLabel="Siguiente" backLabel="Atrás" >
+                    <p:tab  title="Datos personales" titleStyleClass="title" >
+                        <p:panel header="Datos personales">
+                            <ui:include src="../../../sexualidad/paciente/datos_personales.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Escolaridad" titleStyleClass="title">
+                        <p:panel header="Escolaridad">
+                            <ui:include src="../../../sexualidad/paciente/escolaridad.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Residencia" titleStyleClass="title">
+                        <p:panel header="Residencia">
+                            <ui:include src="../../../sexualidad/paciente/residencia.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Salud" titleStyleClass="title">
+                        <p:panel header="Salud">
+                            <ui:include src="../../../sexualidad/paciente/salud.xhtml"/>
+                        </p:panel>
+                    </p:tab>
+                    <p:tab title="Persona responsable" titleStyleClass="title" >
+                        <p:panel header="Persona responsable" id="tab_contacto">
+                            <ui:include src="../../../sexualidad/paciente/contacto.xhtml"/>
+                        </p:panel>
+                        <p:commandButton value="Guardar" style="float:right"
+                                         action="#{pacienteController.registrar_Paciente()}" 
+                                         ajax="true" update="tab_contacto">
+                        </p:commandButton>
+                    </p:tab>
+                </p:wizard>
+            </h:form>
+
+        
+        
+          <p:dialog header="Información" modal="true" position="center" widgetVar="RegistroExitoso">
+            <h:form id="mensajeForm">
+                <h:panelGrid columns="2" >
+                    <p:graphicImage width="50px" height="50px" library="img" name="exitoso.png" />
+                    <p:outputLabel value="El paciente se registró con éxito" />
+                    <p:commandButton value="Aceptar" ajax="false"
+                                     action="#{pacienteController.terminarRegistro(cargarVistaController)}" />
+                </h:panelGrid>
+
+            </h:form>
+        </p:dialog>
+        
+         <p:dialog header="Información" modal="true" closable="false" position="center" widgetVar="RegistroNoExitoso">
+            <h:form id="mensajeForm2">
+                <h:panelGrid columns="2" >
+                    <p:graphicImage width="50px" height="50px" library="img" name="error.png" />
+                    <p:outputLabel value="El paciente NO se registró con éxito" />
+                </h:panelGrid>
+
+            </h:form>
+        </p:dialog>
+        
+        
+
+  
+</html>

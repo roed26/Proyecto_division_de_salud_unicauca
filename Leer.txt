@@ -1,0 +1,13 @@
+------- Para pruebas los usuarios de cada modulo son --------
+
+odontologo -> odontolgia
+secretaria -> secretaria
+sexologo -> salud sexual
+medico -> medicina
+
+clave: 123456
+
+---- base de datos -----
+Nombre de la base de datos: divsalud-bd
+usuario de la base de datos: userdivsalud
+contraseña: divsalud
